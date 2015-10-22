@@ -40,6 +40,8 @@ Build the sample
 
 5.  Press Ctrl+Shift+B, or select Build \> Build Solution.
 
+For intent recognition to work, you need to sign up [Language Understanding Intelligent Service (LUIS)](<https://www.projectoxford.ai/luis>). Please put your LUIS App ID and Subscription ID in app.config file. app.config file can be located from Solution Explorer.
+
 <img src="SampleScreenshots/SampleRunning1.png" width="100%"/>
 
 Run the sample

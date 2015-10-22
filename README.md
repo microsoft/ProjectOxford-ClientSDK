@@ -8,7 +8,7 @@ understanding and easily add intelligent services into their solutions. The
 Project Oxford APIs are divided into four areas:  
  
 
-| [Face API](<https://www.projectoxford.ai/face>) (Beta) | [Computer Vision API](<https://www.projectoxford.ai/vision>) (Beta) | [Speech API](<https://www.projectoxford.ai/speech>) (Beta) | [Language Understanding Intelligent Service](<https://www.projectoxford.ai/luis>) (Invite only) |
+| [Face API](<https://www.projectoxford.ai/face>) (Beta) | [Computer Vision API](<https://www.projectoxford.ai/vision>) (Beta) | [Speech API](<https://www.projectoxford.ai/speech>) (Beta) | [Language Understanding Intelligent Service](<https://www.projectoxford.ai/luis>) (Beta) |
 |----------------------------------------------------|----------------------------------------------------|----------------------------------------------------|----------------------------------------------------|
 | See your users with face detection and recognition | Understand images and intelligently generate thumbnails | Communicate with your users with speech recognition and synthesis | Understand natural language commands tailored to your app |
 

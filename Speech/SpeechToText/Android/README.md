@@ -83,9 +83,8 @@ key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>)
     To try recognize intent, set m_recoMode to SpeechRecognitionMode.ShortPhrase
     and set m_isIntent to be true.
 
-    For intent recognition to work, you need to sign up Language Understanding Intelligent Service (LUIS) and set the key values in
+    For intent recognition to work, you need to sign up [Language Understanding Intelligent Service (LUIS)](<https://www.projectoxford.ai/luis>) and set the key values in
     luisAppID and luisSubscriptionID from "Samples\_SpeechRecoExample\_res\_values\_strings.xml".
-    Currently LUIS is by invitation only.
 
 <img src="SampleScreenshots/SampleRunning1.png" width="50%"/>
 
