@@ -1,0 +1,10 @@
+<!-- Copyright (c) Microsoft. All rights reserved. -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.microsoft.projectoxford.face.samples.persongroupmanagement.PersonGroupListActivity">
+    <item android:id="@+id/menu_delete_items"
+        app:showAsAction="ifRoom"
+        android:title="@string/delete" />
+</menu>

@@ -1,0 +1,100 @@
+<!-- Copyright (c) Microsoft. All rights reserved. -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.microsoft.projectoxford.face.samples.persongroupmanagement.PersonActivity">
+
+    <RelativeLayout
+        android:id="@+id/person_name_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/view_margin">
+
+        <TextView
+            android:id="@+id/person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@string/person_name" />
+
+        <EditText
+            android:id="@+id/edit_person_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/person_name"
+            android:layout_toEndOf="@+id/person_name"
+            android:singleLine="true"
+            android:maxLength="30"
+            android:hint="@string/type_in_person_name_tip" />
+
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/gridView_faces"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/person_name_view"
+        android:layout_above="@+id/person_tip"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/view_margin"
+        android:horizontalSpacing="@dimen/view_margin"
+        android:layout_marginBottom="@dimen/view_margin"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/person_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/info"
+        android:layout_marginBottom="@dimen/view_margin"
+        android:text="@string/person_tip" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/button_bar"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:id="@+id/button_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/add_face"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/view_margin"
+            android:layout_marginEnd="@dimen/view_margin"
+            android:text="@string/add_face"
+            android:onClick="addFace"
+            style="@style/ButtonStyle" />
+
+        <Button
+            android:id="@+id/done_and_save"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/done_and_save"
+            android:onClick="doneAndSave"
+            style="@style/ButtonStyle" />
+
+    </LinearLayout>
+
+</RelativeLayout>

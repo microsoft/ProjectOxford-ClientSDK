@@ -1,0 +1,92 @@
+<!-- Copyright (c) Microsoft. All rights reserved. -->
+
+<resources>
+    <!-- Please refer to http://oxford-portal.azurewebsites.net/doc/general/subscription-key-mgmt to get your subscription key -->
+    <!-- If you have one subscription key, you can add it here to use the service -->
+    <string name="subscription_key">Please_add_the_subscription_key_here</string>
+
+    <!-- Main activity -->
+    <string name="detection">Detection</string>
+    <string name="verification">Verification</string>
+    <string name="identification">Identification</string>
+    <string name="grouping">Grouping</string>
+    <string name="find_similar_faces">Find Similar Faces</string>
+    <string name="detection_description">Detect faces, face landmarks, pose, gender, and age.</string>
+    <string name="verification_description">Check if two faces belong to the same person.</string>
+    <string name="grouping_description">Group faces based on similarity.</string>
+    <string name="find_similar_face_description">Search for similar-looking faces.</string>
+    <string name="identification_description">Identify the person from a face.</string>
+
+    <!-- Tips to get subscription key shown on main activity-->
+    <string name="app_name">Project Oxford Face API Samples</string>
+    <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
+    <string name="add_subscription_key_tip">Please put your subscription key to source file \"app/res/values/strings.xml\" to enable Face API calls.</string>
+
+    <!-- Detection activity -->
+    <string name="image">Image:</string>
+    <string name="select_image">Select\nImage</string>
+    <string name="result">Result:</string>
+    <string name="detect">Detect</string>
+
+    <!-- Verification activity -->
+    <string name="verify">Verify</string>
+    <string name="face_0">Face0:</string>
+    <string name="face_1">Face1:</string>
+
+    <!-- Verification activity -->
+    <string name="face">Face:</string>
+    <string name="group">Group</string>
+
+    <!-- Identification activity -->
+    <string name="identify">Identify</string>
+    <string name="manage_person_groups">Manage\nPerson\nGroups</string>
+    <string name="person_groups">Person Groups</string>
+    <string name="target_image">Target image</string>
+    <string name="faces">Faces in image</string>
+
+    <!-- Person group management activities -->
+    <string name="delete">Delete</string>
+    <string name="done_and_save">Save</string>
+
+    <string name="person_group_list">Person Group List</string>
+    <string name="person_group_list_tip">- Tap on a group to edit.\n- Long tap to delete.</string>
+    <string name="add_person_group">Add Person Group</string>
+
+    <string name="person_group">Person Group</string>
+    <string name="person_group_tip">- Tap on a person to edit.\n- Long press to delete.</string>
+    <string name="person_group_name">Person group name:</string>
+    <string name="type_in_person_group_name_tip">Name (within 30 characters)</string>
+    <string name="add_person">Add Person</string>
+
+    <string name="person">Person</string>
+    <string name="person_tip">- Long press on a face to delete.</string>
+    <string name="type_in_person_name_tip">Name (within 30 characters)</string>
+    <string name="add_face">Add Face</string>
+    <string name="person_name">Person name:</string>
+    <string name="add_face_to_person">Add Faces To Person</string>
+    <string name="select_face_tip">Select this person\'s faces (if exist) by click on the checkbox.</string>
+
+    <!-- Find similar faces and grouping activity -->
+    <string name="zero_face">Face database: 0 face in total</string>
+    <string name="target_face">Target face:</string>
+    <string name="all_faces">All Faces:</string>
+    <string name="add_faces">Add\nFaces</string>
+
+    <!-- Common in all activities -->
+    <string name="progress_dialog_title">Please wait</string>
+    <string name="view_log">View Log</string>
+
+    <!-- Select image activity -->
+    <string name="select_an_image">Select an Image</string>
+    <string name="take_photo">Take a Photo</string>
+    <string name="select_image_in_album">From Gallery</string>
+
+    <!-- Logs -->
+    <string name="log">Log:</string>
+    <string name="detection_log">Detection Log</string>
+    <string name="verification_log">Verification Log</string>
+    <string name="find_similar_face_log">Find Similar Face Log</string>
+    <string name="grouping_log">Grouping Log</string>
+    <string name="identification_log">Identification Log</string>
+
+</resources>

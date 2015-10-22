@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.ProjectOxford.SpeechRecognition-x64</id>
+    <version>0.4.9.1</version>
+    <title>Microsoft.ProjectOxford.SpeechRecognition for x64 build</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://github.com/Microsoft/ProjectOxford-ClientSDK/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/Microsoft/ProjectOxford-ClientSDK</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Microsoft Project Oxford Speech Recognition API Client Library for x64 build</description>
+    <summary>This client libraries allows you to use Microsoft's algorithms in Project Oxford to process spoken language. 
+This is for x64 build. For x86 build, please use Microsoft.ProjectOxford.SpeechRecognition-x86.
+See https://github.com/Microsoft/ProjectOxford-ClientSDK for more information.</summary>
+    <releaseNotes>Beta Release of Project Oxford SDK Client Library</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>ProjectOxford Oxford Speech Recognition SpeechRecognition</tags>
+  </metadata>
+</package>

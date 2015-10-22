@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        name = 'Maven Central Repo' //optional name
+        url = 'http://repo1.maven.org/maven2/'
+    }
+}
+dependencies {
+    compile 'com.microsoft.projectoxford:speechrecognition:0.5.0'
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
+
+    productFlavors {
+        x86 {
+            ndk {
+                abiFilter "x86"
+            }
+        }
+        arm {
+            ndk {
+                abiFilters "armeabi"
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDir '../../SpeechSDK/libs'
+        }
+
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}

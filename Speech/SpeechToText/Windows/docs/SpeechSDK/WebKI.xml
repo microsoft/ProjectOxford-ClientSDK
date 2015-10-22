@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpKI>
+  <HelpKINode Title="AdmRecoOnlyPreferences class">
+    <HelpKINode Title="AdmRecoOnlyPreferences Class" Url="html/bec13652-c8f1-fae4-ee6f-7e1fdc05aa78.htm" />
+    <HelpKINode Title="about AdmRecoOnlyPreferences class" Url="html/bec13652-c8f1-fae4-ee6f-7e1fdc05aa78.htm" />
+    <HelpKINode Title="constructor" Url="html/60641b7e-1415-1fda-c6d6-10dd1a2fa010.htm" />
+    <HelpKINode Title="methods" Url="html/26779190-2f3f-488c-b34b-3c0b445f3185.htm" />
+    <HelpKINode Title="properties" Url="html/035652b4-f291-1ec8-60cd-12a6f9126ffd.htm" />
+  </HelpKINode>
+  <HelpKINode Title="AdmRecoOnlyPreferences.AdmRecoOnlyPreferences constructor" Url="html/60641b7e-1415-1fda-c6d6-10dd1a2fa010.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.AuthenticationScheme property" Url="html/558223c4-537e-7b94-49fc-12f33345c1e0.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.ClientId property" Url="html/ee27b7c0-7872-000f-72e3-54854cc01989.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.ClientSecret property" Url="html/5abd2df2-38c5-6827-e0d9-fa640f13d106.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.ClientVersion property" Url="html/2d4dacbf-ea0a-c8b3-cea5-2166ba86738a.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.IAASEnabled property" Url="html/45d6870d-6f36-3bae-65d9-bfc06de7a54f.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.LuisAppId property" Url="html/a942f2ac-a918-3370-5653-57ffac862682.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.LuisSubscriptionId property" Url="html/8d21f6c8-7b34-38c0-421a-75ca771353d4.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.TTSEnabled property" Url="html/60b69849-8e35-b1bf-7113-5c0cebccd776.htm" />
+  <HelpKINode Title="AdmRecoOnlyPreferences.UxAppSupport property" Url="html/5e27b948-3887-d57f-0482-d1a507035673.htm" />
+  <HelpKINode Title="AudioCompressionType enumeration" Url="html/20aad350-02da-4827-60b1-83850eea6605.htm" />
+  <HelpKINode Title="AudioStart method" Url="html/703172eb-2a08-4ca2-aec8-f4446dc7127c.htm" />
+  <HelpKINode Title="AudioStop method" Url="html/e87aa58a-33c0-ca6a-39ee-e48047825eb1.htm" />
+  <HelpKINode Title="AuthenticationScheme property" Url="html/558223c4-537e-7b94-49fc-12f33345c1e0.htm" />
+  <HelpKINode Title="AverageBytesPerSecond field" Url="html/2da662da-283e-f284-7466-662e62fdf796.htm" />
+  <HelpKINode Title="BabbleTimeout enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="BitsPerSample field" Url="html/7e6dcde8-b0b6-b953-1e07-52383236433c.htm" />
+  <HelpKINode Title="BlockAlign field" Url="html/d5655402-f5f5-b082-e5a7-53643c971cd7.htm" />
+  <HelpKINode Title="Body field" Url="html/822253f6-d815-4457-da48-592dac7f3ac0.htm" />
+  <HelpKINode Title="Cancelled enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="ChannelCount field" Url="html/a75d25e3-3cc0-e937-efc5-471ec8d26d1d.htm" />
+  <HelpKINode Title="ClientId property" Url="html/ee27b7c0-7872-000f-72e3-54854cc01989.htm" />
+  <HelpKINode Title="ClientSecret property" Url="html/5abd2df2-38c5-6827-e0d9-fa640f13d106.htm" />
+  <HelpKINode Title="ClientVersion property" Url="html/2d4dacbf-ea0a-c8b3-cea5-2166ba86738a.htm" />
+  <HelpKINode Title="Confidence enumeration" Url="html/e2d0293c-670a-fcc3-9706-7c67ab8f4a42.htm" />
+  <HelpKINode Title="Confidence field" Url="html/350aee14-ce10-4943-4d99-a3ca10b2044a.htm" />
+  <HelpKINode Title="ConversationBase class">
+    <HelpKINode Title="ConversationBase Class" Url="html/2166e511-9210-e4ed-efbc-79870f7a9e1c.htm" />
+    <HelpKINode Title="about ConversationBase class" Url="html/2166e511-9210-e4ed-efbc-79870f7a9e1c.htm" />
+    <HelpKINode Title="constructor" Url="html/7e0a1601-2bbb-7351-7c3a-8b75d2d25701.htm" />
+    <HelpKINode Title="events" Url="html/4963780c-7653-59aa-c44b-b6ee9f619592.htm" />
+    <HelpKINode Title="methods" Url="html/3ddc2533-8531-1894-dd03-7bda547e82b6.htm" />
+  </HelpKINode>
+  <HelpKINode Title="ConversationBase.AudioStart method" Url="html/703172eb-2a08-4ca2-aec8-f4446dc7127c.htm" />
+  <HelpKINode Title="ConversationBase.AudioStop method" Url="html/e87aa58a-33c0-ca6a-39ee-e48047825eb1.htm" />
+  <HelpKINode Title="ConversationBase.ConversationBase constructor" Url="html/7e0a1601-2bbb-7351-7c3a-8b75d2d25701.htm" />
+  <HelpKINode Title="ConversationBase.Dispose method" Url="html/2d8fc2f9-452d-6a71-c2e0-9ec054248c9d.htm" />
+  <HelpKINode Title="ConversationBase.OnConversationError event" Url="html/d9561821-264c-2ca8-dffa-6930e4768f01.htm" />
+  <HelpKINode Title="ConversationBase.OnIntent event" Url="html/82cd7b5d-51cb-7bcc-f905-04d51ed0b2e5.htm" />
+  <HelpKINode Title="ConversationBase.OnMicrophoneStatus event" Url="html/4c4cae60-75e8-f10c-ba28-14e84ecfca3c.htm" />
+  <HelpKINode Title="ConversationBase.OnPartialResponseReceived event" Url="html/a7e83c6f-b456-9061-c3ea-e20e885b33be.htm" />
+  <HelpKINode Title="ConversationBase.OnResponseReceived event" Url="html/74688a17-01b9-4469-53f3-a8e982545d31.htm" />
+  <HelpKINode Title="ConversationBase.WaitForFinalResponse method" Url="html/06ae9252-8276-c8ac-76a5-d95cb4407b64.htm" />
+  <HelpKINode Title="create16BitPCMFormat method" Url="html/1b14cabf-302a-5e1b-6f00-d54ad01d3fed.htm" />
+  <HelpKINode Title="CreateDataClient method" Url="html/914599b3-2988-8dd6-e299-8002a5546fea.htm" />
+  <HelpKINode Title="CreateDataClientWithIntent method" Url="html/b87258b7-1fc5-41e0-9f36-65b7860b0e3b.htm" />
+  <HelpKINode Title="CreateMicrophoneClient method" Url="html/16d49382-6ff1-e10f-0270-fabbbc47ca4e.htm" />
+  <HelpKINode Title="CreateMicrophoneClientWithIntent method" Url="html/ed36b105-7c9c-4c6f-5704-c39d711a10f6.htm" />
+  <HelpKINode Title="createSiren7Format method" Url="html/f89db6d3-8358-982e-02c7-edeb83f25431.htm" />
+  <HelpKINode Title="DataRecognitionClient class">
+    <HelpKINode Title="DataRecognitionClient Class" Url="html/ff4169e5-6142-558a-92af-48618f592f39.htm" />
+    <HelpKINode Title="about DataRecognitionClient class" Url="html/ff4169e5-6142-558a-92af-48618f592f39.htm" />
+    <HelpKINode Title="events" Url="html/22f594bc-2274-93b7-fe80-e6f7f1ce0f26.htm" />
+    <HelpKINode Title="methods" Url="html/5629399f-8b0b-59a1-d4fc-7e2df7fda308.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DataRecognitionClient.Dispose method" Url="html/0408e261-b753-1149-1d2a-83bfdaacb834.htm" />
+  <HelpKINode Title="DataRecognitionClient.EndAudio method" Url="html/cf887e47-59d0-130c-4b20-30996c4fd306.htm" />
+  <HelpKINode Title="DataRecognitionClient.Finalize method" Url="html/d11f3899-b899-fb93-c0d6-d5d72d3349a1.htm" />
+  <HelpKINode Title="DataRecognitionClient.SendAudio method" Url="html/de9bea6b-ea8a-84ff-57f5-2e89652498e7.htm" />
+  <HelpKINode Title="DataRecognitionClient.SendAudioFormat method" Url="html/d67a9b84-44dc-d9ae-14be-02bcf4180452.htm" />
+  <HelpKINode Title="DataRecognitionClientWithIntent class">
+    <HelpKINode Title="DataRecognitionClientWithIntent Class" Url="html/5dd7868a-5ea0-8681-237f-b54c4d586f7a.htm" />
+    <HelpKINode Title="about DataRecognitionClientWithIntent class" Url="html/5dd7868a-5ea0-8681-237f-b54c4d586f7a.htm" />
+    <HelpKINode Title="events" Url="html/cc930188-832d-9ded-6410-bafda0d5e812.htm" />
+    <HelpKINode Title="methods" Url="html/ed12436d-158f-225a-37f1-f464365a12e4.htm" />
+  </HelpKINode>
+  <HelpKINode Title="DictationEndSilenceTimeout enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="DisplayText field" Url="html/9a7c9040-d6e7-0ed6-370d-99441f04a271.htm" />
+  <HelpKINode Title="Dispose method">
+    <HelpKINode Title="ConversationBase.Dispose Method " Url="html/2d8fc2f9-452d-6a71-c2e0-9ec054248c9d.htm" />
+    <HelpKINode Title="DataRecognitionClient.Dispose Method " Url="html/0408e261-b753-1149-1d2a-83bfdaacb834.htm" />
+  </HelpKINode>
+  <HelpKINode Title="EncodingFormat field" Url="html/455fc35e-0211-2b6f-0eb8-20e7327109fb.htm" />
+  <HelpKINode Title="EndAudio method" Url="html/cf887e47-59d0-130c-4b20-30996c4fd306.htm" />
+  <HelpKINode Title="EndMicAndRecognition method" Url="html/7aead28d-c58d-7c22-d9d0-288b85bd3b99.htm" />
+  <HelpKINode Title="EndOfDictation enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="Finalize method" Url="html/d11f3899-b899-fb93-c0d6-d5d72d3349a1.htm" />
+  <HelpKINode Title="FormatSpecificData field" Url="html/9933bdff-6613-43f0-1fb8-b8d726013a81.htm" />
+  <HelpKINode Title="Headers field" Url="html/9cb47a0f-5752-26b4-271b-8158e97f065e.htm" />
+  <HelpKINode Title="High enumeration member" Url="html/e2d0293c-670a-fcc3-9706-7c67ab8f4a42.htm" />
+  <HelpKINode Title="HotWordMaximumTime enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="IAASEnabled property" Url="html/45d6870d-6f36-3bae-65d9-bfc06de7a54f.htm" />
+  <HelpKINode Title="InitialSilenceTimeout enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="Intent class">
+    <HelpKINode Title="Intent Class" Url="html/1f150970-fed3-7622-6f8b-c9b49901a718.htm" />
+    <HelpKINode Title="about Intent class" Url="html/1f150970-fed3-7622-6f8b-c9b49901a718.htm" />
+    <HelpKINode Title="fields" Url="html/b63b0dea-37aa-7ed0-45cb-a8475bfca4f0.htm" />
+    <HelpKINode Title="methods" Url="html/f64510ed-ef6c-558e-d92a-0c01d696e80f.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Intent property" Url="html/7991270a-52d3-3c44-a1e6-afe8397f82f2.htm" />
+  <HelpKINode Title="Intent.Body field" Url="html/822253f6-d815-4457-da48-592dac7f3ac0.htm" />
+  <HelpKINode Title="Intent.Headers field" Url="html/9cb47a0f-5752-26b4-271b-8158e97f065e.htm" />
+  <HelpKINode Title="Intent.Url field" Url="html/b683d453-d048-7d8a-4b7b-4bbc8eb52363.htm" />
+  <HelpKINode Title="Intermediate enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="InverseTextNormalizationResult field" Url="html/d808c8f5-7e07-b6e8-2d90-bcc73884a80c.htm" />
+  <HelpKINode Title="LexicalForm field" Url="html/b26021bc-ecba-8af9-b0e4-50a2abd0618e.htm" />
+  <HelpKINode Title="Locale property" Url="html/c7a4f179-0e9e-5295-ca08-b407742ea2cf.htm" />
+  <HelpKINode Title="LongDictation enumeration member" Url="html/b43c59cb-904b-91c5-b410-ce4b673b73b1.htm" />
+  <HelpKINode Title="Low enumeration member" Url="html/e2d0293c-670a-fcc3-9706-7c67ab8f4a42.htm" />
+  <HelpKINode Title="LuisAppId property" Url="html/a942f2ac-a918-3370-5653-57ffac862682.htm" />
+  <HelpKINode Title="LuisSubscriptionId property" Url="html/8d21f6c8-7b34-38c0-421a-75ca771353d4.htm" />
+  <HelpKINode Title="MaskedInverseTextNormalizationResult field" Url="html/0b2f9079-6440-58c7-d007-4921f05f5a66.htm" />
+  <HelpKINode Title="MicrophoneEventArgs class">
+    <HelpKINode Title="MicrophoneEventArgs Class" Url="html/e854b213-8a83-9040-7ba1-ce1e663c8950.htm" />
+    <HelpKINode Title="about MicrophoneEventArgs class" Url="html/e854b213-8a83-9040-7ba1-ce1e663c8950.htm" />
+    <HelpKINode Title="methods" Url="html/0ab83ca7-8987-4876-4d01-282feae23b94.htm" />
+    <HelpKINode Title="properties" Url="html/02908459-a03a-0779-4554-99b409451659.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MicrophoneEventArgs.Recording property" Url="html/71603645-418a-53a7-a4fe-5d7d2fcb9404.htm" />
+  <HelpKINode Title="MicrophoneRecognitionClient class">
+    <HelpKINode Title="MicrophoneRecognitionClient Class" Url="html/1c5feefe-a09b-69b9-cc18-10a843f31fc5.htm" />
+    <HelpKINode Title="about MicrophoneRecognitionClient class" Url="html/1c5feefe-a09b-69b9-cc18-10a843f31fc5.htm" />
+    <HelpKINode Title="events" Url="html/523030ec-de29-7f8f-13c9-e3b6b1e8d3ef.htm" />
+    <HelpKINode Title="methods" Url="html/1939c8a1-0d81-957d-4270-cd01f2861e47.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MicrophoneRecognitionClient.EndMicAndRecognition method" Url="html/7aead28d-c58d-7c22-d9d0-288b85bd3b99.htm" />
+  <HelpKINode Title="MicrophoneRecognitionClient.StartMicAndRecognition method" Url="html/2819a502-a0e5-8c3c-5e0c-2b726e3fd715.htm" />
+  <HelpKINode Title="MicrophoneRecognitionClientWithIntent class">
+    <HelpKINode Title="MicrophoneRecognitionClientWithIntent Class" Url="html/5ac6f169-ea11-eaee-20b5-a4e5a419798a.htm" />
+    <HelpKINode Title="about MicrophoneRecognitionClientWithIntent class" Url="html/5ac6f169-ea11-eaee-20b5-a4e5a419798a.htm" />
+    <HelpKINode Title="events" Url="html/430a4ed8-da0d-f7eb-a848-da6276100de6.htm" />
+    <HelpKINode Title="methods" Url="html/359aa6dd-0b5c-d062-d97f-d26193d9f862.htm" />
+  </HelpKINode>
+  <HelpKINode Title="MicrophoneTimeout property" Url="html/9abc1ee4-d3a2-40b7-2323-a3a9700bf086.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford namespace" Url="html/2f2b6f71-0a81-b331-fe50-dc681063bbf8.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.AdmRecoOnlyPreferences class" Url="html/bec13652-c8f1-fae4-ee6f-7e1fdc05aa78.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.AudioCompressionType enumeration" Url="html/20aad350-02da-4827-60b1-83850eea6605.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.Confidence enumeration" Url="html/e2d0293c-670a-fcc3-9706-7c67ab8f4a42.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.ConversationBase class" Url="html/2166e511-9210-e4ed-efbc-79870f7a9e1c.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.DataRecognitionClient class" Url="html/ff4169e5-6142-558a-92af-48618f592f39.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.DataRecognitionClientWithIntent class" Url="html/5dd7868a-5ea0-8681-237f-b54c4d586f7a.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.Intent class" Url="html/1f150970-fed3-7622-6f8b-c9b49901a718.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.MicrophoneEventArgs class" Url="html/e854b213-8a83-9040-7ba1-ce1e663c8950.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.MicrophoneRecognitionClient class" Url="html/1c5feefe-a09b-69b9-cc18-10a843f31fc5.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.MicrophoneRecognitionClientWithIntent class" Url="html/5ac6f169-ea11-eaee-20b5-a4e5a419798a.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.PartialSpeechResponseEventArgs class" Url="html/1bbf309f-c887-e5cd-3297-8480af2a6fe3.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.Preferences class" Url="html/0917926c-1c76-89eb-94b8-450ea4378981.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.RecognitionResult class" Url="html/8fa0c6ec-397f-0a34-0430-b1cdf6ba1c45.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.RecognitionStatus enumeration" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.RecognizedPhrase class" Url="html/cbd61214-dc0f-a674-273a-751145514068.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.SpeechAudioFormat class" Url="html/d5a7d51c-1fc3-f2c0-2667-8ff358b339b1.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.SpeechErrorEventArgs class" Url="html/ae355903-a1e2-67a6-033b-0002da486b00.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.SpeechIntentEventArgs class" Url="html/4add33d0-9740-2bb1-ac83-6d0cdfc41e2d.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.SpeechRecognitionMode enumeration" Url="html/b43c59cb-904b-91c5-b410-ce4b673b73b1.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.SpeechRecognitionServiceFactory class" Url="html/2181841e-ab91-e9b2-6b38-f33e101db270.htm" />
+  <HelpKINode Title="MicrosoftProjectOxford.SpeechResponseEventArgs class" Url="html/2531addd-d625-26a4-a991-a98aab730b27.htm" />
+  <HelpKINode Title="NoMatch enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="None enumeration member">
+    <HelpKINode Title="Confidence Enumeration" Url="html/e2d0293c-670a-fcc3-9706-7c67ab8f4a42.htm" />
+    <HelpKINode Title="RecognitionStatus Enumeration" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Normal enumeration member" Url="html/e2d0293c-670a-fcc3-9706-7c67ab8f4a42.htm" />
+  <HelpKINode Title="OnConversationError event" Url="html/d9561821-264c-2ca8-dffa-6930e4768f01.htm" />
+  <HelpKINode Title="OnIntent event" Url="html/82cd7b5d-51cb-7bcc-f905-04d51ed0b2e5.htm" />
+  <HelpKINode Title="OnMicrophoneStatus event" Url="html/4c4cae60-75e8-f10c-ba28-14e84ecfca3c.htm" />
+  <HelpKINode Title="OnPartialResponseReceived event" Url="html/a7e83c6f-b456-9061-c3ea-e20e885b33be.htm" />
+  <HelpKINode Title="OnResponseReceived event" Url="html/74688a17-01b9-4469-53f3-a8e982545d31.htm" />
+  <HelpKINode Title="PartialResult property" Url="html/42fed8ff-25ff-5158-a3bf-259f2503a80f.htm" />
+  <HelpKINode Title="PartialSpeechResponseEventArgs class">
+    <HelpKINode Title="PartialSpeechResponseEventArgs Class" Url="html/1bbf309f-c887-e5cd-3297-8480af2a6fe3.htm" />
+    <HelpKINode Title="about PartialSpeechResponseEventArgs class" Url="html/1bbf309f-c887-e5cd-3297-8480af2a6fe3.htm" />
+    <HelpKINode Title="methods" Url="html/95395464-9c7e-6835-edfb-0b7e6cf80744.htm" />
+    <HelpKINode Title="properties" Url="html/e98e4e6f-abac-39cf-79ee-f4d598cd35ed.htm" />
+  </HelpKINode>
+  <HelpKINode Title="PartialSpeechResponseEventArgs.PartialResult property" Url="html/42fed8ff-25ff-5158-a3bf-259f2503a80f.htm" />
+  <HelpKINode Title="Payload property" Url="html/01e78c04-c9b0-0560-43dd-6c4852d40188.htm" />
+  <HelpKINode Title="PCM enumeration member" Url="html/20aad350-02da-4827-60b1-83850eea6605.htm" />
+  <HelpKINode Title="PhraseResponse property" Url="html/76156af6-eb92-5c40-d50c-dca4986cd4a9.htm" />
+  <HelpKINode Title="Preferences class">
+    <HelpKINode Title="Preferences Class" Url="html/0917926c-1c76-89eb-94b8-450ea4378981.htm" />
+    <HelpKINode Title="about Preferences class" Url="html/0917926c-1c76-89eb-94b8-450ea4378981.htm" />
+    <HelpKINode Title="constructor" Url="html/0c868dcf-2d24-d670-6cd7-27c6ff11de80.htm" />
+    <HelpKINode Title="methods" Url="html/f499d2f6-8cf5-b071-5e03-a9ab5d74b279.htm" />
+    <HelpKINode Title="properties" Url="html/1edd4572-599d-4f13-a6e6-f950200a2da0.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Preferences.Locale property" Url="html/c7a4f179-0e9e-5295-ca08-b407742ea2cf.htm" />
+  <HelpKINode Title="Preferences.MicrophoneTimeout property" Url="html/9abc1ee4-d3a2-40b7-2323-a3a9700bf086.htm" />
+  <HelpKINode Title="Preferences.Preferences constructor" Url="html/0c868dcf-2d24-d670-6cd7-27c6ff11de80.htm" />
+  <HelpKINode Title="Preferences.ServiceUri property" Url="html/4a0358bb-1169-d9c3-3869-8a109000a0c5.htm" />
+  <HelpKINode Title="RecognitionError enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="RecognitionResult class">
+    <HelpKINode Title="RecognitionResult Class" Url="html/8fa0c6ec-397f-0a34-0430-b1cdf6ba1c45.htm" />
+    <HelpKINode Title="about RecognitionResult class" Url="html/8fa0c6ec-397f-0a34-0430-b1cdf6ba1c45.htm" />
+    <HelpKINode Title="fields" Url="html/141c774f-1a55-1164-968c-7c259a70e0d7.htm" />
+    <HelpKINode Title="methods" Url="html/e115a16a-6f3b-f7e8-53f9-509462958929.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RecognitionResult.RecognitionStatus field" Url="html/057883a5-fbfc-0362-3104-518d1f9c57f0.htm" />
+  <HelpKINode Title="RecognitionResult.Results field" Url="html/c46c3458-0344-ae69-9a72-a29d3141a4f0.htm" />
+  <HelpKINode Title="RecognitionStatus enumeration" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="RecognitionStatus field" Url="html/057883a5-fbfc-0362-3104-518d1f9c57f0.htm" />
+  <HelpKINode Title="RecognitionSuccess enumeration member" Url="html/25fe88c0-bbb2-42b0-f078-7546bba86ab3.htm" />
+  <HelpKINode Title="RecognizedPhrase class">
+    <HelpKINode Title="RecognizedPhrase Class" Url="html/cbd61214-dc0f-a674-273a-751145514068.htm" />
+    <HelpKINode Title="about RecognizedPhrase class" Url="html/cbd61214-dc0f-a674-273a-751145514068.htm" />
+    <HelpKINode Title="fields" Url="html/c11ceba8-df3a-f628-79c3-e61d45beee6a.htm" />
+    <HelpKINode Title="methods" Url="html/f331fd89-4d44-21be-ae12-f4d4b6d92ffd.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RecognizedPhrase.Confidence field" Url="html/350aee14-ce10-4943-4d99-a3ca10b2044a.htm" />
+  <HelpKINode Title="RecognizedPhrase.DisplayText field" Url="html/9a7c9040-d6e7-0ed6-370d-99441f04a271.htm" />
+  <HelpKINode Title="RecognizedPhrase.InverseTextNormalizationResult field" Url="html/d808c8f5-7e07-b6e8-2d90-bcc73884a80c.htm" />
+  <HelpKINode Title="RecognizedPhrase.LexicalForm field" Url="html/b26021bc-ecba-8af9-b0e4-50a2abd0618e.htm" />
+  <HelpKINode Title="RecognizedPhrase.MaskedInverseTextNormalizationResult field" Url="html/0b2f9079-6440-58c7-d007-4921f05f5a66.htm" />
+  <HelpKINode Title="Recording property" Url="html/71603645-418a-53a7-a4fe-5d7d2fcb9404.htm" />
+  <HelpKINode Title="Results field" Url="html/c46c3458-0344-ae69-9a72-a29d3141a4f0.htm" />
+  <HelpKINode Title="SamplesPerSecond field" Url="html/31256cd9-fa9f-4b64-283b-a0decfcce011.htm" />
+  <HelpKINode Title="SendAudio method" Url="html/de9bea6b-ea8a-84ff-57f5-2e89652498e7.htm" />
+  <HelpKINode Title="SendAudioFormat method" Url="html/d67a9b84-44dc-d9ae-14be-02bcf4180452.htm" />
+  <HelpKINode Title="ServiceUri property" Url="html/4a0358bb-1169-d9c3-3869-8a109000a0c5.htm" />
+  <HelpKINode Title="ShortPhrase enumeration member" Url="html/b43c59cb-904b-91c5-b410-ce4b673b73b1.htm" />
+  <HelpKINode Title="Siren7 enumeration member" Url="html/20aad350-02da-4827-60b1-83850eea6605.htm" />
+  <HelpKINode Title="SpeechAudioFormat class">
+    <HelpKINode Title="SpeechAudioFormat Class" Url="html/d5a7d51c-1fc3-f2c0-2667-8ff358b339b1.htm" />
+    <HelpKINode Title="about SpeechAudioFormat class" Url="html/d5a7d51c-1fc3-f2c0-2667-8ff358b339b1.htm" />
+    <HelpKINode Title="constructor" Url="html/2e21e39c-d6c6-2abc-d215-89a31e5aafb9.htm" />
+    <HelpKINode Title="fields" Url="html/89599236-1980-b40e-f001-ae701a597b0a.htm" />
+    <HelpKINode Title="methods" Url="html/dc1e0b39-a90a-6ada-6369-e82ec2900599.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SpeechAudioFormat.AverageBytesPerSecond field" Url="html/2da662da-283e-f284-7466-662e62fdf796.htm" />
+  <HelpKINode Title="SpeechAudioFormat.BitsPerSample field" Url="html/7e6dcde8-b0b6-b953-1e07-52383236433c.htm" />
+  <HelpKINode Title="SpeechAudioFormat.BlockAlign field" Url="html/d5655402-f5f5-b082-e5a7-53643c971cd7.htm" />
+  <HelpKINode Title="SpeechAudioFormat.ChannelCount field" Url="html/a75d25e3-3cc0-e937-efc5-471ec8d26d1d.htm" />
+  <HelpKINode Title="SpeechAudioFormat.create16BitPCMFormat method" Url="html/1b14cabf-302a-5e1b-6f00-d54ad01d3fed.htm" />
+  <HelpKINode Title="SpeechAudioFormat.createSiren7Format method" Url="html/f89db6d3-8358-982e-02c7-edeb83f25431.htm" />
+  <HelpKINode Title="SpeechAudioFormat.EncodingFormat field" Url="html/455fc35e-0211-2b6f-0eb8-20e7327109fb.htm" />
+  <HelpKINode Title="SpeechAudioFormat.FormatSpecificData field" Url="html/9933bdff-6613-43f0-1fb8-b8d726013a81.htm" />
+  <HelpKINode Title="SpeechAudioFormat.SamplesPerSecond field" Url="html/31256cd9-fa9f-4b64-283b-a0decfcce011.htm" />
+  <HelpKINode Title="SpeechAudioFormat.SpeechAudioFormat constructor" Url="html/2e21e39c-d6c6-2abc-d215-89a31e5aafb9.htm" />
+  <HelpKINode Title="SpeechErrorCode property" Url="html/ea0dec7a-abe5-f65c-1f6f-4e7ab207ab94.htm" />
+  <HelpKINode Title="SpeechErrorEventArgs class">
+    <HelpKINode Title="SpeechErrorEventArgs Class" Url="html/ae355903-a1e2-67a6-033b-0002da486b00.htm" />
+    <HelpKINode Title="about SpeechErrorEventArgs class" Url="html/ae355903-a1e2-67a6-033b-0002da486b00.htm" />
+    <HelpKINode Title="methods" Url="html/9390a7b2-30c5-07a3-7006-44918d8af02f.htm" />
+    <HelpKINode Title="properties" Url="html/2a897726-a33f-7ebd-94d9-625d9c356e01.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SpeechErrorEventArgs.SpeechErrorCode property" Url="html/ea0dec7a-abe5-f65c-1f6f-4e7ab207ab94.htm" />
+  <HelpKINode Title="SpeechErrorEventArgs.SpeechErrorText property" Url="html/68c03251-4d88-8b39-5fca-834d94675367.htm" />
+  <HelpKINode Title="SpeechErrorText property" Url="html/68c03251-4d88-8b39-5fca-834d94675367.htm" />
+  <HelpKINode Title="SpeechIntentEventArgs class">
+    <HelpKINode Title="SpeechIntentEventArgs Class" Url="html/4add33d0-9740-2bb1-ac83-6d0cdfc41e2d.htm" />
+    <HelpKINode Title="about SpeechIntentEventArgs class" Url="html/4add33d0-9740-2bb1-ac83-6d0cdfc41e2d.htm" />
+    <HelpKINode Title="methods" Url="html/b510b11f-5d0b-94b8-3626-99731ebc5f03.htm" />
+    <HelpKINode Title="properties" Url="html/12d4f85c-570c-10b0-694f-6b4230a6e385.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SpeechIntentEventArgs.Intent property" Url="html/7991270a-52d3-3c44-a1e6-afe8397f82f2.htm" />
+  <HelpKINode Title="SpeechIntentEventArgs.Payload property" Url="html/01e78c04-c9b0-0560-43dd-6c4852d40188.htm" />
+  <HelpKINode Title="SpeechRecognitionMode enumeration" Url="html/b43c59cb-904b-91c5-b410-ce4b673b73b1.htm" />
+  <HelpKINode Title="SpeechRecognitionServiceFactory class">
+    <HelpKINode Title="SpeechRecognitionServiceFactory Class" Url="html/2181841e-ab91-e9b2-6b38-f33e101db270.htm" />
+    <HelpKINode Title="about SpeechRecognitionServiceFactory class" Url="html/2181841e-ab91-e9b2-6b38-f33e101db270.htm" />
+    <HelpKINode Title="methods" Url="html/8d0701c9-ec65-aff1-05ba-1fee02ae680d.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SpeechRecognitionServiceFactory.CreateDataClient method" Url="html/914599b3-2988-8dd6-e299-8002a5546fea.htm" />
+  <HelpKINode Title="SpeechRecognitionServiceFactory.CreateDataClientWithIntent method" Url="html/b87258b7-1fc5-41e0-9f36-65b7860b0e3b.htm" />
+  <HelpKINode Title="SpeechRecognitionServiceFactory.CreateMicrophoneClient method" Url="html/16d49382-6ff1-e10f-0270-fabbbc47ca4e.htm" />
+  <HelpKINode Title="SpeechRecognitionServiceFactory.CreateMicrophoneClientWithIntent method" Url="html/ed36b105-7c9c-4c6f-5704-c39d711a10f6.htm" />
+  <HelpKINode Title="SpeechResponseEventArgs class">
+    <HelpKINode Title="SpeechResponseEventArgs Class" Url="html/2531addd-d625-26a4-a991-a98aab730b27.htm" />
+    <HelpKINode Title="about SpeechResponseEventArgs class" Url="html/2531addd-d625-26a4-a991-a98aab730b27.htm" />
+    <HelpKINode Title="methods" Url="html/e10a20da-09e4-7df9-0ccb-e02e94228ac8.htm" />
+    <HelpKINode Title="properties" Url="html/f1e87235-87a2-7b6b-5a62-4f931f1d4e14.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SpeechResponseEventArgs.PhraseResponse property" Url="html/76156af6-eb92-5c40-d50c-dca4986cd4a9.htm" />
+  <HelpKINode Title="StartMicAndRecognition method" Url="html/2819a502-a0e5-8c3c-5e0c-2b726e3fd715.htm" />
+  <HelpKINode Title="TTSEnabled property" Url="html/60b69849-8e35-b1bf-7113-5c0cebccd776.htm" />
+  <HelpKINode Title="Url field" Url="html/b683d453-d048-7d8a-4b7b-4bbc8eb52363.htm" />
+  <HelpKINode Title="UxAppSupport property" Url="html/5e27b948-3887-d57f-0482-d1a507035673.htm" />
+  <HelpKINode Title="WaitForFinalResponse method" Url="html/06ae9252-8276-c8ac-76a5-d95cb4407b64.htm" />
+</HelpKI>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SpeechSDK">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../SpeechSDK/bin/SpeechSDK.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

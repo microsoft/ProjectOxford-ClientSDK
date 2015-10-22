@@ -1,0 +1,27 @@
+<!-- Copyright (c) Microsoft. All rights reserved. -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/view_margin">
+
+    <TextView
+        android:id="@+id/face_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/view_margin"/>
+
+    <com.microsoft.projectoxford.face.samples.helper.EmbeddedGridView
+        android:id="@+id/faces"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/face_group_name"
+        android:numColumns="5"
+        android:horizontalSpacing="@dimen/view_margin"
+        android:verticalSpacing="@dimen/view_margin"
+        android:background="#E0E0E0" />
+
+</RelativeLayout>
