@@ -99,7 +99,7 @@ Contributing
 
 We welcome contributions and are always looking for new SDKs, input, and
 suggestions. Learn more about how you can help by reading the [Contribution
-Rules & Guidelines](<../../CONTRIBUTING.md>).
+Rules & Guidelines](</CONTRIBUTING.md>).
 
 Additionally, feel free to reach out to us directly with questions, feedback, or
 suggestions.
