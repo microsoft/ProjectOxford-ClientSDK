@@ -122,15 +122,8 @@ namespace MicrosoftProjectOxfordExample
         /// <param name="e">An System.EventArgs that contains the event data.</param>
         protected override void OnClosed(EventArgs e)
         {
-            if (null != _dataClient)
-            {
-                _dataClient.Dispose();
-            }
-
-            if (null != _micClient)
-            {
-                _micClient.Dispose();
-            }
+            _dataClient?.Dispose();
+            _micClient?.Dispose();
 
             _FinalResponseEvent.Dispose();
 
@@ -171,14 +164,13 @@ namespace MicrosoftProjectOxfordExample
                 if (_micClient == null)
                 {
                     _micClient = CreateMicrophoneRecoClient(SpeechRecognitionMode.ShortPhrase, _recoLanguage, SubscriptionKey);
-                } 
+                }
                 _micClient.StartMicAndRecognition();
             }
             else if (IsMicrophoneClientDictation)
             {
                 // Long dictation recongition using microphone
                 LogRecognitionStart("microphone", _recoLanguage, SpeechRecognitionMode.LongDictation);
-
                 if (_micClient == null)
                 {
                     _micClient = CreateMicrophoneRecoClient(SpeechRecognitionMode.LongDictation, _recoLanguage, SubscriptionKey);
@@ -268,8 +260,6 @@ namespace MicrosoftProjectOxfordExample
             intentMicClient.OnResponseReceived += OnMicShortPhraseResponseReceivedHandler;
             intentMicClient.OnConversationError += OnConversationErrorHandler;
 
-            intentMicClient.StartMicAndRecognition();
-
             return intentMicClient;
 
         }
@@ -335,11 +325,11 @@ namespace MicrosoftProjectOxfordExample
                 // audio data, you must first send up an SpeechAudioFormat descriptor to describe 
                 // the layout and format of your raw audio data via DataRecognitionClient's sendAudioFormat() method.
 
-                int bytesRead = 0;
                 byte[] buffer = new byte[1024];
 
                 try
                 {
+                    var bytesRead = 0;
                     do
                     {
                         // Get more Audio data to send into byte buffer.
@@ -372,10 +362,6 @@ namespace MicrosoftProjectOxfordExample
                 // for dataReco, since we already called endAudio() on it as soon as we were done
                 // sending all the data.
                 _micClient.EndMicAndRecognition();
-
-                // BUGBUG: Work around for the issue when cached _micClient cannot be re-used for recognition.
-                _micClient.Dispose();
-                _micClient = null;
 
                 WriteResponseResult(e);
 
@@ -441,10 +427,6 @@ namespace MicrosoftProjectOxfordExample
                     // for dataReco, since we already called endAudio() on it as soon as we were done
                     // sending all the data.
                     _micClient.EndMicAndRecognition();
-
-                    // BUGBUG: Work around for the issue when cached _micClient cannot be re-used for recognition.
-                    _micClient.Dispose();
-                    _micClient = null;
 
                     _startButton.IsEnabled = true;
                     _radioGroup.IsEnabled = true;
@@ -564,7 +546,7 @@ namespace MicrosoftProjectOxfordExample
         /// <returns></returns>
         private string GetSubscriptionKeyFromIsolatedStorage()
         {
-            string subscriptionKey = null;
+            string subscriptionKey;
 
             using (IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
             {
@@ -620,7 +602,7 @@ namespace MicrosoftProjectOxfordExample
                 SaveSubscriptionKeyToIsolatedStorage(SubscriptionKey);
                 MessageBox.Show("Subscription key is saved in your disk.\nYou do not need to paste the key next time.", "Subscription Key");
             }
-            catch (System.Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show("Fail to save subscription key. Error message: " + exception.Message,
                     "Subscription Key", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -635,7 +617,7 @@ namespace MicrosoftProjectOxfordExample
                 SaveSubscriptionKeyToIsolatedStorage("");
                 MessageBox.Show("Subscription key is deleted from your disk.", "Subscription Key");
             }
-            catch (System.Exception exception)
+            catch (Exception exception)
             {
                 MessageBox.Show("Fail to delete subscription key. Error message: " + exception.Message,
                     "Subscription Key", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -650,10 +632,7 @@ namespace MicrosoftProjectOxfordExample
         private void OnPropertyChanged<T>([CallerMemberName]string caller = null)
         {
             var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(caller));
-            }
+            handler?.Invoke(this, new PropertyChangedEventArgs(caller));
         }
 
         private void RadioButton_Click(object sender, RoutedEventArgs e)
@@ -664,10 +643,9 @@ namespace MicrosoftProjectOxfordExample
                 _micClient.EndMicAndRecognition();
                 _micClient.Dispose();
             }
-            if (_dataClient != null)
-            {
-                _dataClient.Dispose();
-            }
+
+            _dataClient?.Dispose();
+
             _micClient = null;
             _dataClient = null;
 
