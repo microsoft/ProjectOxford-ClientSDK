@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.ProjectOxford.Emotion, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ProjectOxford.Emotion.1.0.0.3\lib\net45\Microsoft.ProjectOxford.Emotion.dll</HintPath>
+    <Reference Include="Microsoft.ProjectOxford.Emotion, Version=1.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ProjectOxford.Emotion.1.0.0.1\lib\net45\Microsoft.ProjectOxford.Emotion.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -87,7 +87,9 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="EmotionAPI-WPF-Samples\Properties\Settings.settings" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
