@@ -5,7 +5,7 @@ This repo contains the client libraries and samples that demonstrate the [Micros
 Oxford APIs](<https://www.projectoxford.ai>), an evolving portfolio of REST APIs
 that enable developers to leverage the power of Microsoft's natural data
 understanding and easily add intelligent services into their solutions. The
-Project Oxford APIs are divided into four areas:  
+Project Oxford APIs are divided into five areas:  
  
 
 | [Face API](<https://www.projectoxford.ai/face>) (Beta) | [Emotion API](<https://www.projectoxford.ai/emotion>) (Beta) | [Computer Vision API](<https://www.projectoxford.ai/vision>) (Beta) | [Speech API](<https://www.projectoxford.ai/speech>) (Beta) | [Language Understanding Intelligent Service](<https://www.projectoxford.ai/luis>) (Beta) |
