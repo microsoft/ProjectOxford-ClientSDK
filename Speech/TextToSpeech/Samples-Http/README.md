@@ -12,9 +12,9 @@ Many languages are demonstrated, including Android, C#, Java, Node.js, PHP, Pyth
 Build the samples
 ----------------
 
-1. You must obtain an [Speech API subscription
-    key](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>) and
-    will need a [Microsoft Azure Account](<http://www.azure.com>).
+1. First, you must obtain a [subscription
+key](<http://www.projectoxford.ai/subscription>) for Speech API and will
+need a Microsoft account.
 
 2. You need to find the line with the string "Your Client Secret goes here" in the source files of
 a particular language, and replace it with your subscription key for Speech.

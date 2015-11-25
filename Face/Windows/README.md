@@ -33,14 +33,11 @@ Build the sample
 
 Run the sample
 --------------
+First, you must obtain a [subscription
+key](<http://www.projectoxford.ai/subscription>) for Face API and will
+need a Microsoft account.
 
 After the build is complete, press F5 to run the sample.
-
-First, you will
-need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
-
-You must obtain a subscription key for Face API by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
 
 Locate the text edit box saying "Paste your subscription key here to start" on
 the top right corner. Paste your subscription key. You can choose to persist

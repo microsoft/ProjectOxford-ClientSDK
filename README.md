@@ -29,9 +29,9 @@ your choice:
 -   [Speech](</Speech/>)
 
 To learn more and sign-up for Project Oxford, [visit our
-website](<http://www.ProjectOxford.ai>). You must obtain an [API
-key](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>) and will
-need a [Microsoft Azure Account](<http://www.azure.com>).
+website](<http://www.ProjectOxford.ai>). You must obtain [subscription
+keys](<http://www.projectoxford.ai/subscription>) for different services and will
+need a Microsoft account.
 
 Contributing
 ============
