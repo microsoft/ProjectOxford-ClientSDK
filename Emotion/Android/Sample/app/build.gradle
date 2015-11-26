@@ -18,17 +18,13 @@ android {
         }
     }
 }
-repositories{
-    flatDir{
-        dirs 'libs'
-    }
-}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //
     // Use the following line to include client library for Emotion API from Maven Central Repository
     //
+    compile 'com.microsoft.projectoxford:emotion:0.4.0'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('libs/gson-2.3.1.jar')
-    compile(name:'lib-debug', ext:'aar')
 }

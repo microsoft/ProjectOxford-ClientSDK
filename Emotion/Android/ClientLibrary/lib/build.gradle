@@ -27,7 +27,7 @@ group = "com.microsoft.projectoxford"
 // Artifact name is the name of the technology
 archivesBaseName = "emotion"
 // Update your version
-version = "0.5.0"
+version = "0.4.0"
 
 uploadArchives {
     repositories {
@@ -50,7 +50,7 @@ uploadArchives {
                 // optionally artifactId can be defined here
 
                 // Descriptions of the artifacts.
-                description 'This client library allows the use of Microsoft\'s state-of-the-art cloud-based computer emotion algorithms to return information based on the visual content, and to generate your ideal thumbnail. See https://github.com/Microsoft/ProjectOxford-ClientSDK/tree/master/Vision for more information.'
+                description 'This client library allows the use of Microsoft\'s state-of-the-art cloud-based algorithms to detect emotions based on facial expressions. See https://github.com/Microsoft/ProjectOxford-ClientSDK/tree/master/Emotion for more information.'
 
                 // Project URL
                 url 'https://github.com/Microsoft/ProjectOxford-ClientSDK'
