@@ -48,8 +48,8 @@ public class ConfigurationManager {
      *
      * @return Oxford subscription key for API-Calls
      */
-    public static String getSubscriptionKey() {
-        return Resources.getSystem().getString(R.string.subscription_key);
+    public static String getSubscriptionKey(Context c) {
+        return c.getResources().getString(R.string.subscription_key);
     }
 
     /**

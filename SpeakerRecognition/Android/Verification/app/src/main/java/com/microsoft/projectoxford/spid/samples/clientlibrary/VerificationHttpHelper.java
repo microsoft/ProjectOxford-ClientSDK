@@ -32,6 +32,7 @@
 //
 package com.microsoft.projectoxford.spid.samples.clientlibrary;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -75,7 +76,7 @@ public class VerificationHttpHelper {
     private static final String BASE_URI = "https://api.projectoxford.ai/spid/v1.0/verificationProfiles";
     private static final String VERIFY_ENDPOINT = "https://api.projectoxford.ai/spid/v1.0/verify";
 
-    private String mSubscriptionKey;
+    private static String mSubscriptionKey;
 
     private static VerificationHttpHelper sInstance;
     private static final String OCP_SUBSCRIPTION_KEY_HEADER = "Ocp-Apim-Subscription-Key";
@@ -83,15 +84,16 @@ public class VerificationHttpHelper {
     private static final String LOCALE_PARAM = "locale";
 
     private VerificationHttpHelper() {
-        mSubscriptionKey = ConfigurationManager.getSubscriptionKey();
     }
 
     /**
      * Creates an instance of the verification helper
      *
+     * @param key The subscription key
      * @return A VerificationHttpHelper object
      */
-    public static VerificationHttpHelper getInstance() {
+    public static VerificationHttpHelper getInstance(String key) {
+        mSubscriptionKey = key;
         if (sInstance == null)
             sInstance = new VerificationHttpHelper();
         return sInstance;

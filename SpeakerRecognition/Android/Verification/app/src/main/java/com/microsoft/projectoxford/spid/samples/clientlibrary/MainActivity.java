@@ -102,7 +102,8 @@ public class MainActivity extends ActionBarActivity {
         this.mStatus = (TextView) findViewById(R.id.statusText);
         this.mPhraseText = (TextView) findViewById(R.id.phraseText);
         //creates a new instance of the helper
-        this.mHttpHelper = VerificationHttpHelper.getInstance();
+        String subscriptionKey = ConfigurationManager.getSubscriptionKey(this);
+        this.mHttpHelper = VerificationHttpHelper.getInstance(subscriptionKey);
         //Initialize the speakerId
         initializeSpeakerId();
         //Getting the endianness of the underlying system
