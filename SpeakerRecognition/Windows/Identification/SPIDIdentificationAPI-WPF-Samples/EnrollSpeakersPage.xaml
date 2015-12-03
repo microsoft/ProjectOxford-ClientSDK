@@ -1,0 +1,45 @@
+﻿<Page x:Class="SPIDIdentificationAPI_WPF_Samples.EnrollSpeakersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="EnrollSpeakersPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.75*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="5, 5, 0, 0" FontWeight="Bold">Enroll Speakers</TextBlock>
+        <Frame x:Name="_speakersListFrame" Grid.Row="1" Grid.Column="0" Grid.RowSpan="8" Margin="5, 5, 0, 0" NavigationUIVisibility="Hidden"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5, 5, 0, 0" FontWeight="Bold">Step 1: Create New Profiles</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" Margin="5, 5, 0, 0">Please click [Add] to add new profiles</TextBlock>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <TextBlock Margin="5,9,0,0"><Run Text="Locale"/></TextBlock>
+            <ComboBox x:Name="_localeCmb" Margin="5,5,0,0" SelectedIndex="0">
+                <ComboBoxItem Content="en-us"/>
+            </ComboBox>
+        </StackPanel>
+        <Button x:Name="_addBtn" Grid.Row="3" Grid.Column="2" Margin="5,5,5,0" Content="_Add" Click="_addBtn_Click"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5, 25, 0, 0" FontWeight="Bold">Step 2: Enroll Profile</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="1" Margin="5, 5, 0, 0">Select a profile from the list on the left to enroll it.</TextBlock>
+        <TextBlock Grid.Row="6" Grid.Column="1"  Margin="5, 7, 0, 0">Click [Load File] to specify a file to enroll with.</TextBlock>
+        <Button x:Name="_loadFileBtn" Grid.Row="6" Grid.Column="2" Margin="5, 5, 5, 0" Content="_Load File" Click="_loadFileBtn_Click"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Margin="5, 7, 0, 0">Click [Enroll] to perform the enrollment.</TextBlock>
+        <Button x:Name="_enrollBtn" Grid.Row="7" Grid.Column="2" Margin="5, 5, 5, 0" Content="_Enroll" Click="_enrollBtn_Click" />
+    </Grid>
+</Page>
