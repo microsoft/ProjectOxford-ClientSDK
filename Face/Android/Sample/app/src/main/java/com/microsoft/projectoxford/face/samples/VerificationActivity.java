@@ -142,11 +142,12 @@ public class VerificationActivity extends ActionBarActivity {
 
                 // Start detection.
                 return faceServiceClient.detect(
-                        params[0],   /* input stream of image to detect */
-                        false,       /* whether to analyzes facial landmarks */
-                        false,       /* whether to analyzes age */
-                        false,       /* whether to analyzes gender */
-                        false);      /* whether to analyzes head pose */
+                        params[0],  /* Input stream of image to detect */
+                        true,       /* Whether to return face ID */
+                        false,       /* Whether to return face landmarks */
+                        /* Which face attributes to analyze, currently we support:
+                           age,gender,headPose,smile,facialHair */
+                        "");
             }  catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());

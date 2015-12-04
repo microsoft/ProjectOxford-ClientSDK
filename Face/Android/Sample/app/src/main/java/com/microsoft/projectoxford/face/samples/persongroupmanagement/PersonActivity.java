@@ -89,10 +89,9 @@ public class PersonActivity extends ActionBarActivity {
                 publishProgress("Syncing with server to add person...");
                 addLog("Request: Creating Person in person group" + params[0]);
 
-                UUID[] faceIds = new UUID[0];
                 // Start the request to creating person.
                 CreatePersonResult createPersonResult
-                        = faceServiceClient.createPerson(params[0], faceIds, "Name", "User Data");
+                        = faceServiceClient.createPerson(params[0], "Name", "User Data");
                 return createPersonResult.personId.toString();
             } catch (Exception e) {
                 publishProgress(e.getMessage());

@@ -76,17 +76,18 @@ public class DetectionActivity extends ActionBarActivity {
         protected Face[] doInBackground(InputStream... params) {
             // Get an instance of face service client to detect faces in image.
             FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
-            try{
+            try {
                 publishProgress("Detecting...");
 
                 // Start detection.
                 return faceServiceClient.detect(
                         params[0],  /* Input stream of image to detect */
-                        true,       /* Whether to analyzes facial landmarks */
-                        true,       /* Whether to analyzes age */
-                        true,       /* Whether to analyzes gender */
-                        true);      /* Whether to analyzes head pose */
-            }  catch (Exception e) {
+                        true,       /* Whether to return face ID */
+                        true,       /* Whether to return face landmarks */
+                        /* Which face attributes to analyze, currently we support:
+                           age,gender,headPose,smile,facialHair */
+                        "age,gender,headPose,smile,facialHair");
+            } catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());
                 addLog(e.getMessage());
@@ -109,7 +110,7 @@ public class DetectionActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(Face[] result) {
             if (mSucceed) {
-                addLog("Response: Success. Detected " + (result == null ? 0: result.length)
+                addLog("Response: Success. Detected " + (result == null ? 0 : result.length)
                         + " face(s) in " + mImageUri);
             }
 
@@ -168,10 +169,9 @@ public class DetectionActivity extends ActionBarActivity {
     // Called when image selection is done.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case REQUEST_SELECT_IMAGE:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     // If image is selected successfully, set the image URI and bitmap.
                     mImageUri = data.getData();
                     mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
@@ -245,10 +245,10 @@ public class DetectionActivity extends ActionBarActivity {
             String detectionResult;
             if (result != null) {
                 detectionResult = result.length + " face"
-                        + (result.length > 1 ? "s": "") + " detected";
+                        + (result.length > 1 ? "s" : "") + " detected";
 
                 // Show the detected faces on original image.
-                ImageView imageView = (ImageView)findViewById(R.id.image);
+                ImageView imageView = (ImageView) findViewById(R.id.image);
                 imageView.setImageBitmap(ImageHelper.drawFaceRectanglesOnBitmap(
                         mBitmap, result, true));
 
@@ -312,7 +312,7 @@ public class DetectionActivity extends ActionBarActivity {
 
             if (detectionResult != null) {
                 faces = Arrays.asList(detectionResult);
-                for (Face face: faces) {
+                for (Face face : faces) {
                     try {
                         // Crop face thumbnail with five main landmarks drawn from original image.
                         faceThumbnails.add(ImageHelper.generateFaceThumbnail(
@@ -349,7 +349,7 @@ public class DetectionActivity extends ActionBarActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 LayoutInflater layoutInflater =
-                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = layoutInflater.inflate(R.layout.item_face_with_description, parent, false);
             }
             convertView.setId(position);
@@ -360,11 +360,12 @@ public class DetectionActivity extends ActionBarActivity {
 
             // Show the face details.
             DecimalFormat formatter = new DecimalFormat("#0.0");
-            String face_description = "Age: " + formatter.format(faces.get(position).attributes.age) + "\n"
-                    + "Gender: " + faces.get(position).attributes.gender + "\n"
-                    + "Head pose(in degree): pitch(" + formatter.format(faces.get(position).attributes.headPose.pitch) + "), "
-                    + "roll(" + formatter.format(faces.get(position).attributes.headPose.roll) + "), "
-                    + "yaw(" + formatter.format(faces.get(position).attributes.headPose.yaw) + ")";
+            String face_description = "Age: " + formatter.format(faces.get(position).faceAttributes.age) + "\n"
+                    + "Gender: " + faces.get(position).faceAttributes.gender + "\n"
+                    + "Head pose(in degree): roll(" + formatter.format(faces.get(position).faceAttributes.headPose.roll) + "), "
+                    + "yaw(" + formatter.format(faces.get(position).faceAttributes.headPose.yaw) + ")\n"
+                    + "Moustache: " + formatter.format(faces.get(position).faceAttributes.facialHair.moustache) + "\n"
+                    + "Smile: " + formatter.format(faces.get(position).faceAttributes.smile);
             ((TextView) convertView.findViewById(R.id.text_detected_face)).setText(face_description);
 
             return convertView;

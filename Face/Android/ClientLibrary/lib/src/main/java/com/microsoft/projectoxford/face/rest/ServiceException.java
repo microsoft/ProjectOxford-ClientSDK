@@ -30,12 +30,17 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-package com.microsoft.projectoxford.face.contract;
+package com.microsoft.projectoxford.face.rest;
 
-import java.util.UUID;
+import com.google.gson.Gson;
 
-public class SimilarFace {
-    public UUID faceId;
+public class ServiceException extends Exception {
 
-    public double confidence;
+    public ServiceException(String message) {
+        super(message);
+    }
+
+    public ServiceException(Gson errorObject) {
+        super(errorObject.toString());
+    }
 }

@@ -35,7 +35,11 @@ package com.microsoft.projectoxford.face.contract;
 public class FaceAttribute {
     public double age;
 
-    public GenderEnum gender;
+    public String gender;
+
+    public double smile;
+
+    public FacialHair facialHair;
 
     public HeadPose headPose;
 }

@@ -30,12 +30,23 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-package com.microsoft.projectoxford.face.contract;
+package com.microsoft.projectoxford.face.rest;
 
-import java.util.UUID;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import java.net.URI;
 
-public class SimilarFace {
-    public UUID faceId;
+public class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
+    public static final String METHOD_NAME = "DELETE";
+    public String getMethod() { return METHOD_NAME; }
 
-    public double confidence;
+    public HttpDeleteWithBody(final String uri) {
+        this(URI.create(uri));
+    }
+
+    public HttpDeleteWithBody(final URI uri) {
+        super();
+        setURI(uri);
+    }
+
+    public HttpDeleteWithBody() { super(); }
 }

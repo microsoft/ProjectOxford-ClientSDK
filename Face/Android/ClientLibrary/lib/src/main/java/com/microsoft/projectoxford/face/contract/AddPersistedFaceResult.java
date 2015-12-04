@@ -30,17 +30,13 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-package com.microsoft.projectoxford.face.rest;
+package com.microsoft.projectoxford.face.contract;
 
-import org.json.JSONObject;
+import java.util.UUID;
 
-public class RESTException extends Exception {
-
-    public RESTException(String message) {
-        super(message);
-    }
-
-    public RESTException(JSONObject errorObject) {
-        super(errorObject.toString());
-    }
+public class AddPersistedFaceResult {
+    /**
+     * The persisted face identifier
+     */
+    public UUID persistedFaceId;
 }

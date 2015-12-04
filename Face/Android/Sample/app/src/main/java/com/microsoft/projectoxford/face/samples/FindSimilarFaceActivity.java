@@ -87,8 +87,9 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
                 UUID[] faceIds = Arrays.copyOfRange(params, 1, params.length);
                 // Start find similar faces.
                 return faceServiceClient.findSimilar(
-                        params[0],      /* The first face ID to verify */
-                        faceIds);     /* The second face ID to verify */
+                        params[0],
+                        faceIds,      /* The first face ID to verify */
+                        faceIds.length);     /* The second face ID to verify */
             }  catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());
@@ -139,11 +140,12 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
 
                 // Start detection.
                 return faceServiceClient.detect(
-                        params[0],   /* input stream of image to detect */
-                        false,       /* whether to analyzes facial landmarks */
-                        false,       /* whether to analyzes age */
-                        false,       /* whether to analyzes gender */
-                        false);      /* whether to analyzes head pose */
+                        params[0],  /* Input stream of image to detect */
+                        true,       /* Whether to return face ID */
+                        false,       /* Whether to return face landmarks */
+                        /* Which face attributes to analyze, currently we support:
+                           age,gender,headPose,smile,facialHair */
+                        "");
             }  catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());

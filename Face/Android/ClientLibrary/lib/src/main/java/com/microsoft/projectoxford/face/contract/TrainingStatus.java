@@ -33,11 +33,24 @@
 package com.microsoft.projectoxford.face.contract;
 
 public class TrainingStatus {
-    public String id;
+    /**
+     * Training status.
+     */
+    public String status;
 
-    public String status; // running, succeeded, failed, timeout
+    /**
+     * Create date time.
+     */
+    public String createdDateTime;
 
-    public String startTime; // "\/Date(1310669000000)\/" 2015-03-09 12:00:00
+    /**
+     * Last action date time.
+     */
+    public String lastActionDateTime;
 
-    public String endTime;
+    /**
+     * Message. Only when failed
+     */
+    public String message;
 }
+

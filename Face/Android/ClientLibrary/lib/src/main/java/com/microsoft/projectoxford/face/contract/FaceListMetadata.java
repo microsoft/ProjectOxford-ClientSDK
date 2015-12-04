@@ -32,8 +32,10 @@
 //
 package com.microsoft.projectoxford.face.contract;
 
-public class Gender {
-    public GenderEnum gender;
+public class FaceListMetadata {
+    public String faceGroupId;
 
-    public double confidence;
+    public String name;
+
+    public String userData;
 }

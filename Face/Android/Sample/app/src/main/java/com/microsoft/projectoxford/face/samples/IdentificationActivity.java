@@ -57,6 +57,7 @@ import com.microsoft.projectoxford.face.contract.IdentifyResult;
 import com.microsoft.projectoxford.face.contract.TrainingStatus;
 import com.microsoft.projectoxford.face.samples.helper.ImageHelper;
 import com.microsoft.projectoxford.face.samples.helper.LogHelper;
+import com.microsoft.projectoxford.face.samples.helper.SampleApp;
 import com.microsoft.projectoxford.face.samples.helper.SelectImageActivity;
 import com.microsoft.projectoxford.face.samples.helper.StorageHelper;
 import com.microsoft.projectoxford.face.samples.log.IdentificationLogActivity;
@@ -94,8 +95,7 @@ public class IdentificationActivity extends ActionBarActivity {
             addLog(logString);
 
             // Get an instance of face service client to detect faces in image.
-            FaceServiceClient faceServiceClient =
-                    new FaceServiceClient(getString(R.string.subscription_key));
+            FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
             try{
                 publishProgress("Getting person group status...");
 
@@ -110,9 +110,9 @@ public class IdentificationActivity extends ActionBarActivity {
 
                 publishProgress("Identifying...");
 
-                // Start detection.
+                // Start identification.
                 return faceServiceClient.identity(
-                        this.mPersonGroupId,     /* personGroupId */
+                        this.mPersonGroupId,   /* personGroupId */
                         params,                  /* faceIds */
                         1);                      /* maxNumOfCandidatesReturned */
             }  catch (Exception e) {
@@ -254,18 +254,18 @@ public class IdentificationActivity extends ActionBarActivity {
         @Override
         protected Face[] doInBackground(InputStream... params) {
             // Get an instance of face service client to detect faces in image.
-            FaceServiceClient faceServiceClient =
-                    new FaceServiceClient(getString(R.string.subscription_key));
+            FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
             try{
                 publishProgress("Detecting...");
 
                 // Start detection.
                 return faceServiceClient.detect(
-                        params[0],   /* Input stream of image to detect */
-                        false,       /* Whether to analyzes facial landmarks */
-                        false,       /* Whether to analyzes age */
-                        false,       /* Whether to analyzes gender */
-                        false);      /* Whether to analyzes head pose */
+                        params[0],  /* Input stream of image to detect */
+                        true,       /* Whether to return face ID */
+                        false,       /* Whether to return face landmarks */
+                        /* Which face attributes to analyze, currently we support:
+                           age,gender,headPose,smile,facialHair */
+                        "");
             }  catch (Exception e) {
                 publishProgress(e.getMessage());
                 return null;
