@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">ClientLibrary</string>
-    <string name="action_settings">Settings</string>
-    <string name="enroll">Enroll User</string>
-    <string name="verify">Verify User</string>
-    <string name="subscription_key">Please_add_the_subscription_key_here</string>
-</resources>
