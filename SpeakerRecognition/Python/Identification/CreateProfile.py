@@ -40,24 +40,17 @@ def create_profile(subscription_key, locale):
     subscription_key -- the subscription key string
     locale -- the locale string
     """
-
     helper = IdentificationServiceHttpClientHelper.IdentificationServiceHttpClientHelper(
         subscription_key)
 
     creation_response = helper.create_profile(locale)
 
-    print('Profile ID')
-    print(creation_response.get_profile_id())
+    print('Profile ID = {0}'.format(creation_response.get_profile_id()))
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print('Usage: python CreateProfile.py <subscription_key_file_path>')
-        print('\t<subscription_key_file_path> is the path of a file that'
-              ' contains only the subscription key')
+        print('Usage: python CreateProfile.py <subscription_key>')
+        print('\t<subscription_key> is the subscription key for the service')
         sys.exit('Error: Incorrect Usage.')
 
-    SUBSCRIPTION_KEY_FILE = open(sys.argv[1])
-    SUBSCRIPTION_KEY = SUBSCRIPTION_KEY_FILE.readline()
-    SUBSCRIPTION_KEY_FILE.close()
-
-    create_profile(SUBSCRIPTION_KEY, 'en-us')
+    create_profile(sys.argv[1], 'en-us')

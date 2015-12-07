@@ -33,46 +33,32 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import IdentificationServiceHttpClientHelper
 import sys
 
-def enroll_profiles(subscription_key, enrollment_script_file_path):
-    """Creates a profile on the server.
+def enroll_profile(subscription_key, profile_id, file_path):
+    """Enrolls a profile on the server.
 
     Arguments:
     subscription_key -- the subscription key string
-    enrollment_script_file_path -- the enrollment script file path
+    profile_id -- the profile ID of the profile to enroll
+    file_path -- the path of the file to use for enrollment
     """
-
     helper = IdentificationServiceHttpClientHelper.IdentificationServiceHttpClientHelper(
         subscription_key)
-    enrollment_script_file = open(enrollment_script_file_path)
-    print('Profile ID, Total Enrollment Speech Time, Remaining Enrollment Time,'
-          ' Speech Time, Enrollment Status')
-    for line in enrollment_script_file:
-        fields = line.split(',')
-        if len(fields) != 2:
-            sys.exit('Error: Incorrect script line format: ' + line)
-        profile_id = fields[0].strip()
-        file_path = fields[1].strip()
-        enrollment_response = helper.enroll_profile(profile_id, file_path)
-        print('{0}, {1}, {2}, {3}, {4}'.format(
-            profile_id,
-            enrollment_response.get_total_speech_time(),
-            enrollment_response.get_remaining_speech_time(),
-            enrollment_response.get_speech_time(),
-            enrollment_response.get_enrollment_status()))
+
+    enrollment_response = helper.enroll_profile(profile_id, file_path)
+
+    print('Total Enrollment Speech Time = {0}'.format(enrollment_response.get_total_speech_time()))
+    print('Remaining Enrollment Time = {0}'.format(enrollment_response.get_remaining_speech_time()))
+    print('Speech Time = {0}'.format(enrollment_response.get_speech_time()))
+    print('Enrollment Status = {0}'.format(enrollment_response.get_enrollment_status()))
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print('Usage: python EnrollProfile.py <subscription_key_file_path> '
-              '<enrollment_script_file_path>')
-        print('\t<subscription_key_file_path> is the path of a file that'
-              ' contains only the subscription key')
-        print('\t<enrollment_script_file_path> is the path of a file that'
-              ' contains the enrollment script. This should be a csv file where the'
-              ' first element is the profile ID and the second element is the enrollment file path')
+    if len(sys.argv) < 4:
+        print('Usage: python EnrollProfile.py <subscription_key> <profile_id> '
+            '<enrollment_file_path>')
+        print('\t<subscription_key> is the subscription key for the service')
+        print('\t<profile_id> is the profile ID of the profile to enroll')
+        print('\t<enrollment_file_path> is the enrollment audio file path')
+
         sys.exit('Error: Incorrect Usage.')
 
-    SUBSCRIPTION_KEY_FILE = open(sys.argv[1])
-    SUBSCRIPTION_KEY = SUBSCRIPTION_KEY_FILE.readline()
-    SUBSCRIPTION_KEY_FILE.close()
-
-    enroll_profiles(SUBSCRIPTION_KEY, sys.argv[2])
+    enroll_profile(sys.argv[1], sys.argv[2], sys.argv[3])

@@ -166,7 +166,11 @@ namespace SPIDVerificationAPI_WPF_Sample
                     }
                     else
                     {
-                        throw new Exception("Cannot enroll audio: " + result.StatusCode.ToString());
+                        EnrollmentVerificationError errorResponse = JsonConvert.DeserializeObject<EnrollmentVerificationError>(resultStr);
+                        if (errorResponse.Error != null)
+                            throw new Exception("Cannot enroll audio: " + errorResponse.Error.Message);
+                        else
+                            throw new Exception("Cannot enroll audio: " + result.StatusCode.ToString());
                     }
                 }
                 catch (TaskCanceledException exception)

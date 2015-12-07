@@ -40,6 +40,7 @@ import IdentificationProfile
 import IdentificationResponse
 import EnrollmentResponse
 import ProfileCreationResponse
+import logging
 
 class IdentificationServiceHttpClientHelper:
     """Abstracts the interaction with the Identification service."""
@@ -71,20 +72,24 @@ class IdentificationServiceHttpClientHelper:
 
     def get_all_profiles(self):
         """Return a list of all profiles on the server."""
-        # Send the request
-        res, message = self._send_request(
-            'GET',
-            self._BASE_URI,
-            self._IDENTIFICATION_PROFILES_URI,
-            self._JSON_CONTENT_HEADER_VALUE)
+        try:
+            # Send the request
+            res, message = self._send_request(
+                'GET',
+                self._BASE_URI,
+                self._IDENTIFICATION_PROFILES_URI,
+                self._JSON_CONTENT_HEADER_VALUE)
 
-        if res.status == self._STATUS_OK:
-            # Parse the response body
-            profiles_raw = json.loads(message)
-            return [IdentificationProfile.IdentificationProfile(profiles_raw[i])
-                    for i in range(0, len(profiles_raw))]
-        else:
-            raise Exception('Error getting all profiles: ' + res.reason)
+            if res.status == self._STATUS_OK:
+                # Parse the response body
+                profiles_raw = json.loads(message)
+                return [IdentificationProfile.IdentificationProfile(profiles_raw[i])
+                        for i in range(0, len(profiles_raw))]
+            else:
+                raise Exception('Error getting all profiles: ' + res.reason)
+        except:
+            logging.error('Error getting all profiles.')
+            raise
 
     def create_profile(self, locale):
         """Creates a profile on the server and returns a dictionary of the creation response.
@@ -92,23 +97,27 @@ class IdentificationServiceHttpClientHelper:
         Arguments:
         locale -- the locale string for the profile
         """
-        # Prepare the body of the message
-        body = json.dumps({'locale': '{0}'.format(locale)})
+        try:
+            # Prepare the body of the message
+            body = json.dumps({'locale': '{0}'.format(locale)})
 
-        # Send the request
-        res, message = self._send_request(
-            'POST',
-            self._BASE_URI,
-            self._IDENTIFICATION_PROFILES_URI,
-            self._JSON_CONTENT_HEADER_VALUE,
-            body)
+            # Send the request
+            res, message = self._send_request(
+                'POST',
+                self._BASE_URI,
+                self._IDENTIFICATION_PROFILES_URI,
+                self._JSON_CONTENT_HEADER_VALUE,
+                body)
 
-        if res.status == self._STATUS_OK:
-            # Parse the response body
-            return ProfileCreationResponse.ProfileCreationResponse(json.loads(message))
-        else:
-            message = res.read().decode('utf-8')
-            raise Exception('Error creating profile: ' + res.reason)
+            if res.status == self._STATUS_OK:
+                # Parse the response body
+                return ProfileCreationResponse.ProfileCreationResponse(json.loads(message))
+            else:
+                message = res.read().decode('utf-8')
+                raise Exception('Error creating profile: ' + res.reason)
+        except:
+            logging.error('Error creating profile.')
+            raise
 
     def enroll_profile(self, profile_id, file_path):
         """Enrolls a profile using an audio file and returns a
@@ -118,32 +127,35 @@ class IdentificationServiceHttpClientHelper:
         profile_id -- the profile ID string of the user to enroll
         file_path -- the file path string of the audio file to use
         """
-        # Prepare the request
-        request_url = '{0}/{1}/enroll'.format(
-            self._IDENTIFICATION_PROFILES_URI,
-            urllib.parse.quote(profile_id))
+        try:
+            # Prepare the request
+            request_url = '{0}/{1}/enroll'.format(
+                self._IDENTIFICATION_PROFILES_URI,
+                urllib.parse.quote(profile_id))
 
-        # Prepare the body of the message
-        with open(file_path, 'rb') as body:
-            # Send the request
-            res, message = self._send_request(
-                'POST',
-                self._BASE_URI,
-                request_url,
-                self._STREAM_CONTENT_HEADER_VALUE,
-                body)
+            # Prepare the body of the message
+            with open(file_path, 'rb') as body:
+                # Send the request
+                res, message = self._send_request(
+                    'POST',
+                    self._BASE_URI,
+                    request_url,
+                    self._STREAM_CONTENT_HEADER_VALUE,
+                    body)
 
+            if res.status == self._STATUS_OK:
+                # Parse the response body
+                return EnrollmentResponse.EnrollmentResponse(json.loads(message))
+            elif res.status == self._STATUS_ACCEPTED:
+                operation_url = res.getheader(self._OPERATION_LOCATION_HEADER)
 
-        if res.status == self._STATUS_OK:
-            # Parse the response body
-            return EnrollmentResponse.EnrollmentResponse(json.loads(message))
-        elif res.status == self._STATUS_ACCEPTED:
-            operation_url = res.getheader(self._OPERATION_LOCATION_HEADER)
-
-            return EnrollmentResponse.EnrollmentResponse(
-                self._poll_operation(operation_url))
-        else:
-            raise Exception('Error enrolling profile: ' + res.reason)
+                return EnrollmentResponse.EnrollmentResponse(
+                    self._poll_operation(operation_url))
+            else:
+                raise Exception('Error enrolling profile: ' + res.reason)
+        except:
+            logging.error('Error enrolling profile.')
+            raise
 
     def identify_file(self, file_path, test_profile_ids):
         """Enrolls a profile using an audio file and returns a
@@ -153,36 +165,40 @@ class IdentificationServiceHttpClientHelper:
         file_path -- the file path of the audio file to test
         test_profile_ids -- an array of test profile IDs strings
         """
-        # Prepare the request
-        if len(test_profile_ids) < 1:
-            raise Exception('Error identifying file: no test profile IDs are provided.')
-        test_profile_ids_str = test_profile_ids[0]
-        for i in range(1, len(test_profile_ids)):
-            test_profile_ids_str += ',' + test_profile_ids[i]
-        request_url = '{0}?identificationProfileIds={1}'.format(
-            self._IDENTIFICATION_URI,
-            urllib.parse.quote(test_profile_ids_str))
+        try:
+            # Prepare the request
+            if len(test_profile_ids) < 1:
+                raise Exception('Error identifying file: no test profile IDs are provided.')
+            test_profile_ids_str = test_profile_ids[0]
+            for i in range(1, len(test_profile_ids)):
+                test_profile_ids_str += ',' + test_profile_ids[i]
+            request_url = '{0}?identificationProfileIds={1}'.format(
+                self._IDENTIFICATION_URI,
+                urllib.parse.quote(test_profile_ids_str))
 
-        # Prepare the body of the message
-        with open(file_path, 'rb') as body:
-            # Send the request
-            res, message = self._send_request(
-                'POST',
-                self._BASE_URI,
-                request_url,
-                self._STREAM_CONTENT_HEADER_VALUE,
-                body)
+            # Prepare the body of the message
+            with open(file_path, 'rb') as body:
+                # Send the request
+                res, message = self._send_request(
+                    'POST',
+                    self._BASE_URI,
+                    request_url,
+                    self._STREAM_CONTENT_HEADER_VALUE,
+                    body)
 
-        if res.status == self._STATUS_OK:
-            # Parse the response body
-            return IdentificationResponse.IdentificationResponse(json.loads(message))
-        elif res.status == self._STATUS_ACCEPTED:
-            operation_url = res.getheader(self._OPERATION_LOCATION_HEADER)
+            if res.status == self._STATUS_OK:
+                # Parse the response body
+                return IdentificationResponse.IdentificationResponse(json.loads(message))
+            elif res.status == self._STATUS_ACCEPTED:
+                operation_url = res.getheader(self._OPERATION_LOCATION_HEADER)
 
-            return IdentificationResponse.IdentificationResponse(
-                self._poll_operation(operation_url))
-        else:
-            raise Exception('Error identifying file: ' + res.reason)
+                return IdentificationResponse.IdentificationResponse(
+                    self._poll_operation(operation_url))
+            else:
+                raise Exception('Error identifying file: ' + res.reason)
+        except:
+            logging.error('Error identifying file.')
+            raise
 
     def _poll_operation(self, operation_url):
         """Polls on an operation till it is done
@@ -190,34 +206,38 @@ class IdentificationServiceHttpClientHelper:
         Arguments:
         operation_url -- the url to poll for the operation status
         """
-        # Split the operation URL to a base URL and a request URL
-        base_url = re.compile('https?://', re.IGNORECASE).sub('', operation_url)
-        request_url = re.search('/.*', base_url).group()
-        base_url = re.compile('/.*', re.IGNORECASE).sub('', base_url)
+        try:
+            # Split the operation URL to a base URL and a request URL
+            base_url = re.compile('https?://', re.IGNORECASE).sub('', operation_url)
+            request_url = re.search('/.*', base_url).group()
+            base_url = re.compile('/.*', re.IGNORECASE).sub('', base_url)
 
-        while True:
-            # Send the request
-            res, message = self._send_request(
-                'GET',
-                base_url,
-                request_url,
-                self._JSON_CONTENT_HEADER_VALUE)
+            while True:
+                # Send the request
+                res, message = self._send_request(
+                    'GET',
+                    base_url,
+                    request_url,
+                    self._JSON_CONTENT_HEADER_VALUE)
 
-            if res.status != self._STATUS_OK:
-                raise Exception('Operation Error: ' + res.reason)
+                if res.status != self._STATUS_OK:
+                    raise Exception('Operation Error: ' + res.reason)
 
-            # Parse the response body
-            operation_response = json.loads(message)
+                # Parse the response body
+                operation_response = json.loads(message)
 
-            if operation_response[self._OPERATION_STATUS_FIELD_NAME] == \
-                    self._OPERATION_STATUS_SUCCEEDED:
-                return operation_response[self._OPERATION_PROC_RES_FIELD_NAME]
-            elif operation_response[self._OPERATION_STATUS_FIELD_NAME] == \
-                    self._OPERATION_STATUS_FAILED:
-                raise Exception('Operation Error: ' +
-                                operation_response[self._OPERATION_MESSAGE_FIELD_NAME])
-            else:
-                time.sleep(self._OPERATION_STATUS_UPDATE_DELAY)
+                if operation_response[self._OPERATION_STATUS_FIELD_NAME] == \
+                        self._OPERATION_STATUS_SUCCEEDED:
+                    return operation_response[self._OPERATION_PROC_RES_FIELD_NAME]
+                elif operation_response[self._OPERATION_STATUS_FIELD_NAME] == \
+                        self._OPERATION_STATUS_FAILED:
+                    raise Exception('Operation Error: ' +
+                                    operation_response[self._OPERATION_MESSAGE_FIELD_NAME])
+                else:
+                    time.sleep(self._OPERATION_STATUS_UPDATE_DELAY)
+        except:
+            logging.error('Error polling the operation status.')
+            raise
 
     def _send_request(self, method, base_url, request_url, content_type_value, body=None):
         """Sends the request to the server then returns the response and the response body string.
@@ -229,15 +249,19 @@ class IdentificationServiceHttpClientHelper:
         content_type_value -- the value of the content type field in the headers
         body -- the body of the request (needed only in POST methods)
         """
-        # Set the headers
-        headers = {self._CONTENT_TYPE_HEADER: content_type_value,
-                   self._SUBSCRIPTION_KEY_HEADER: self._subscription_key}
+        try:
+            # Set the headers
+            headers = {self._CONTENT_TYPE_HEADER: content_type_value,
+                       self._SUBSCRIPTION_KEY_HEADER: self._subscription_key}
 
-        # Start the connection
-        with closing(http.client.HTTPSConnection(base_url)) as conn:
-            # Send the request
-            conn.request(method, request_url, body, headers)
-            res = conn.getresponse()
-            message = res.read().decode('utf-8')
+            # Start the connection
+            with closing(http.client.HTTPSConnection(base_url)) as conn:
+                # Send the request
+                conn.request(method, request_url, body, headers)
+                res = conn.getresponse()
+                message = res.read().decode('utf-8')
 
-            return res, message
+                return res, message
+        except:
+            logging.error('Error sending the request.')
+            raise

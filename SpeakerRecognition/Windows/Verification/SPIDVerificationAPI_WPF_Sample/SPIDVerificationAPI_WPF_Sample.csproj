@@ -66,6 +66,8 @@
     <Compile Include="EnrollPage.xaml.cs">
       <DependentUpon>EnrollPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EnrollmentVerificationError.cs" />
+    <Compile Include="ErrorResponse.cs" />
     <Compile Include="PhraseResponse.cs" />
     <Compile Include="SpeakerProfile.cs" />
     <Compile Include="VerificationResult.cs" />

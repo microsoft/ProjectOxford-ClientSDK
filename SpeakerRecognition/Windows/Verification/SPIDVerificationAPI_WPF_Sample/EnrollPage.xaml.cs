@@ -29,7 +29,7 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
+//
 
 using NAudio.Utils;
 using NAudio.Wave;
@@ -86,21 +86,29 @@ namespace SPIDVerificationAPI_WPF_Sample
             _speakerId = _storageHelper.readValue(MainWindow.SPEAKER_FILENAME);
             if (_speakerId == null)
             {
-                setStatus("You need to create a profile before enrolling");
+                createProfile();
+                record.IsEnabled = false;
             }
             else
             {
                 setStatus("Retrieving available phrases...");
                 record.IsEnabled = false;
-                List<PhraseResponse> phrases = await _helper.GetAllAvailablePhrases("en-us");
-                foreach (PhraseResponse phrase in phrases)
+                try
                 {
-                    ListBoxItem item = new ListBoxItem();
-                    item.Content = phrase.Phrase;
-                    phrasesList.Items.Add(item);
+                    List<PhraseResponse> phrases = await _helper.GetAllAvailablePhrases("en-us");
+                    foreach (PhraseResponse phrase in phrases)
+                    {
+                        ListBoxItem item = new ListBoxItem();
+                        item.Content = phrase.Phrase;
+                        phrasesList.Items.Add(item);
+                    }
+                    setStatus("Retrieving available phrases done");
+                }
+                catch (Exception e)
+                {
+                    setStatus(e.Message);
                 }
                 record.IsEnabled = true;
-                setStatus("Retrieving available phrases done");
             }
 
         }
@@ -193,6 +201,25 @@ namespace SPIDVerificationAPI_WPF_Sample
         {
             IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
             _storageHelper.writeValue(MainWindow.SPEAKER_PHRASE_FILENAME, phrase);
+        }
+
+        private async void createProfile()
+        {
+            setStatus("Creating Profile...");
+            try
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+                SpeakerProfile response = await _helper.CreateProfileAsync("en-us");
+                sw.Stop();
+                setStatus("Profile Created, Elapsed Time: " + sw.Elapsed);
+                IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
+                _storageHelper.writeValue(MainWindow.SPEAKER_FILENAME, response.VerificationProfileId);
+                record.IsEnabled = true;
+            }
+            catch (Exception exception)
+            {
+                setStatus(exception.Message);
+            }
         }
     }
 }

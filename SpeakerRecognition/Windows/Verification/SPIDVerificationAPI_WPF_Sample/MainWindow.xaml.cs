@@ -82,9 +82,8 @@ namespace SPIDVerificationAPI_WPF_Sample
             _scenariosControl.Disclaimer = "Microsoft will receive the audio files you upload and may use them to improve Speaker Recognition API and related services. By submitting an audio, you confirm you have consent from everyone in it.";
             _scenariosControl.SampleScenarioList = new Scenario[]
             {
-                new Scenario { Title = "Scenario 1: Create a new Profile", PageClass=typeof(CreateProfilePage)},
-                new Scenario { Title = "Scenario 2: Make a new Enrollment", PageClass=typeof(EnrollPage)},
-                new Scenario { Title = "Scenario 3: Verify a Speaker", PageClass=typeof(VerifySpeakerPage)}
+                new Scenario { Title = "Scenario 1: Make a new Enrollment", PageClass=typeof(EnrollPage)},
+                new Scenario { Title = "Scenario 2: Verify a Speaker", PageClass=typeof(VerifySpeakerPage)}
             };
         }
         /// <summary>

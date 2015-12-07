@@ -58,13 +58,8 @@ def print_all_profiles(subscription_key):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print('Usage: python PrintAllProfiles.py <subscription_key_file_path>')
-        print('\t<subscription_key_file_path> is the path of a file that'
-              ' contains only the subscription key')
+        print('Usage: python PrintAllProfiles.py <subscription_key>')
+        print('\t<subscription_key> is the subscription key for the service')
         sys.exit('Error: Incorrect Usage.')
 
-    SUBSCRIPTION_KEY_FILE = open(sys.argv[1])
-    SUBSCRIPTION_KEY = SUBSCRIPTION_KEY_FILE.readline()
-    SUBSCRIPTION_KEY_FILE.close()
-
-    print_all_profiles(SUBSCRIPTION_KEY)
+    print_all_profiles(sys.argv[1])
