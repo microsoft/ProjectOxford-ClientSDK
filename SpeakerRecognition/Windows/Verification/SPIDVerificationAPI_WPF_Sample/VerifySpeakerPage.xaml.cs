@@ -34,22 +34,12 @@
 using NAudio.Utils;
 using NAudio.Wave;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -73,12 +63,23 @@ namespace SPIDVerificationAPI_WPF_Sample
             _subscriptionKey = ((MainWindow)Application.Current.MainWindow).SubscriptionKey;
             IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
             _speakerId = _storageHelper.readValue(MainWindow.SPEAKER_FILENAME);
-            initializeRecorder();
-            _helper = new VerificationServiceHttpClientHelper();
-            _helper.SubscriptionKey = _subscriptionKey;
-            string userPhrase = _storageHelper.readValue(MainWindow.SPEAKER_PHRASE_FILENAME);
-            userPhraseTxt.Text = userPhrase;
+            if (_speakerId == null)
+            {
+                ((MainWindow)Application.Current.MainWindow).Log("You need to create a profile and complete enrollments first before verification");
+                recordBtn.IsEnabled = false;
+                stopRecordBtn.IsEnabled = false;
+            }
+            else
+            {
+                initializeRecorder();
+                _helper = new VerificationServiceHttpClientHelper();
+                _helper.SubscriptionKey = _subscriptionKey;
+                string userPhrase = _storageHelper.readValue(MainWindow.SPEAKER_PHRASE_FILENAME);
+                userPhraseTxt.Text = userPhrase;
+                stopRecordBtn.IsEnabled = false;
+            }
         }
+
         /// <summary>
         /// Initialize NAudio recorder instance
         /// </summary>
@@ -86,12 +87,13 @@ namespace SPIDVerificationAPI_WPF_Sample
         {
             _waveIn = new WaveIn();
             _waveIn.DeviceNumber = 0;
-            int sampleRate = 16000; // 8 kHz
+            int sampleRate = 16000; // 16 kHz
             int channels = 1; // mono
             _waveIn.WaveFormat = new WaveFormat(sampleRate, channels);
             _waveIn.DataAvailable += waveIn_DataAvailable;
             _waveIn.RecordingStopped += waveSource_RecordingStopped;
         }
+
         /// <summary>
         /// A listener called when the recording stops
         /// </summary>
@@ -107,6 +109,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             initializeRecorder();
             enrollSpeaker(_stream);
         }
+
         /// <summary>
         /// A method that's called whenever there's a chunk of recorded audio is recorded
         /// </summary>
@@ -122,6 +125,11 @@ namespace SPIDVerificationAPI_WPF_Sample
             }
             _fileWriter.WriteData(e.Buffer, 0, e.BytesRecorded);
         }
+
+        /// <summary>
+        /// Enrolls the audio of a speaker
+        /// </summary>
+        /// <param name="audioStream">The audio stream</param>
         private async void enrollSpeaker(Stream audioStream)
         {
             try
@@ -132,6 +140,16 @@ namespace SPIDVerificationAPI_WPF_Sample
                 sw.Stop();
                 setStatus("Verification Done, Elapsed Time: " + sw.Elapsed);
                 statusResTxt.Text = response.Result;
+                if (response.Result.Equals("Accept"))
+                {
+                    statusResTxt.Background = Brushes.Green;
+                    statusResTxt.Foreground = Brushes.White;
+                }
+                else
+                {
+                    statusResTxt.Background = Brushes.Red;
+                    statusResTxt.Foreground = Brushes.White;
+                }
                 confTxt.Text = response.Confidence;
             }
             catch (Exception exception)
@@ -139,16 +157,33 @@ namespace SPIDVerificationAPI_WPF_Sample
                 setStatus(exception.Message);
             }
         }
+
+        /// <summary>
+        /// A helper method that's used for logging status at the status bar
+        /// </summary>
+        /// <param name="status">The status to be logged at the status bar</param>
         private void setStatus(string status)
         {
             ((MainWindow)Application.Current.MainWindow).Log(status);
         }
+
+        /// <summary>
+        /// Click handler for the stop recording button
+        /// </summary>
+        /// <param name="sender">The object that sent the event</param>
+        /// <param name="e">Event arguments object</param>
         private void stopRecordBtn_Click_1(object sender, RoutedEventArgs e)
         {
             recordBtn.IsEnabled = true;
             stopRecordBtn.IsEnabled = false;
             _waveIn.StopRecording();
         }
+
+        /// <summary>
+        /// Click handler for the record button
+        /// </summary>
+        /// <param name="sender">The object that sent the event</param>
+        /// <param name="e">Event arguments object</param>
         private void recordBtn_Click_1(object sender, RoutedEventArgs e)
         {
             recordBtn.IsEnabled = false;

@@ -7,15 +7,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="300"
       Title="EnrollPage" Width="676">
-
-    <Grid Margin="0,0,0,-127">
-        <Button x:Name="record" Content="Record" HorizontalAlignment="Left" Margin="40,372,0,0" VerticalAlignment="Top" Width="276" IsEnabled="True" Click="record_Click"/>
-        <Button x:Name="stopRecord" Content="Stop Recording" HorizontalAlignment="Left" Margin="341,372,0,0" VerticalAlignment="Top" Width="249" IsEnabled="False" Click="stopRecord_Click"/>
-        <TextBox x:Name="verPhraseText" HorizontalAlignment="Left" Height="20" Margin="40,270,0,0" TextWrapping="Wrap" Text="Verification Phrase" VerticalAlignment="Top" Width="550" IsEnabled="False"/>
-        <TextBox x:Name="remEnrollText" HorizontalAlignment="Left" Height="18" Margin="40,326,0,0" TextWrapping="Wrap" Text="Remaining Enrollments" VerticalAlignment="Top" Width="550" IsEnabled="False"/>
-        <Label x:Name="verPhraseLabel" Content="Verification Phrase:" HorizontalAlignment="Left" Margin="40,244,0,0" VerticalAlignment="Top" Width="232"/>
-        <Label x:Name="remEnrollLabel" Content="Remaining Enrollments" HorizontalAlignment="Left" Margin="40,295,0,0" VerticalAlignment="Top" Width="232"/>
-        <ListBox x:Name="phrasesList" HorizontalAlignment="Left" Height="178" Margin="40,61,0,0" VerticalAlignment="Top" Width="550"/>
-        <Label x:Name="label" Content="Available Phrases" HorizontalAlignment="Left" Margin="40,23,0,0" VerticalAlignment="Top" Width="159"/>
+    <Grid Margin="0,0,0,-197">
+        <Button x:Name="record" Content="Record" HorizontalAlignment="Left" Margin="40,448,0,0" VerticalAlignment="Top" Width="159" IsEnabled="True" Click="record_Click"/>
+        <Button x:Name="stopRecord" Content="Stop Recording" HorizontalAlignment="Left" Margin="228,448,0,0" VerticalAlignment="Top" Width="162" IsEnabled="False" Click="stopRecord_Click"/>
+        <TextBox x:Name="verPhraseText" HorizontalAlignment="Left" Height="20" Margin="40,346,0,0" TextWrapping="Wrap" Text="Verification Phrase" VerticalAlignment="Top" Width="550" IsEnabled="False"/>
+        <TextBox x:Name="remEnrollText" HorizontalAlignment="Left" Height="18" Margin="40,402,0,0" TextWrapping="Wrap" Text="Remaining Enrollments" VerticalAlignment="Top" Width="550" IsEnabled="False"/>
+        <Label x:Name="verPhraseLabel" Content="Verification Phrase:" HorizontalAlignment="Left" Margin="37,320,0,0" VerticalAlignment="Top" Width="232"/>
+        <Label x:Name="remEnrollLabel" Content="Remaining Enrollments" HorizontalAlignment="Left" Margin="40,376,0,0" VerticalAlignment="Top" Width="232"/>
+        <ItemsControl  x:Name="phrasesList" HorizontalAlignment="Left" Height="239" Margin="40,61,0,0" VerticalAlignment="Top" Width="550" BorderBrush="#FF131212" BorderThickness="2"/>
+        <Label x:Name="label" Content="Available Phrases" HorizontalAlignment="Left" Margin="40,34,0,0" VerticalAlignment="Top" Width="159"/>
+        <Button x:Name="resetBtn" Content="Reset Profile" HorizontalAlignment="Left" Margin="411,448,0,0" VerticalAlignment="Top" Width="179" IsEnabled="False" Click="resetBtn_Click"/>
     </Grid>
 </Page>

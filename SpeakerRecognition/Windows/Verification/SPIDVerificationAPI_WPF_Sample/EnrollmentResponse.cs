@@ -29,15 +29,7 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
-
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -50,10 +42,12 @@ namespace SPIDVerificationAPI_WPF_Sample
         /// The number of remaining enrollments for a profile
         /// </summary>
         public int RemainingEnrollments { get; set; }
+
         /// <summary>
         /// The verification phrase used by the speaker
         /// </summary>
         public string Phrase { get; set; }
+
         /// <summary>
         /// The status of The enrollment for the speaker
         /// </summary>

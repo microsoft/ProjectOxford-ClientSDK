@@ -29,21 +29,15 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
-
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+//
 
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -52,16 +46,17 @@ namespace SPIDVerificationAPI_WPF_Sample
     /// </summary>
     public class VerificationServiceHttpClientHelper
     {
-        private const string BASE_URI = "https://api.projectoxford.ai/spid/v1.0/verificationProfiles";
-        private const string VERIFY_ENDPOINT = "https://api.projectoxford.ai/spid/v1.0/verify";
-        private const string PHRASES_ENDPOINT = "https://api.projectoxford.ai/spid/v1.0/verificationPhrases?locale=";
+        private const string _BASE_URI = "https://api.projectoxford.ai/spid/v1.0/verificationProfiles";
+        private const string _VERIFY_ENDPOINT = "https://api.projectoxford.ai/spid/v1.0/verify";
+        private const string _PHRASES_ENDPOINT = "https://api.projectoxford.ai/spid/v1.0/verificationPhrases?locale=";
         private const string _OCP_SUBSCRIPTION_KEY_HEADER = "Ocp-Apim-Subscription-Key";
         private const string _OCTET_STREAM_HEADER = "application/octet-stream";
         private const string _JSON_HEADER = "application/json";
         private const string _LOCALE_PARAM = "locale";
+
         /// <summary>
         /// The subscription key used for accessing Oxford SPID APIs
-        /// </summary>
+        /// </summary>                                              
         public string SubscriptionKey { get; set; }
         /// <summary>
         /// Creates a new helper
@@ -69,6 +64,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         public VerificationServiceHttpClientHelper()
         {
         }
+
         /// <summary>
         /// Creates a new profile asynchronously
         /// </summary>
@@ -85,7 +81,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                  {
                         new KeyValuePair<string, string>(_LOCALE_PARAM, locale),
                  });
-                var result = await client.PostAsync(BASE_URI, content);
+                var result = await client.PostAsync(_BASE_URI, content);
                 if (result.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     //parse response
@@ -99,6 +95,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 }
             }
         }
+
         /// <summary>
         /// Verifies a given speaker using the speaker Id and audio stream
         /// </summary>
@@ -117,7 +114,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 try
                 {
                     speakerId = Uri.EscapeDataString(speakerId);
-                    var requestURL = VERIFY_ENDPOINT + "?verificationProfileId=" + speakerId;
+                    var requestURL = _VERIFY_ENDPOINT + "?verificationProfileId=" + speakerId;
                     var result = await client.PostAsync(requestURL, content);
                     string resultStr = await result.Content.ReadAsStringAsync();
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
@@ -128,7 +125,11 @@ namespace SPIDVerificationAPI_WPF_Sample
                     }
                     else
                     {
-                        throw new Exception("Cannot Verify Speaker: " + result.StatusCode.ToString());
+                        EnrollmentVerificationError errorResponse = JsonConvert.DeserializeObject<EnrollmentVerificationError>(resultStr);
+                        if (errorResponse.Error != null)
+                            throw new Exception("Cannot verify speaker: " + errorResponse.Error.Message);
+                        else
+                            throw new Exception("Cannot verify speaker: " + result.StatusCode.ToString());
                     }
                 }
                 catch (TaskCanceledException exception)
@@ -137,6 +138,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 }
             }
         }
+
         /// <summary>
         /// Enroll a new stream asynchronously for a given speaker
         /// </summary>
@@ -155,7 +157,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 try
                 {
                     speakerId = Uri.EscapeDataString(speakerId);
-                    var requestUrl = BASE_URI + "/" + speakerId + "/enroll";
+                    var requestUrl = _BASE_URI + "/" + speakerId + "/enroll";
                     var result = await client.PostAsync(requestUrl, content);
                     string resultStr = await result.Content.ReadAsStringAsync();
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
@@ -179,6 +181,12 @@ namespace SPIDVerificationAPI_WPF_Sample
                 }
             }
         }
+
+        /// <summary>
+        /// Gets a list of all available phrases for enrollments
+        /// </summary>
+        /// <param name="locale">The locale of the pharases</param>
+        /// <returns></returns>
         public async Task<List<PhraseResponse>> GetAllAvailablePhrases(string locale)
         {
             using (var client = new HttpClient())
@@ -188,7 +196,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 try
                 {
                     locale = Uri.EscapeDataString(locale);
-                    var requestUrl = PHRASES_ENDPOINT + locale;
+                    var requestUrl = _PHRASES_ENDPOINT + locale;
                     var result = await client.GetAsync(requestUrl);
                     string resultStr = await result.Content.ReadAsStringAsync();
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
@@ -205,6 +213,26 @@ namespace SPIDVerificationAPI_WPF_Sample
                 catch (TaskCanceledException exception)
                 {
                     throw new TimeoutException("Connection timed out: " + exception.Message);
+                }
+            }
+        }
+        /// <summary>
+        /// Resets a new profile asynchronously
+        /// </summary>
+        /// <param name="speakerId">The speaker Id</param>
+        /// <returns>SpeakerProfile encapsulating the profile repsonse</returns>
+        public async Task ResetProfileAsync(string speakerId)
+        {
+            using (var client = new HttpClient())
+            {
+                // Request headers
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_JSON_HEADER));
+                client.DefaultRequestHeaders.Add(_OCP_SUBSCRIPTION_KEY_HEADER, SubscriptionKey);
+                speakerId = Uri.EscapeDataString(speakerId);
+                var result = await client.PostAsync(_BASE_URI + "/" + speakerId + "/reset", null);
+                if (result.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new Exception("Cannot Reset Profile: " + result.StatusCode.ToString());
                 }
             }
         }

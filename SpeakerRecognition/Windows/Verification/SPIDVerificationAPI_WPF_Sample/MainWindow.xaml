@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SPIDVerificationAPI_WPF_Sample" 
         xmlns:sampleUtil="clr-namespace:SampleUserControlLibrary;assembly=SampleUserControlLibrary" 
         mc:Ignorable="d" 
-        Title="Microsoft.ProjectOxford.SPID Sample" Height="800" Width="1100"
+        Title="Microsoft Project Oxford" Height="800" Width="1100"
         Icon="Assets\Microsoft-logo_rgb_c-gray.png">
     <Grid>
         <sampleUtil:SampleScenarios x:Name="_scenariosControl"/>

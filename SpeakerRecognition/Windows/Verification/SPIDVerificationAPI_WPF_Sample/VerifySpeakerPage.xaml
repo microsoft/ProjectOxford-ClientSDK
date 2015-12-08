@@ -9,14 +9,14 @@
       Title="VerifySpeakerPage" Width="417">
 
     <Grid>
-        <Button x:Name="recordBtn" Content="Record" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="164" Click="recordBtn_Click_1"/>
-        <Button x:Name="stopRecordBtn" Content="Stop Recording" HorizontalAlignment="Left" Margin="209,52,0,0" VerticalAlignment="Top" Width="137" Click="stopRecordBtn_Click_1"/>
-        <Label x:Name="confidenceLbl" Content="Confidence Level" HorizontalAlignment="Left" Margin="11,159,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="statusLbl" Content="Status" HorizontalAlignment="Left" Margin="11,95,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="confTxt"  IsEnabled="False" HorizontalAlignment="Left" Height="24" Margin="11,190,0,0" TextWrapping="Wrap" Text="Confidence Level" VerticalAlignment="Top" Width="335"/>
-        <TextBox x:Name="statusResTxt" IsEnabled="False" HorizontalAlignment="Left" Height="24" Margin="11,126,0,0" TextWrapping="Wrap" Text="Verification Status" VerticalAlignment="Top" Width="335" />
-        <Label x:Name="userPhrase" Content="Your Verification Phrase" HorizontalAlignment="Left" Margin="11,230,0,0" VerticalAlignment="Top" Width="335"/>
-        <TextBox x:Name="userPhraseTxt" HorizontalAlignment="Left" Height="23" Margin="11,267,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="335" IsEnabled="False"/>
+        <Button x:Name="recordBtn" Content="Record" HorizontalAlignment="Left" Margin="11,270,0,0" VerticalAlignment="Top" Width="164" Click="recordBtn_Click_1"/>
+        <Button x:Name="stopRecordBtn" Content="Stop Recording" HorizontalAlignment="Left" Margin="209,270,0,0" VerticalAlignment="Top" Width="137" Click="stopRecordBtn_Click_1"/>
+        <Label x:Name="confidenceLbl" Content="Confidence Level" HorizontalAlignment="Left" Margin="11,79,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="statusLbl" Content="Status" HorizontalAlignment="Left" Margin="11,27,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="confTxt"  IsEnabled="False" HorizontalAlignment="Left" Height="24" Margin="11,106,0,0" TextWrapping="Wrap" Text="Confidence Level" VerticalAlignment="Top" Width="335"/>
+        <TextBox x:Name="statusResTxt" IsEnabled="False" HorizontalAlignment="Left" Height="24" Margin="11,54,0,0" TextWrapping="Wrap" Text="Verification Status" VerticalAlignment="Top" Width="335" />
+        <Label x:Name="userPhrase" Content="Your Verification Phrase" HorizontalAlignment="Left" Margin="11,201,0,0" VerticalAlignment="Top" Width="335"/>
+        <TextBox x:Name="userPhraseTxt" HorizontalAlignment="Left" Height="23" Margin="11,228,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="335" IsEnabled="False"/>
 
     </Grid>
 </Page>
