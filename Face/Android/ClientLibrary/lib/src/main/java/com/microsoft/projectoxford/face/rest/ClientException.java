@@ -47,7 +47,7 @@ public class ClientException extends Exception {
 
     public ClientException(String message, int statusCode) {
         super(message);
-        Integer code = new Integer(statusCode);
+        Integer code = statusCode;
         error.code = code.toString();
         error.message = message;
     }

@@ -141,7 +141,7 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
                         false,       /* Whether to return face landmarks */
                         /* Which face attributes to analyze, currently we support:
                            age,gender,headPose,smile,facialHair */
-                        "");
+                        null);
             }  catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());

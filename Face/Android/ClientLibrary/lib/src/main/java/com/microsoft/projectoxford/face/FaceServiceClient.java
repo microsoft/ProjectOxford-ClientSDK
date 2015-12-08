@@ -32,31 +32,83 @@
 //
 package com.microsoft.projectoxford.face;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
-
 import com.microsoft.projectoxford.face.contract.AddPersistedFaceResult;
 import com.microsoft.projectoxford.face.contract.CreatePersonResult;
+import com.microsoft.projectoxford.face.contract.Face;
 import com.microsoft.projectoxford.face.contract.FaceList;
 import com.microsoft.projectoxford.face.contract.FaceListMetadata;
 import com.microsoft.projectoxford.face.contract.FaceRectangle;
 import com.microsoft.projectoxford.face.contract.GroupResult;
+import com.microsoft.projectoxford.face.contract.IdentifyResult;
+import com.microsoft.projectoxford.face.contract.Person;
+import com.microsoft.projectoxford.face.contract.PersonFace;
 import com.microsoft.projectoxford.face.contract.PersonGroup;
+import com.microsoft.projectoxford.face.contract.SimilarFace;
 import com.microsoft.projectoxford.face.contract.SimilarPersistedFace;
 import com.microsoft.projectoxford.face.contract.TrainingStatus;
-import com.microsoft.projectoxford.face.contract.SimilarFace;
-import com.microsoft.projectoxford.face.rest.ClientException;
-import com.microsoft.projectoxford.face.contract.Face;
-import com.microsoft.projectoxford.face.contract.IdentifyResult;
-import com.microsoft.projectoxford.face.contract.PersonFace;
 import com.microsoft.projectoxford.face.contract.VerifyResult;
-import com.microsoft.projectoxford.face.contract.Person;
+import com.microsoft.projectoxford.face.rest.ClientException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.UUID;
 
 public interface FaceServiceClient {
 
     /**
-     * Detects face from an URL image.
+     * Supported face attribute types
+     */
+    public enum FaceAttributeType
+    {
+        /**
+         * Analyses age
+         */
+        Age {
+            public String toString() {
+                return "age";
+            }
+        },
+
+        /**
+         * Analyses gender
+         */
+        Gender {
+            public String toString() {
+                return "gender";
+            }
+        },
+
+        /**
+         * Analyses facial hair
+         */
+        FacialHair {
+            public String toString() {
+                return "facialHair";
+            }
+        },
+
+        /**
+         * Analyses whether is smiling
+         */
+        Smile {
+            public String toString() {
+                return "smile";
+            }
+        },
+
+        /**
+         * Analyses head pose
+         */
+        HeadPose {
+            public String toString() {
+                return "headPose";
+            }
+        }
+    }
+
+    /**
+     * Detects faces in an URL image.
      * @param url url.
      * @param returnFaceId If set to <c>true</c> [return face ID].
      * @param returnFaceLandmarks If set to <c>true</c> [return face landmarks].
@@ -65,10 +117,10 @@ public interface FaceServiceClient {
      * @throws ClientException
      * @throws IOException
      */
-    Face[] detect(String url, boolean returnFaceId, boolean returnFaceLandmarks, String returnFaceAttributes) throws ClientException, IOException;
+    Face[] detect(String url, boolean returnFaceId, boolean returnFaceLandmarks, FaceAttributeType[] returnFaceAttributes) throws ClientException, IOException;
 
     /**
-     * Detects an image.
+     * Detects faces in an uploaded image.
      * @param imageStream The image stream.
      * @param returnFaceId If set to <c>true</c> [return face ID].
      * @param returnFaceLandmarks If set to <c>true</c> [return face landmarks]
@@ -77,7 +129,7 @@ public interface FaceServiceClient {
      * @throws ClientException
      * @throws IOException
      */
-    Face[] detect(InputStream imageStream, boolean returnFaceId, boolean returnFaceLandmarks, String returnFaceAttributes) throws ClientException, IOException;
+    Face[] detect(InputStream imageStream, boolean returnFaceId, boolean returnFaceLandmarks, FaceAttributeType[] returnFaceAttributes) throws ClientException, IOException;
 
     /**
      * Verifies whether the specified two faces belong to the same person.
@@ -203,7 +255,7 @@ public interface FaceServiceClient {
      * @throws ClientException
      * @throws IOException
      */
-    AddPersistedFaceResult addPersonFace(String personGroupId, UUID personId, String url, String userData, String targetFace) throws ClientException, IOException;
+    AddPersistedFaceResult addPersonFace(String personGroupId, UUID personId, String url, String userData, FaceRectangle targetFace) throws ClientException, IOException;
 
     /**
      * Adds a face to a person.
@@ -356,7 +408,7 @@ public interface FaceServiceClient {
      * @throws ClientException
      * @throws IOException
      */
-    AddPersistedFaceResult addFacesToFaceList(String faceListId, String url, String userData, String targetFace) throws ClientException, IOException;
+    AddPersistedFaceResult addFacesToFaceList(String faceListId, String url, String userData, FaceRectangle targetFace) throws ClientException, IOException;
 
     /**
      *  Adds the face to face list
@@ -368,7 +420,7 @@ public interface FaceServiceClient {
      * @throws ClientException
      * @throws IOException
      */
-    AddPersistedFaceResult AddFaceToFaceList(String faceListId, InputStream imageStream, String userData, String targetFace) throws ClientException, IOException;
+    AddPersistedFaceResult AddFaceToFaceList(String faceListId, InputStream imageStream, String userData, FaceRectangle targetFace) throws ClientException, IOException;
 
     /**
      * Deletes the face from face list.

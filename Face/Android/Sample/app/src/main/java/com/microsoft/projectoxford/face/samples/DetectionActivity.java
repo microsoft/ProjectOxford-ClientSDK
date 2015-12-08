@@ -86,7 +86,13 @@ public class DetectionActivity extends ActionBarActivity {
                         true,       /* Whether to return face landmarks */
                         /* Which face attributes to analyze, currently we support:
                            age,gender,headPose,smile,facialHair */
-                        "age,gender,headPose,smile,facialHair");
+                        new FaceServiceClient.FaceAttributeType[] {
+                                FaceServiceClient.FaceAttributeType.Age,
+                                FaceServiceClient.FaceAttributeType.Gender,
+                                FaceServiceClient.FaceAttributeType.FacialHair,
+                                FaceServiceClient.FaceAttributeType.Smile,
+                                FaceServiceClient.FaceAttributeType.HeadPose
+                        });
             } catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());
