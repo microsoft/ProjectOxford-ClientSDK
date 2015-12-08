@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
@@ -32,83 +32,111 @@
 //
 
 using System;
+using System.Net;
+using System.Runtime.Serialization;
 
 namespace Microsoft.ProjectOxford.Face.Contract
 {
-    #region Enumerations
-
     /// <summary>
-    /// Enumeration represents status of training
+    /// Represents client error with detailed error message and error code
     /// </summary>
-    public enum Status
+    [DataContract]
+    public class ClientError
     {
-        /// <summary>
-        /// Training succeeded
-        /// </summary>
-        Succeeded,
+        #region Constructors
 
         /// <summary>
-        /// Training failed
+        /// Initializes a new instance of the <see cref="ClientError" /> class
         /// </summary>
-        Failed,
+        public ClientError()
+        {
+        }
+
+        #endregion Constructors
+
+        #region Properties
 
         /// <summary>
-        /// Training still in progress
+        /// Gets or sets the detailed error message and error code
         /// </summary>
-        Running
+        [DataMember(Name = "error")]
+        public ClientExceptionMessage Error
+        {
+            get;
+            set;
+        }
+
+        #endregion Properties
     }
 
-    #endregion Enumerations
-
     /// <summary>
-    /// The training status entity.
+    /// Represents detailed error message and error code
     /// </summary>
-    public class TrainingStatus
+    [DataContract]
+    public class ClientExceptionMessage
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets the status.
+        /// Gets or sets the detailed error code
         /// </summary>
-        /// <value>
-        /// The status.
-        /// </value>
-        public Status Status
+        [DataMember(Name = "code")]
+        public string ErrorCode
         {
-            get; set;
+            get;
+            set;
         }
 
         /// <summary>
-        /// Gets or sets the create time.
+        /// Gets or sets the detailed error message
         /// </summary>
-        /// <value>
-        /// The create time.
-        /// </value>
-        public DateTime CreatedDateTime
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Gets or sets the last action time.
-        /// </summary>
-        /// <value>
-        /// The last action time.
-        /// </value>
-        public DateTime LastActionDateTime
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Gets or sets the message.
-        /// </summary>
-        /// <value>
-        /// The message.
-        /// </value>
+        [DataMember(Name = "message")]
         public string Message
         {
-            get; set;
+            get;
+            set;
+        }
+
+        #endregion Properties
+    }
+
+    /// <summary>
+    /// Represents client error with detailed error message and error code
+    /// </summary>
+    [DataContract]
+    public class ServiceError
+    {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceError" /> class
+        /// </summary>
+        public ServiceError()
+        {
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the detailed error message and error code
+        /// </summary>
+        [DataMember(Name = "statusCode")]
+        public string ErrorCode
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the detailed error message and error code
+        /// </summary>
+        [DataMember(Name = "message")]
+        public string Message
+        {
+            get;
+            set;
         }
 
         #endregion Properties
