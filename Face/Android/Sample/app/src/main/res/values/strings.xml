@@ -89,4 +89,14 @@
     <string name="grouping_log">Grouping Log</string>
     <string name="identification_log">Identification Log</string>
 
+    <!-- Warning messages -->
+    <string name="person_name_empty_warning_message">Person name cannot be empty</string>
+    <string name="no_face_to_group">No faces to group</string>
+    <string name="no_person_group_selected_for_identification_warning">No person group selected</string>
+    <string name="face_cannot_be_identified">Unknown person</string>
+    <string name="user_provided_person_name">Person name</string>
+    <string name="user_provided_description_data">User data</string>
+    <string name="user_provided_person_group_name">Person group name</string>
+    <string name="user_provided_person_group_description_data">User data</string>
+
 </resources>

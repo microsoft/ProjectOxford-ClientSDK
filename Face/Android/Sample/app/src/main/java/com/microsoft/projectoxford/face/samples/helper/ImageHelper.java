@@ -88,7 +88,9 @@ public class ImageHelper {
             options.inSampleSize = 1;
             options.inSampleSize = calculateSampleSize(maxSideLength, IMAGE_MAX_SIDE_LENGTH);
             options.inJustDecodeBounds = false;
-            imageInputStream.close();
+            if (imageInputStream != null) {
+                imageInputStream.close();
+            }
 
             // Load the bitmap and resize it to the expected size length
             imageInputStream = contentResolver.openInputStream(imageUri);

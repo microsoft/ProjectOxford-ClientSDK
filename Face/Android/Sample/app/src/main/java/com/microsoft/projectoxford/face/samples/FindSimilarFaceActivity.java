@@ -204,8 +204,10 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
         listView.setAdapter(mFaceListAdapter);
 
         TextView textView = (TextView) findViewById(R.id.text_all_faces);
-        textView.setText("Face database: " + mFaceListAdapter.faces.size() + " face"
-                + (mFaceListAdapter.faces.size() > 1 ? "s": "")+ " in total");
+        textView.setText(String.format(
+                "Face database: %d face%s in total",
+                mFaceListAdapter.faces.size(),
+                mFaceListAdapter.faces.size() > 1 ? "s" : ""));
 
         refreshFindSimilarFaceButtonEnabledStatus();
 

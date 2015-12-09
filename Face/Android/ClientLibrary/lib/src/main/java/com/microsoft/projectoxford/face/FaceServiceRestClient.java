@@ -33,6 +33,7 @@
 package com.microsoft.projectoxford.face;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.projectoxford.face.common.RequestMethod;
 import com.microsoft.projectoxford.face.contract.AddPersistedFaceResult;
@@ -65,7 +66,7 @@ import java.util.UUID;
 
 public class FaceServiceRestClient implements FaceServiceClient {
     private final WebServiceRequest mRestCall;
-    private Gson mGson = new Gson();
+    private Gson mGson = new GsonBuilder().setDateFormat("M/d/yyyy h:m:s a").create();
 
     private static String sServiceHost = "https://api.projectoxford.ai/face/v1.0";
     private static final String DETECT_QUERY = "detect";

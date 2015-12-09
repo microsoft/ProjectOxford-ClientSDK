@@ -171,8 +171,10 @@ public class GroupingActivity extends ActionBarActivity {
             listView.setAdapter(mFaceListAdapter);
 
             TextView textView = (TextView) findViewById(R.id.text_all_faces);
-            textView.setText(mFaceListAdapter.faces.size() + " face"
-                    + (mFaceListAdapter.faces.size() > 1 ? "s": "")+ " in total");
+            textView.setText(String.format(
+                    "%d face%s in total",
+                    mFaceListAdapter.faces.size(),
+                    mFaceListAdapter.faces.size() > 1 ? "s" : ""));
         }
 
         if (mFaceListAdapter.faces.size() >= 2 && mFaceListAdapter.faces.size() <= 100) {
@@ -270,7 +272,7 @@ public class GroupingActivity extends ActionBarActivity {
             setAllButtonsEnabledStatus(false);
         } else {
             TextView textView = (TextView) findViewById(R.id.info);
-            textView.setText("No faces to group");
+            textView.setText(R.string.no_face_to_group);
         }
     }
 

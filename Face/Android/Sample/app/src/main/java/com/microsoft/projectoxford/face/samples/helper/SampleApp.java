@@ -33,28 +33,21 @@
 package com.microsoft.projectoxford.face.samples.helper;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
 import com.microsoft.projectoxford.face.samples.R;
+
 public class SampleApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;
-        mFaceServiceClient = new FaceServiceRestClient(getString(R.string.subscription_key));
-    }
-
-    public static Context getContext() {
-        return mContext;
+        sFaceServiceClient = new FaceServiceRestClient(getString(R.string.subscription_key));
     }
 
     public static FaceServiceClient getFaceServiceClient() {
-        return mFaceServiceClient;
+        return sFaceServiceClient;
     }
 
-    private static Context mContext;
-
-    private static FaceServiceClient mFaceServiceClient;
+    private static FaceServiceClient sFaceServiceClient;
 }

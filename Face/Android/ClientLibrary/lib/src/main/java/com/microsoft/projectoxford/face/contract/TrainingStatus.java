@@ -32,21 +32,45 @@
 //
 package com.microsoft.projectoxford.face.contract;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
+
 public class TrainingStatus {
+    public enum Status {
+        /**
+         * Training succeed.
+         */
+        @SerializedName("succeeded")
+        Succeeded,
+
+        /**
+         * Training succeed.
+         */
+        @SerializedName("failed")
+        Failed,
+
+        /**
+         * Training succeed.
+         */
+        @SerializedName("running")
+        Running
+    }
+
     /**
      * Training status.
      */
-    public String status;
+    public Status status;
 
     /**
      * Create date time.
      */
-    public String createdDateTime;
+    public Date createdDateTime;
 
     /**
      * Last action date time.
      */
-    public String lastActionDateTime;
+    public Date lastActionDateTime;
 
     /**
      * Message. Only when failed

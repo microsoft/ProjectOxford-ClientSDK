@@ -95,7 +95,12 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
                     FaceRectangle faceRect = mFaceGridViewAdapter.faceRectList.get(index);
                     addLog("Request: Adding face to person " + mPersonId);
                     // Start the request to add face.
-                    AddPersistedFaceResult result = faceServiceClient.addPersonFace(mPersonGroupId, personId, imageInputStream, "User Data", faceRect);
+                    AddPersistedFaceResult result = faceServiceClient.addPersonFace(
+                            mPersonGroupId,
+                            personId,
+                            imageInputStream,
+                            "User data",
+                            faceRect);
 
                     mFaceGridViewAdapter.faceIdList.set(index, result.persistedFaceId);
                 }

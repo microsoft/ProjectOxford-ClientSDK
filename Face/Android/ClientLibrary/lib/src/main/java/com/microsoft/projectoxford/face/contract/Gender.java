@@ -32,14 +32,12 @@
 //
 package com.microsoft.projectoxford.face.contract;
 
-public class FaceAttribute {
-    public double age;
+import com.google.gson.annotations.SerializedName;
 
-    public Gender gender;
+public enum Gender {
+    @SerializedName("male")
+    Male,
 
-    public double smile;
-
-    public FacialHair facialHair;
-
-    public HeadPose headPose;
+    @SerializedName("female")
+    Female
 }

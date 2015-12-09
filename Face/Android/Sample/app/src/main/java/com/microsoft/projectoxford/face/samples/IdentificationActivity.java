@@ -102,7 +102,7 @@ public class IdentificationActivity extends ActionBarActivity {
                 TrainingStatus trainingStatus = faceServiceClient.getPersonGroupTrainingStatus(
                         this.mPersonGroupId);     /* personGroupId */
 
-                if (!trainingStatus.status.equals("succeeded")) {
+                if (trainingStatus.status != TrainingStatus.Status.Succeeded) {
                     publishProgress("Person group training status is " + trainingStatus.status);
                     mSucceed = false;
                     return null;
@@ -196,14 +196,14 @@ public class IdentificationActivity extends ActionBarActivity {
         } else if (position < 0) {
             setIdentifyButtonEnabledStatus(false);
             textView.setTextColor(Color.RED);
-            textView.setText("No person group selected");
+            textView.setText(R.string.no_person_group_selected_for_identification_warning);
         } else {
             mPersonGroupId = mPersonGroupListAdapter.personGroupIdList.get(0);
             String personGroupName = StorageHelper.getPersonGroupName(
                     mPersonGroupId, IdentificationActivity.this);
             refreshIdentifyButtonEnabledStatus();
             textView.setTextColor(Color.BLACK);
-            textView.setText("Person group to use: " + personGroupName);
+            textView.setText(String.format("Person group to use: %s", personGroupName));
         }
     }
 
@@ -531,7 +531,7 @@ public class IdentificationActivity extends ActionBarActivity {
                             identity);
                 } else {
                     ((TextView) convertView.findViewById(R.id.text_detected_face)).setText(
-                            "Unknown person");
+                            R.string.face_cannot_be_identified);
                 }
             }
 
@@ -591,8 +591,11 @@ public class IdentificationActivity extends ActionBarActivity {
             int personNumberInGroup = StorageHelper.getAllPersonIds(
                     personGroupIdList.get(position), IdentificationActivity.this).size();
             ((TextView)convertView.findViewById(R.id.text_person_group)).setText(
-                    personGroupName + " (" + personNumberInGroup
-                            + " Person" + (personNumberInGroup > 0 ? "s)": ")"));
+                    String.format(
+                            "%s (%d Person%s",
+                            personGroupName,
+                            personNumberInGroup,
+                            personNumberInGroup > 0 ? "s)" : ")"));
 
             if (position == 0) {
                 ((TextView)convertView.findViewById(R.id.text_person_group)).setTextColor(

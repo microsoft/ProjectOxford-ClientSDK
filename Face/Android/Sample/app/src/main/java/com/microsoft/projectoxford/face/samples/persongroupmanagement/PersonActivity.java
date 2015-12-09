@@ -90,8 +90,11 @@ public class PersonActivity extends ActionBarActivity {
                 addLog("Request: Creating Person in person group" + params[0]);
 
                 // Start the request to creating person.
-                CreatePersonResult createPersonResult
-                        = faceServiceClient.createPerson(params[0], "Name", "User Data");
+                CreatePersonResult createPersonResult = faceServiceClient.createPerson(
+                        params[0],
+                        getString(R.string.user_provided_person_name),
+                        getString(R.string.user_provided_description_data));
+
                 return createPersonResult.personId.toString();
             } catch (Exception e) {
                 publishProgress(e.getMessage());
@@ -335,7 +338,7 @@ public class PersonActivity extends ActionBarActivity {
         EditText editTextPersonName = (EditText)findViewById(R.id.edit_person_name);
         String newPersonName = editTextPersonName.getText().toString();
         if (newPersonName.equals("")) {
-            textWarning.setText("Person name could not be empty");
+            textWarning.setText(R.string.person_name_empty_warning_message);
             return;
         }
 

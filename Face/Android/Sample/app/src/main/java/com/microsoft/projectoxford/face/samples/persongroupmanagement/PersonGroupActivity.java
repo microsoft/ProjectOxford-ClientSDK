@@ -92,7 +92,11 @@ public class PersonGroupActivity extends ActionBarActivity {
                 publishProgress("Syncing with server to add person group...");
 
                 // Start creating person group in server.
-                faceServiceClient.createPersonGroup(params[0], "Name", "User Data");
+                faceServiceClient.createPersonGroup(
+                        params[0],
+                        getString(R.string.user_provided_person_group_name),
+                        getString(R.string.user_provided_person_group_description_data));
+
                 return params[0];
             } catch (Exception e) {
                 publishProgress(e.getMessage());
