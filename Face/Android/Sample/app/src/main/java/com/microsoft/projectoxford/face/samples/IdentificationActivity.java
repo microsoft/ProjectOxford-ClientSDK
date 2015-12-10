@@ -592,10 +592,9 @@ public class IdentificationActivity extends ActionBarActivity {
                     personGroupIdList.get(position), IdentificationActivity.this).size();
             ((TextView)convertView.findViewById(R.id.text_person_group)).setText(
                     String.format(
-                            "%s (%d Person%s",
+                            "%s (Person count: %d)",
                             personGroupName,
-                            personNumberInGroup,
-                            personNumberInGroup > 0 ? "s)" : ")"));
+                            personNumberInGroup));
 
             if (position == 0) {
                 ((TextView)convertView.findViewById(R.id.text_person_group)).setTextColor(

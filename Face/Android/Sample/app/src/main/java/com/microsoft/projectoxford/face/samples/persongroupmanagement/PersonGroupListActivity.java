@@ -294,7 +294,7 @@ public class PersonGroupListActivity extends ActionBarActivity {
             int personNumberInGroup = StorageHelper.getAllPersonIds(
                     personGroupIdList.get(position), PersonGroupListActivity.this).size();
             ((TextView)convertView.findViewById(R.id.text_person_group)).setText(
-                    String.format("%s (%d Person%s", personGroupName, personNumberInGroup, personNumberInGroup > 0 ? "s)" : ")"));
+                    String.format("%s (Person count: %d)", personGroupName, personNumberInGroup));
 
             // set the checked status of the item
             CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkbox_person_group);
