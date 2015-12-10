@@ -32,21 +32,11 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using Microsoft.ProjectOxford.Speech.SpeakerIdentification;
 
 namespace SPIDIdentificationAPI_WPF_Samples
 {
@@ -57,11 +47,19 @@ namespace SPIDIdentificationAPI_WPF_Samples
     {
         private string _selectedFile = "";
 
+        private SpeechIdServiceClient _serviceClient;
+
+        /// <summary>
+        /// Constructor to initialize the Identify File page
+        /// </summary>
         public IdentifyFilePage()
         {
             InitializeComponent();
 
             _speakersListFrame.Navigate(SpeakersListPage.SpeakersList);
+
+            MainWindow window = (MainWindow)Application.Current.MainWindow;
+            _serviceClient = new SpeechIdServiceClient(window.ScenarioControl.SubscriptionKey);
         }
 
         private void _loadFileBtn_Click(object sender, RoutedEventArgs e)
@@ -86,9 +84,8 @@ namespace SPIDIdentificationAPI_WPF_Samples
             MainWindow window = (MainWindow)Application.Current.MainWindow;
             try
             {
-                IdentificationServiceHttpClientHelper requestHelper = new IdentificationServiceHttpClientHelper(window.ScenarioControl.SubscriptionKey);
                 if (_selectedFile == "")
-                    throw new Exception("Error: No File Selected.");
+                    throw new Exception("No File Selected.");
 
                 window.Log("Identifying File...");
                 IdentificationProfile[] selectedProfiles = SpeakersListPage.SpeakersList.GetSelectedProfiles();
@@ -102,17 +99,35 @@ namespace SPIDIdentificationAPI_WPF_Samples
                 using (Stream audioStream = File.OpenRead(_selectedFile))
                 {
                     _selectedFile = "";
-                    response = await requestHelper.IdentiftyAsync(audioStream, testProfileIds);
+                    response = await _serviceClient.IdentiftyAsync(audioStream, testProfileIds, TimeSpan.FromSeconds(5), 10);
                 }
                 window.Log("Identification Done.");
 
                 _identificationResultTxtBlk.Text = response.IdentifiedProfileId;
-                _identificationConfidenceTxtBlk.Text = response.Confidence;
+                switch (response.Confidence)
+                {
+                    case IdentificationConfidence.High:
+                        _identificationConfidenceTxtBlk.Text = "High";
+                        break;
+                    case IdentificationConfidence.Low:
+                        _identificationConfidenceTxtBlk.Text = "Low";
+                        break;
+                    case IdentificationConfidence.None:
+                        _identificationConfidenceTxtBlk.Text = "Can't Identify Audio";
+                        break;
+                    case IdentificationConfidence.Normal:
+                        _identificationConfidenceTxtBlk.Text = "Normal";
+                        break;
+                }
                 _identificationResultStckPnl.Visibility = Visibility.Visible;
+            }
+            catch (IdentificationException ex)
+            {
+                window.Log("Speaker Identification Error: " + ex.Message);
             }
             catch (Exception ex)
             {
-                window.Log(ex.Message);
+                window.Log("Error: " + ex.Message);
             }
         }
 

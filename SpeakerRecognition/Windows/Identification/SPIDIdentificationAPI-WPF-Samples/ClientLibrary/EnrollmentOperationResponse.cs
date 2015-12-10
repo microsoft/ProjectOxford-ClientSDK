@@ -4,7 +4,7 @@
 // 
 // Project Oxford: http://ProjectOxford.ai
 // 
-// ProjectOxford SDK Github:
+// Project Oxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 // 
 // Copyright (c) Microsoft Corporation
@@ -29,28 +29,43 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
+// 
 
-namespace SPIDVerificationAPI_WPF_Sample
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// A class encapsulating the response returned by the service as a result of an enrollment request
+    /// Encapsulates the enrollment operation response
     /// </summary>
-    public class EnrollmentResponse
+    internal class EnrollmentOperationResponse
     {
         /// <summary>
-        /// The number of remaining enrollments for a profile
+        /// The enrollment operation status
         /// </summary>
-        public int RemainingEnrollments { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public OperationStatus Status { get; set; }
 
         /// <summary>
-        /// The verification phrase used by the speaker
+        /// The created date time for the enrollment request
         /// </summary>
-        public string Phrase { get; set; }
+        public DateTime CreatedDateTime { get; set; }
 
         /// <summary>
-        /// The status of The enrollment for the speaker
+        /// The last action date time for the enrollment request
         /// </summary>
-        public string EnrollmentStatus { get; set; }
+        public DateTime LastActionDateTime { get; set; }
+
+        /// <summary>
+        /// The message in case of failure
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// The enrollment result
+        /// </summary>
+        public EnrollmentResponse ProcessingResult { get; set; }
     }
 }

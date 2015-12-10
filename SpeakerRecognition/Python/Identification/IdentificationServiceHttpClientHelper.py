@@ -33,7 +33,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import http.client
 import urllib.parse
 import json
-import re
 import time
 from contextlib import closing
 import IdentificationProfile
@@ -169,9 +168,7 @@ class IdentificationServiceHttpClientHelper:
             # Prepare the request
             if len(test_profile_ids) < 1:
                 raise Exception('Error identifying file: no test profile IDs are provided.')
-            test_profile_ids_str = test_profile_ids[0]
-            for i in range(1, len(test_profile_ids)):
-                test_profile_ids_str += ',' + test_profile_ids[i]
+            test_profile_ids_str = ','.join(test_profile_ids)
             request_url = '{0}?identificationProfileIds={1}'.format(
                 self._IDENTIFICATION_URI,
                 urllib.parse.quote(test_profile_ids_str))
@@ -207,17 +204,15 @@ class IdentificationServiceHttpClientHelper:
         operation_url -- the url to poll for the operation status
         """
         try:
-            # Split the operation URL to a base URL and a request URL
-            base_url = re.compile('https?://', re.IGNORECASE).sub('', operation_url)
-            request_url = re.search('/.*', base_url).group()
-            base_url = re.compile('/.*', re.IGNORECASE).sub('', base_url)
+            # Parse the operation URL
+            parsed_url = urllib.parse.urlparse(operation_url)
 
             while True:
                 # Send the request
                 res, message = self._send_request(
                     'GET',
-                    base_url,
-                    request_url,
+                    parsed_url.netloc,
+                    parsed_url.path,
                     self._JSON_CONTENT_HEADER_VALUE)
 
                 if res.status != self._STATUS_OK:

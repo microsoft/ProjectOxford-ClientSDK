@@ -4,7 +4,7 @@
 // 
 // Project Oxford: http://ProjectOxford.ai
 // 
-// Project Oxford SDK Github:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 // 
 // Copyright (c) Microsoft Corporation
@@ -29,39 +29,23 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
+//
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// Encapsulates the response for the indentification operation
+    /// A class encapsulating an exception raised during speaker profile reset
     /// </summary>
-    internal class IdentificationOperationResponse
+    public class ResetProfileException : Exception
     {
         /// <summary>
-        /// The identification operation status
+        /// A public constructor creating the exception with a specified message
         /// </summary>
-        public string Status { get; set; }
-
-        /// <summary>
-        /// The created date time for the identification request
-        /// </summary>
-        public string CreatedDateTime { get; set; }
-
-        /// <summary>
-        /// The last action date time for the identification request
-        /// </summary>
-        public string LastActionDateTime { get; set; }
-
-        /// <summary>
-        /// The identification result
-        /// </summary>
-        public IdentificationResponse ProcessingResult { get; set; }
+        /// <param name="message">Exception message</param>
+        public ResetProfileException(string message) : base(message)
+        {
+        }
     }
 }

@@ -31,53 +31,41 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-using System.Windows;
-using SampleUserControlLibrary;
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Encapsulates the response for the indentification operation
     /// </summary>
-    public partial class MainWindow : Window
+    internal class IdentificationOperationResponse
     {
         /// <summary>
-        /// Gets the sample scenario control
+        /// The identification operation status
         /// </summary>
-        public SampleScenarios ScenarioControl
-        {
-            get
-            {
-                return _scenariosControl;
-            }
-        }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public OperationStatus Status { get; set; }
 
         /// <summary>
-        /// Constructor to initalize the Main Window
+        /// The created date time for the identification request
         /// </summary>
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            _scenariosControl.SampleTitle = "Speaker Identification Sample";
-            _scenariosControl.SampleScenarioList = new Scenario[]
-            {
-                new Scenario{ Title = "Enroll Speakers", PageClass = typeof(EnrollSpeakersPage)},
-                new Scenario{ Title = "Identify File", PageClass = typeof(IdentifyFilePage)},
-            };
-
-            _scenariosControl.Disclaimer = "Microsoft will receive the audio files you upload and may use them to improve Speaker Recognition API and related services. By submitting an audio, you confirm you have consent from everyone in it.";
-
-            _scenariosControl.ClearLog();
-        }
+        public DateTime CreatedDateTime { get; set; }
 
         /// <summary>
-        /// Writes a message in the status area
+        /// The last action date time for the identification request
         /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Log(string message)
-        {
-            _scenariosControl.Log(message);
-        }
+        public DateTime LastActionDateTime { get; set; }
+
+        /// <summary>
+        /// The message in case of failure
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// The identification result
+        /// </summary>
+        public IdentificationResponse ProcessingResult { get; set; }
     }
 }

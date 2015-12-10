@@ -4,7 +4,7 @@
 // 
 // Project Oxford: http://ProjectOxford.ai
 // 
-// Project Oxford SDK Github:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,53 +31,52 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-using System.Windows;
-using SampleUserControlLibrary;
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SPIDIdentificationAPI_WPF_Samples
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
+
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// A class encapsulating the response returned by the service on creating or retrieving a speaker profile
     /// </summary>
-    public partial class MainWindow : Window
+    public class SpeakerProfile
     {
         /// <summary>
-        /// Gets the sample scenario control
+        /// An enum encoding the profile enrollment status
         /// </summary>
-        public SampleScenarios ScenarioControl
-        {
-            get
-            {
-                return _scenariosControl;
-            }
-        }
+        public enum ProfileEnrollmentStatus { Enrolling, Training, Enrolled };
 
         /// <summary>
-        /// Constructor to initalize the Main Window
+        /// The speaker profile Id
         /// </summary>
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            _scenariosControl.SampleTitle = "Speaker Identification Sample";
-            _scenariosControl.SampleScenarioList = new Scenario[]
-            {
-                new Scenario{ Title = "Enroll Speakers", PageClass = typeof(EnrollSpeakersPage)},
-                new Scenario{ Title = "Identify File", PageClass = typeof(IdentifyFilePage)},
-            };
-
-            _scenariosControl.Disclaimer = "Microsoft will receive the audio files you upload and may use them to improve Speaker Recognition API and related services. By submitting an audio, you confirm you have consent from everyone in it.";
-
-            _scenariosControl.ClearLog();
-        }
+        public string VerificationProfileId { get; set; }
 
         /// <summary>
-        /// Writes a message in the status area
+        /// The speaker profile locale.
         /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Log(string message)
-        {
-            _scenariosControl.Log(message);
-        }
+        public string Locale { get; set; }
+
+        /// <summary>
+        /// The enrollments count For a given speaker
+        /// </summary>
+        public int EnrollmentsCount { get; set; }
+        /// <summary>
+        /// The timestamp of profile creation
+        /// </summary>
+        public DateTime CreateTimestamp { get; set; }
+
+        /// <summary>
+        /// The timestamp for the last used time for the given profile
+        /// </summary>
+        public DateTime LastUsedTimestamp { get; set; }
+
+        /// <summary>
+        /// The profile enrolling status
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ProfileEnrollmentStatus ProfileStatus { get; set; }
     }
 }

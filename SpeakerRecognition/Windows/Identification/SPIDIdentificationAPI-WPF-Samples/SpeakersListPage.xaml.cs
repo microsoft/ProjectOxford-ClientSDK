@@ -33,18 +33,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.ProjectOxford.Speech.SpeakerIdentification;
 
 namespace SPIDIdentificationAPI_WPF_Samples
 {
@@ -54,6 +47,8 @@ namespace SPIDIdentificationAPI_WPF_Samples
     public partial class SpeakersListPage : Page
     {
         private bool _speakersLoaded = false;
+
+        private SpeechIdServiceClient _serviceClient;
 
         private static SpeakersListPage s_speakersList = new SpeakersListPage();
 
@@ -71,8 +66,6 @@ namespace SPIDIdentificationAPI_WPF_Samples
         private SpeakersListPage()
         {
             InitializeComponent();
-
-            MainWindow window = (MainWindow)Application.Current.MainWindow;
         }
 
         /// <summary>
@@ -93,18 +86,21 @@ namespace SPIDIdentificationAPI_WPF_Samples
             MainWindow window = (MainWindow)Application.Current.MainWindow;
             try
             {
-                IdentificationServiceHttpClientHelper requestHelper = new IdentificationServiceHttpClientHelper(window.ScenarioControl.SubscriptionKey);
                 window.Log("Retreiving All Profiles...");
-                List<IdentificationProfile> allProfiles = await requestHelper.GetAllProfilesAsync();
+                List<IdentificationProfile> allProfiles = await _serviceClient.GetAllProfilesAsync();
                 window.Log("All Profiles Retreived.");
                 _speakersListView.Items.Clear();
                 foreach (IdentificationProfile profile in allProfiles)
                     AddSpeaker(profile);
                 _speakersLoaded = true;
             }
+            catch (GetProfileException ex)
+            {
+                window.Log("Error Retreiving Profiles: " + ex.Message);
+            }
             catch (Exception ex)
             {
-                window.Log(ex.Message);
+                window.Log("Error: " + ex.Message);
             }
         }
 
@@ -113,20 +109,30 @@ namespace SPIDIdentificationAPI_WPF_Samples
             await UpdateAllSpeakersAsync();
         }
 
+        /// <summary>
+        /// Enables single selection mode for the speakers list
+        /// </summary>
         public void SetSingleSelectionMode()
         {
             _speakersListView.SelectionMode = SelectionMode.Single;
         }
 
+        /// <summary>
+        /// Enables multiple selection mode for the speakers list
+        /// </summary>
         public void SetMultipleSelectionMode()
         {
             _speakersListView.SelectionMode = SelectionMode.Multiple;
         }
 
+        /// <summary>
+        /// Gets the selected profiles from the speakers list
+        /// </summary>
+        /// <returns>An array of the selected identification profiles</returns>
         public IdentificationProfile[] GetSelectedProfiles()
         {
             if (_speakersListView.SelectedItems.Count == 0)
-                throw new Exception("Error: No Speakers Selected.");
+                throw new Exception("No Speakers Selected.");
             IdentificationProfile[] result = new IdentificationProfile[_speakersListView.SelectedItems.Count];
             for (int i = 0; i < result.Length; i++)
                 result[i] = _speakersListView.SelectedItems[i] as IdentificationProfile;
@@ -137,6 +143,8 @@ namespace SPIDIdentificationAPI_WPF_Samples
         {
             if (_speakersLoaded == false)
             {
+                MainWindow window = (MainWindow)Application.Current.MainWindow;
+                _serviceClient = new SpeechIdServiceClient(window.ScenarioControl.SubscriptionKey);
                 await UpdateAllSpeakersAsync();
             }
         }

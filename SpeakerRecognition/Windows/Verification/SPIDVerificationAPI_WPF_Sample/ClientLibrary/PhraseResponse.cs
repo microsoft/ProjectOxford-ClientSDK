@@ -31,16 +31,17 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace SPIDVerificationAPI_WPF_Sample
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// An object encapsulating an error message
+    /// A class encapsulating the result returned by the service as a result of enumerating all possible enrollment
+    /// and verification phrases
     /// </summary>
-    internal class ErrorResponse
+    public class PhraseResponse
     {
         /// <summary>
-        /// A string representation of the error message
+        /// The enrollment or verification phrase
         /// </summary>
-        public string Message { get; set; }
+        public string Phrase;
     }
 }

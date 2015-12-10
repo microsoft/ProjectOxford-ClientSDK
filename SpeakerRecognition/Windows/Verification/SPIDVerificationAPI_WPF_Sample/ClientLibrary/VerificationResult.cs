@@ -4,7 +4,7 @@
 // 
 // Project Oxford: http://ProjectOxford.ai
 // 
-// Project Oxford SDK Github:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,37 +31,38 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace SPIDIdentificationAPI_WPF_Samples
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// Encapsulates the enrollment response for a profile
+    /// A class encapsulating the response returned from the service as a result of a verification request
     /// </summary>
-    public class EnrollmentResponse
+    public class VerificationResult
     {
         /// <summary>
-        /// The enrollment status of the profile
+        /// An enum encoding the confidence level of verification
         /// </summary>
-        public string EnrollmentStatus { get; set; }
+        public enum ConfidenceLevel { Low, Normal, High};
 
         /// <summary>
-        /// The remaining enrollment speech time
+        /// An enum encoding the speaker verification result
         /// </summary>
-        public string RemainingEnrollmentSpeechTime { get; set; }
+        public enum SpeakerVerificationResult { Accept, Reject}
 
         /// <summary>
-        /// The total speech time in the submitted enrollment
+        /// The status of the verification result
         /// </summary>
-        public string SpeechTime { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SpeakerVerificationResult Result { get; set; }
 
         /// <summary>
-        /// The total enrollment speech time submitted for this profile (includes previous enrollment files sent)
+        /// The confidence of the verification result
         /// </summary>
-        public string EnrollmentSpeechTime { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ConfidenceLevel Confidence { get; set; }
     }
 }

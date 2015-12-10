@@ -29,30 +29,23 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
-
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+//
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SPIDVerificationAPI_WPF_Sample
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// A class encapsulating the response returned from the service as a result of a verification request
+    /// A class encapsulating an exception raised during profile creation
     /// </summary>
-    public class VerificationResult
+    public class ProfileCreationException : Exception
     {
         /// <summary>
-        /// The status of the verification result
+        /// A public constructor creating the exception with a specified message
         /// </summary>
-        public string Result { get; set; }
-        /// <summary>
-        /// The confidence of the verification result
-        /// </summary>
-        public string Confidence { get; set; }
+        /// <param name="message">Exception message</param>
+        public ProfileCreationException(string message) : base(message)
+        {
+        }
     }
 }

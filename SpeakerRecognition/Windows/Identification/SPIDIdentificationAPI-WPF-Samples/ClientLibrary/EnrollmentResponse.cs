@@ -4,7 +4,7 @@
 // 
 // Project Oxford: http://ProjectOxford.ai
 // 
-// ProjectOxford SDK Github:
+// Project Oxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,44 +31,35 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SPIDVerificationAPI_WPF_Sample
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// A class encapsulating the response returned by the service on creating or retrieving a speaker profile
+    /// Encapsulates the enrollment response for a profile
     /// </summary>
-    public class SpeakerProfile
+    public class EnrollmentResponse
     {
         /// <summary>
-        /// The speaker profile Id
+        /// The enrollment status of the profile
         /// </summary>
-        public string VerificationProfileId { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EnrollmentStatus EnrollmentStatus { get; set; }
+
         /// <summary>
-        /// The speaker profile locale.
+        /// The remaining enrollment speech time
         /// </summary>
-        public string Locale { get; set; }
+        public double RemainingEnrollmentSpeechTime { get; set; }
+
         /// <summary>
-        /// The enrollments count For a given speaker
+        /// The total speech time in the submitted enrollment
         /// </summary>
-        public int EnrollmentsCount { get; set; }
+        public double SpeechTime { get; set; }
+
         /// <summary>
-        /// The timestamp of profile creation
+        /// The total enrollment speech time submitted for this profile (includes previous enrollment files sent)
         /// </summary>
-        public DateTime CreateTimestamp { get; set; }
-        /// <summary>
-        /// The timestamp for the last used time for the given profile
-        /// </summary>
-        public DateTime LastUsedTimestamp { get; set; }
-        /// <summary>
-        /// The profile enrolling status
-        /// </summary>
-        public string ProfileStatus { get; set; }
+        public double EnrollmentSpeechTime { get; set; }
     }
 }

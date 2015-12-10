@@ -63,15 +63,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClientLibrary\EnrollmentException.cs" />
+    <Compile Include="ClientLibrary\PhrasesException.cs" />
+    <Compile Include="ClientLibrary\ProfileCreationException.cs" />
+    <Compile Include="ClientLibrary\ResetProfileException.cs" />
+    <Compile Include="ClientLibrary\VerificationException.cs" />
     <Compile Include="EnrollPage.xaml.cs">
       <DependentUpon>EnrollPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EnrollmentVerificationError.cs" />
-    <Compile Include="ErrorResponse.cs" />
-    <Compile Include="PhraseResponse.cs" />
-    <Compile Include="SpeakerProfile.cs" />
-    <Compile Include="VerificationResult.cs" />
-    <Compile Include="VerificationServiceHTTPClientHelper.cs" />
+    <Compile Include="ClientLibrary\EnrollmentVerificationError.cs" />
+    <Compile Include="ClientLibrary\ErrorResponse.cs" />
+    <Compile Include="ClientLibrary\PhraseResponse.cs" />
+    <Compile Include="ClientLibrary\SpeakerProfile.cs" />
+    <Compile Include="ClientLibrary\VerificationResult.cs" />
+    <Compile Include="ClientLibrary\SpeechVerServiceClient.cs" />
     <Compile Include="VerifySpeakerPage.xaml.cs">
       <DependentUpon>VerifySpeakerPage.xaml</DependentUpon>
     </Compile>
@@ -94,7 +99,7 @@
     <Compile Include="CreateProfilePage.xaml.cs">
       <DependentUpon>CreateProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EnrollmentResponse.cs" />
+    <Compile Include="ClientLibrary\EnrollmentResponse.cs" />
     <Compile Include="IsolatedStorageHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -41,6 +41,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.ProjectOxford.Speech.SpeakerVerification;
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -55,7 +56,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         private WaveIn _waveIn;
         private WaveFileWriter _fileWriter;
         private Stream _stream;
-        private VerificationServiceHttpClientHelper _helper;
+        private SpeechVerServiceClient _serviceClient;
 
         /// <summary>
         /// Creates a new EnrollPage 
@@ -65,12 +66,11 @@ namespace SPIDVerificationAPI_WPF_Sample
         {
             InitializeComponent();
             _subscriptionKey = ((MainWindow)Application.Current.MainWindow).SubscriptionKey;
-            _helper = new VerificationServiceHttpClientHelper();
-            _helper.SubscriptionKey = _subscriptionKey;
+            _serviceClient = new SpeechVerServiceClient(_subscriptionKey);
             initializeRecorder();
             initializeSpeaker();
         }
-        
+
         /// <summary>
         /// Initialize the speaker information
         /// </summary>
@@ -92,7 +92,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 setStatus("Using profile Id: " + _speakerId);
                 refreshPhrases();
                 string enrollmentsStatus = _storageHelper.readValue(MainWindow.SPEAKER_ENROLLMENTS);
-                if ((enrollmentsStatus!= null)&&(enrollmentsStatus.Equals("Done")))
+                if ((enrollmentsStatus != null) && (enrollmentsStatus.Equals("Done")))
                 {
                     resetBtn.IsEnabled = true;
                 }
@@ -155,7 +155,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             try
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                EnrollmentResponse response = await _helper.EnrollStreamAsync(audioStream, _speakerId);
+                EnrollmentResponse response = await _serviceClient.EnrollStreamAsync(audioStream, _speakerId);
                 sw.Stop();
                 _remainingEnrollments = response.RemainingEnrollments;
                 setStatus("Enrollment Done, Elapsed Time: " + sw.Elapsed);
@@ -163,7 +163,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 setStatus("Your phrase: " + response.Phrase);
                 setUserPhrase(response.Phrase);
                 remEnrollText.Text = response.RemainingEnrollments.ToString();
-                if(response.RemainingEnrollments == 0)
+                if (response.RemainingEnrollments == 0)
                 {
                     MessageBox.Show("You have now completed the minimum number of enrollments. You may perform verification or add more enrollments", "Speaker enrolled");
                 }
@@ -171,9 +171,13 @@ namespace SPIDVerificationAPI_WPF_Sample
                 IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
                 _storageHelper.writeValue(MainWindow.SPEAKER_ENROLLMENTS, "Done");
             }
-            catch (Exception exception)
+            catch (EnrollmentException exception)
             {
-                setStatus(exception.Message);
+                setStatus("Cannot enroll speaker: " + exception.Message);
+            }
+            catch (Exception gexp)
+            {
+                setStatus("Error: " + gexp.Message);
             }
         }
 
@@ -232,7 +236,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             try
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                SpeakerProfile response = await _helper.CreateProfileAsync("en-us");
+                SpeakerProfile response = await _serviceClient.CreateProfileAsync("en-us");
                 sw.Stop();
                 setStatus("Profile Created, Elapsed Time: " + sw.Elapsed);
                 IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
@@ -240,9 +244,14 @@ namespace SPIDVerificationAPI_WPF_Sample
                 _speakerId = response.VerificationProfileId;
                 return true;
             }
-            catch (Exception exception)
+            catch (ProfileCreationException exception)
             {
-                setStatus(exception.Message);
+                setStatus("Cannot create profile: " + exception.Message);
+                return false;
+            }
+            catch (Exception gexp)
+            {
+                setStatus("Error: " + gexp.Message);
                 return false;
             }
         }
@@ -256,7 +265,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             record.IsEnabled = false;
             try
             {
-                List<PhraseResponse> phrases = await _helper.GetAllAvailablePhrases("en-us");
+                List<PhraseResponse> phrases = await _serviceClient.GetAllAvailablePhrases("en-us");
                 foreach (PhraseResponse phrase in phrases)
                 {
                     ListBoxItem item = new ListBoxItem();
@@ -265,9 +274,13 @@ namespace SPIDVerificationAPI_WPF_Sample
                 }
                 setStatus("Retrieving available phrases done");
             }
+            catch (PhrasesException exp)
+            {
+                setStatus("Cannot retrieve phrases: " + exp.Message);
+            }
             catch (Exception e)
             {
-                setStatus(e.Message);
+                setStatus("Error: " + e.Message);
             }
             record.IsEnabled = true;
         }
@@ -279,9 +292,10 @@ namespace SPIDVerificationAPI_WPF_Sample
         /// <param name="e">A set of arguments sent to the listener</param>
         private async void resetBtn_Click(object sender, RoutedEventArgs e)
         {
-            try {
+            try
+            {
                 setStatus("Resetting profile: " + _speakerId);
-                await _helper.ResetProfileAsync(_speakerId);
+                await _serviceClient.ResetProfileAsync(_speakerId);
                 setStatus("Profile reset");
                 IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
                 _storageHelper.writeValue(MainWindow.SPEAKER_ENROLLMENTS, "Empty");
@@ -289,9 +303,13 @@ namespace SPIDVerificationAPI_WPF_Sample
                 remEnrollText.Text = "";
                 verPhraseText.Text = "";
             }
-            catch (Exception exp)
+            catch (ResetProfileException exp)
             {
                 setStatus("Cannot reset Profile: " + exp.Message);
+            }
+            catch (Exception gexp)
+            {
+                setStatus("Error: " + gexp.Message);
             }
         }
     }

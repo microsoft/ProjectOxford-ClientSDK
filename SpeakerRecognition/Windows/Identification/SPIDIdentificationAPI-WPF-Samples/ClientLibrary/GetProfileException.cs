@@ -32,21 +32,22 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// Encapsulates the profile creation response
+    /// A class encapsulating an exception raised while getting a profile
+    /// from the server
     /// </summary>
-    public class CreateProfileResponse
+    public class GetProfileException : Exception
     {
         /// <summary>
-        /// Speaker profile ID
+        /// Constructor to create an exception with a specified message
         /// </summary>
-        public string IdentificationProfileId { get; set; }
+        /// <param name="message">Exception message</param>
+        public GetProfileException(string message)
+            : base(message)
+        {
+        }
     }
 }

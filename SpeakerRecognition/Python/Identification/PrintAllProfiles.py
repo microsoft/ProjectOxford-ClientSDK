@@ -46,15 +46,15 @@ def print_all_profiles(subscription_key):
 
     print('Profile ID, Locale, Enrollment Speech Time, Remaining Enrollment Speech Time,'
           ' Created Date Time, Last Action Date Time, Enrollment Status')
-    for i in range(0, len(profiles)):
+    for profile in profiles:
         print('{0}, {1}, {2}, {3}, {4}, {5}, {6}'.format(
-            profiles[i].get_profile_id(),
-            profiles[i].get_locale(),
-            profiles[i].get_enrollment_speech_time(),
-            profiles[i].get_remaining_enrollment_time(),
-            profiles[i].get_created_date_time(),
-            profiles[i].get_last_action_date_time(),
-            profiles[i].get_enrollment_status()))
+            profile.get_profile_id(),
+            profile.get_locale(),
+            profile.get_enrollment_speech_time(),
+            profile.get_remaining_enrollment_time(),
+            profile.get_created_date_time(),
+            profile.get_last_action_date_time(),
+            profile.get_enrollment_status()))
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

@@ -32,21 +32,11 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using Microsoft.ProjectOxford.Speech.SpeakerIdentification;
 
 namespace SPIDIdentificationAPI_WPF_Samples
 {
@@ -56,11 +46,20 @@ namespace SPIDIdentificationAPI_WPF_Samples
     public partial class EnrollSpeakersPage : Page
     {
         private string _selectedFile = "";
+
+        private SpeechIdServiceClient _serviceClient;
+
+        /// <summary>
+        /// Constructor to initialize the Enroll Speakers page
+        /// </summary>
         public EnrollSpeakersPage()
         {
             InitializeComponent();
 
             _speakersListFrame.Navigate(SpeakersListPage.SpeakersList);
+
+            MainWindow window = (MainWindow)Application.Current.MainWindow;
+            _serviceClient = new SpeechIdServiceClient(window.ScenarioControl.SubscriptionKey);
         }
 
         private async void _addBtn_Click(object sender, RoutedEventArgs e)
@@ -68,18 +67,25 @@ namespace SPIDIdentificationAPI_WPF_Samples
             MainWindow window = (MainWindow)Application.Current.MainWindow;
             try
             {
-                IdentificationServiceHttpClientHelper requestHelper = new IdentificationServiceHttpClientHelper(window.ScenarioControl.SubscriptionKey);
                 window.Log("Creating Speaker Profile...");
-                CreateProfileResponse creationResponse = await requestHelper.CreateProfileAsync(_localeCmb.Text);
+                CreateProfileResponse creationResponse = await _serviceClient.CreateProfileAsync(_localeCmb.Text);
                 window.Log("Speaker Profile Created.");
                 window.Log("Retreiving The Created Profile...");
-                IdentificationProfile profile = await requestHelper.GetProfileAsync(creationResponse.IdentificationProfileId);
+                IdentificationProfile profile = await _serviceClient.GetProfileAsync(creationResponse.IdentificationProfileId);
                 window.Log("Speaker Profile Retreived.");
                 SpeakersListPage.SpeakersList.AddSpeaker(profile);
             }
+            catch (ProfileCreationException ex)
+            {
+                window.Log("Profile Creation Error: " + ex.Message);
+            }
+            catch (GetProfileException ex)
+            {
+                window.Log("Error Retreiving The Profile: " + ex.Message);
+            }
             catch (Exception ex)
             {
-                window.Log(ex.Message);
+                window.Log("Error: " + ex.Message);
             }
         }
 
@@ -105,23 +111,26 @@ namespace SPIDIdentificationAPI_WPF_Samples
             MainWindow window = (MainWindow)Application.Current.MainWindow;
             try
             {
-                IdentificationServiceHttpClientHelper requestHelper = new IdentificationServiceHttpClientHelper(window.ScenarioControl.SubscriptionKey);
                 if (_selectedFile == "")
-                    throw new Exception("Error: No File Selected.");
+                    throw new Exception("No File Selected.");
 
                 window.Log("Enrolling Speaker...");
                 IdentificationProfile[] selectedProfiles = SpeakersListPage.SpeakersList.GetSelectedProfiles();
                 using (Stream audioStream = File.OpenRead(_selectedFile))
                 {
                     _selectedFile = "";
-                    await requestHelper.EnrollAsync(audioStream, selectedProfiles[0].IdentificationProfileId);
+                    await _serviceClient.EnrollAsync(audioStream, selectedProfiles[0].IdentificationProfileId, TimeSpan.FromSeconds(5), 10);
                 }
                 window.Log("Enrollment Done.");
                 await SpeakersListPage.SpeakersList.UpdateAllSpeakersAsync();
             }
+            catch (EnrollmentException ex)
+            {
+                window.Log("Enrollment Error: " + ex.Message);
+            }
             catch (Exception ex)
             {
-                window.Log(ex.Message);
+                window.Log("Error: " + ex.Message);
             }
         }
 

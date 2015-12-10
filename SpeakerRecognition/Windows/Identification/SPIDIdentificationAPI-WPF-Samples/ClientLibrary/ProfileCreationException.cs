@@ -32,36 +32,21 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// Encapsulates the enrollment operation response
+    /// A class encapsulating an exception raised during profile creation
     /// </summary>
-    internal class EnrollmentOperationResponse
+    public class ProfileCreationException : Exception
     {
         /// <summary>
-        /// The enrollment operation status
+        /// Constructor to create an exception with a specified message
         /// </summary>
-        public string Status { get; set; }
-
-        /// <summary>
-        /// The created date time for the enrollment request
-        /// </summary>
-        public string CreatedDateTime { get; set; }
-
-        /// <summary>
-        /// The last action date time for the enrollment request
-        /// </summary>
-        public string LastActionDateTime { get; set; }
-
-        /// <summary>
-        /// The enrollment result
-        /// </summary>
-        public EnrollmentResponse ProcessingResult { get; set; }
+        /// <param name="message">Exception message</param>
+        public ProfileCreationException(string message)
+            : base(message)
+        {
+        }
     }
 }

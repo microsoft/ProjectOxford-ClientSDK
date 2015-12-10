@@ -4,7 +4,7 @@
 // 
 // Project Oxford: http://ProjectOxford.ai
 // 
-// Project Oxford SDK Github:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 // 
 // Copyright (c) Microsoft Corporation
@@ -29,55 +29,37 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
+//
 
-using System.Windows;
-using SampleUserControlLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// A class encapsulating the response returned by the service as a result of an enrollment request
     /// </summary>
-    public partial class MainWindow : Window
+    public class EnrollmentResponse
     {
         /// <summary>
-        /// Gets the sample scenario control
+        /// An enum encoding the enrolling status of the speaker
         /// </summary>
-        public SampleScenarios ScenarioControl
-        {
-            get
-            {
-                return _scenariosControl;
-            }
-        }
+        public enum SpeakerEnrollmentStatus { Enrolling, Training, Enrolled};
 
         /// <summary>
-        /// Constructor to initalize the Main Window
+        /// The number of remaining enrollments for a profile
         /// </summary>
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            _scenariosControl.SampleTitle = "Speaker Identification Sample";
-            _scenariosControl.SampleScenarioList = new Scenario[]
-            {
-                new Scenario{ Title = "Enroll Speakers", PageClass = typeof(EnrollSpeakersPage)},
-                new Scenario{ Title = "Identify File", PageClass = typeof(IdentifyFilePage)},
-            };
-
-            _scenariosControl.Disclaimer = "Microsoft will receive the audio files you upload and may use them to improve Speaker Recognition API and related services. By submitting an audio, you confirm you have consent from everyone in it.";
-
-            _scenariosControl.ClearLog();
-        }
+        public int RemainingEnrollments { get; set; }
 
         /// <summary>
-        /// Writes a message in the status area
+        /// The verification phrase used by the speaker
         /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Log(string message)
-        {
-            _scenariosControl.Log(message);
-        }
+        public string Phrase { get; set; }
+
+        /// <summary>
+        /// The status of The enrollment for the speaker
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SpeakerEnrollmentStatus EnrollmentStatus { get; set; }
     }
 }

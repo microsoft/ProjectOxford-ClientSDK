@@ -31,53 +31,25 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-using System.Windows;
-using SampleUserControlLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// This encapsulates the response of the identification service
     /// </summary>
-    public partial class MainWindow : Window
+    public class IdentificationResponse
     {
         /// <summary>
-        /// Gets the sample scenario control
+        /// The identified profile ID
         /// </summary>
-        public SampleScenarios ScenarioControl
-        {
-            get
-            {
-                return _scenariosControl;
-            }
-        }
+        public string IdentifiedProfileId { get; set; }
 
         /// <summary>
-        /// Constructor to initalize the Main Window
+        /// The confidence of the identification
         /// </summary>
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            _scenariosControl.SampleTitle = "Speaker Identification Sample";
-            _scenariosControl.SampleScenarioList = new Scenario[]
-            {
-                new Scenario{ Title = "Enroll Speakers", PageClass = typeof(EnrollSpeakersPage)},
-                new Scenario{ Title = "Identify File", PageClass = typeof(IdentifyFilePage)},
-            };
-
-            _scenariosControl.Disclaimer = "Microsoft will receive the audio files you upload and may use them to improve Speaker Recognition API and related services. By submitting an audio, you confirm you have consent from everyone in it.";
-
-            _scenariosControl.ClearLog();
-        }
-
-        /// <summary>
-        /// Writes a message in the status area
-        /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Log(string message)
-        {
-            _scenariosControl.Log(message);
-        }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public IdentificationConfidence Confidence { get; set; }
     }
 }

@@ -32,26 +32,50 @@
 // 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// This encapsulates the response of the identification service
+    /// This class represents the response returning from the service
     /// </summary>
-    public class IdentificationResponse
+    public class IdentificationProfile
     {
         /// <summary>
-        /// The identified profile ID
+        /// Speaker profile ID
         /// </summary>
-        public string IdentifiedProfileId { get; set; }
+        public string IdentificationProfileId { get; set; }
 
         /// <summary>
-        /// The confidence of the identification
+        /// User profile locale
         /// </summary>
-        public string Confidence { get; set; }
+        public string Locale { get; set; }
+
+        /// <summary>
+        /// The total length of audio submitted for enrollment
+        /// </summary>
+        public double EnrollmentSpeechTime { get; set; }
+
+        /// <summary>
+        /// The remaining audio length for the user to be enrolled
+        /// </summary>
+        public double RemainingEnrollmentSpeechTime { get; set; }
+
+        /// <summary>
+        /// User profile creation date and time
+        /// </summary>
+        public DateTime CreatedDateTime { get; set; }
+
+        /// <summary>
+        /// The date and time of the last action performed on this user profile
+        /// </summary>
+        public DateTime LastActionDateTime { get; set; }
+
+        /// <summary>
+        /// The enrollment status of the profile
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EnrollmentStatus EnrollmentStatus { get; set; }
     }
 }

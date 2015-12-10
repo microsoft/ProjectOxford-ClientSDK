@@ -31,53 +31,31 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-using System.Windows;
-using SampleUserControlLibrary;
-
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerIdentification
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// An enum to encapsulate the identification confidence
     /// </summary>
-    public partial class MainWindow : Window
+    public enum IdentificationConfidence
     {
         /// <summary>
-        /// Gets the sample scenario control
+        /// Can't identify the audio among provided profiles.
         /// </summary>
-        public SampleScenarios ScenarioControl
-        {
-            get
-            {
-                return _scenariosControl;
-            }
-        }
+        None,
 
         /// <summary>
-        /// Constructor to initalize the Main Window
+        /// The confidence of the identification is low.
         /// </summary>
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            _scenariosControl.SampleTitle = "Speaker Identification Sample";
-            _scenariosControl.SampleScenarioList = new Scenario[]
-            {
-                new Scenario{ Title = "Enroll Speakers", PageClass = typeof(EnrollSpeakersPage)},
-                new Scenario{ Title = "Identify File", PageClass = typeof(IdentifyFilePage)},
-            };
-
-            _scenariosControl.Disclaimer = "Microsoft will receive the audio files you upload and may use them to improve Speaker Recognition API and related services. By submitting an audio, you confirm you have consent from everyone in it.";
-
-            _scenariosControl.ClearLog();
-        }
+        Low,
 
         /// <summary>
-        /// Writes a message in the status area
+        /// The confidence of the identification is normal.
         /// </summary>
-        /// <param name="message">The message to log</param>
-        public void Log(string message)
-        {
-            _scenariosControl.Log(message);
-        }
+        Normal,
+
+        /// <summary>
+        /// The confidence of the identification is high.
+        /// </summary>
+        High
     }
 }

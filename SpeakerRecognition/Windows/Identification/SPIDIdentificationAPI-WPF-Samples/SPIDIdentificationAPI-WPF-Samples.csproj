@@ -59,6 +59,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClientLibrary\IdentificationConfidence.cs" />
+    <Compile Include="ClientLibrary\EnrollmentException.cs" />
+    <Compile Include="ClientLibrary\EnrollmentStatus.cs" />
+    <Compile Include="ClientLibrary\GetProfileException.cs" />
+    <Compile Include="ClientLibrary\IdentificationException.cs" />
+    <Compile Include="ClientLibrary\OperationStatus.cs" />
+    <Compile Include="ClientLibrary\ProfileCreationException.cs" />
     <Compile Include="SpeakersListPage.xaml.cs">
       <DependentUpon>SpeakersListPage.xaml</DependentUpon>
     </Compile>
@@ -78,16 +85,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CreateProfileResponse.cs" />
-    <Compile Include="EnrollmentOperationResponse.cs" />
-    <Compile Include="EnrollmentResponse.cs" />
+    <Compile Include="ClientLibrary\CreateProfileResponse.cs" />
+    <Compile Include="ClientLibrary\EnrollmentOperationResponse.cs" />
+    <Compile Include="ClientLibrary\EnrollmentResponse.cs" />
     <Compile Include="EnrollSpeakersPage.xaml.cs">
       <DependentUpon>EnrollSpeakersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IdentificationOperationResponse.cs" />
-    <Compile Include="IdentificationProfile.cs" />
-    <Compile Include="IdentificationResponse.cs" />
-    <Compile Include="IdentificationServiceHttpClientHelper.cs" />
+    <Compile Include="ClientLibrary\IdentificationOperationResponse.cs" />
+    <Compile Include="ClientLibrary\IdentificationProfile.cs" />
+    <Compile Include="ClientLibrary\IdentificationResponse.cs" />
+    <Compile Include="ClientLibrary\SpeechIdServiceClient.cs" />
     <Compile Include="IdentifyFilePage.xaml.cs">
       <DependentUpon>IdentifyFilePage.xaml</DependentUpon>
     </Compile>

@@ -4,7 +4,7 @@
 // 
 // Project Oxford: http://ProjectOxford.ai
 // 
-// Project Oxford SDK Github:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 // 
 // Copyright (c) Microsoft Corporation
@@ -29,54 +29,23 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
+//
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SPIDIdentificationAPI_WPF_Samples
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// This class represents the response returning from the service
+    /// A class encapsulating an exception raised during phrases retrieval
     /// </summary>
-    public class IdentificationProfile
+    public class PhrasesException : Exception
     {
         /// <summary>
-        /// Speaker profile ID
+        /// A public constructor creating the exception with a specified message
         /// </summary>
-        public string IdentificationProfileId { get; set; }
-
-        /// <summary>
-        /// User profile locale
-        /// </summary>
-        public string Locale { get; set; }
-
-        /// <summary>
-        /// The total length of audio submitted for enrollment
-        /// </summary>
-        public string EnrollmentSpeechTime { get; set; }
-
-        /// <summary>
-        /// The remaining audio length for the user to be enrolled
-        /// </summary>
-        public string RemainingEnrollmentSpeechTime { get; set; }
-
-        /// <summary>
-        /// User profile creation date and time
-        /// </summary>
-        public string CreatedDateTime { get; set; }
-
-        /// <summary>
-        /// The date and time of the last action performed on this user profile
-        /// </summary>
-        public string LastActionDateTime { get; set; }
-
-        /// <summary>
-        /// The enrollment status of the profile
-        /// </summary>
-        public string EnrollmentStatus { get; set; }
+        /// <param name="message">Exception message</param>
+        public PhrasesException(string message) : base(message)
+        {
+        }
     }
 }

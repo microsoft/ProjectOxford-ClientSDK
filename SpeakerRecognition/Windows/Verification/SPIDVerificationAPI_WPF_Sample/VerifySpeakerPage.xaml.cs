@@ -40,6 +40,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.ProjectOxford.Speech.SpeakerVerification;
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -53,7 +54,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         private WaveIn _waveIn;
         private WaveFileWriter _fileWriter;
         private Stream _stream;
-        private VerificationServiceHttpClientHelper _helper;
+        private SpeechVerServiceClient _serviceClient;
         /// <summary>
         /// Initialization constructor for the verify speaker page
         /// </summary>
@@ -72,8 +73,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             else
             {
                 initializeRecorder();
-                _helper = new VerificationServiceHttpClientHelper();
-                _helper.SubscriptionKey = _subscriptionKey;
+                _serviceClient = new SpeechVerServiceClient(_subscriptionKey);
                 string userPhrase = _storageHelper.readValue(MainWindow.SPEAKER_PHRASE_FILENAME);
                 userPhraseTxt.Text = userPhrase;
                 stopRecordBtn.IsEnabled = false;
@@ -107,7 +107,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             //Dispose recorder object
             _waveIn.Dispose();
             initializeRecorder();
-            enrollSpeaker(_stream);
+            verifySpeaker(_stream);
         }
 
         /// <summary>
@@ -127,20 +127,20 @@ namespace SPIDVerificationAPI_WPF_Sample
         }
 
         /// <summary>
-        /// Enrolls the audio of a speaker
+        /// Verifies the speaker by using the audio
         /// </summary>
         /// <param name="audioStream">The audio stream</param>
-        private async void enrollSpeaker(Stream audioStream)
+        private async void verifySpeaker(Stream audioStream)
         {
             try
             {
                 setStatus("Verifying..");
                 Stopwatch sw = Stopwatch.StartNew();
-                VerificationResult response = await _helper.VerifyAsync(audioStream, _speakerId);
+                VerificationResult response = await _serviceClient.VerifyAsync(audioStream, _speakerId);
                 sw.Stop();
                 setStatus("Verification Done, Elapsed Time: " + sw.Elapsed);
-                statusResTxt.Text = response.Result;
-                if (response.Result.Equals("Accept"))
+                statusResTxt.Text = GetResponseValue(response.Result);
+                if (response.Result == VerificationResult.SpeakerVerificationResult.Accept)
                 {
                     statusResTxt.Background = Brushes.Green;
                     statusResTxt.Foreground = Brushes.White;
@@ -150,11 +150,15 @@ namespace SPIDVerificationAPI_WPF_Sample
                     statusResTxt.Background = Brushes.Red;
                     statusResTxt.Foreground = Brushes.White;
                 }
-                confTxt.Text = response.Confidence;
+                confTxt.Text = GetConfidenceValue(response.Confidence);
             }
-            catch (Exception exception)
+            catch (VerificationException exception)
             {
-                setStatus(exception.Message);
+                setStatus("Cannot verify speaker: " + exception.Message);
+            }
+            catch(Exception e)
+            {
+                setStatus("Error: " + e);
             }
         }
 
@@ -190,6 +194,44 @@ namespace SPIDVerificationAPI_WPF_Sample
             stopRecordBtn.IsEnabled = true;
             _waveIn.StartRecording();
             setStatus("Recording...");
+        }
+
+        /// <summary>
+        /// Get a string representation of confidence level enum
+        /// </summary>
+        /// <param name="level">The value of the confidence level</param>
+        /// <returns></returns>
+        private String GetConfidenceValue(VerificationResult.ConfidenceLevel level)
+        {
+            switch (level)
+            {
+                case VerificationResult.ConfidenceLevel.High:
+                    return "High";
+                case VerificationResult.ConfidenceLevel.Normal:
+                    return "Normal";
+                case VerificationResult.ConfidenceLevel.Low:
+                    return "Low";
+                default:
+                    return "Unknown value";
+            }
+        }
+
+        /// <summary>
+        /// Get a string representation of the enum encoding the verification value
+        /// </summary>
+        /// <param name="result">Enum value encoding the verification result</param>
+        /// <returns></returns>
+        private String GetResponseValue(VerificationResult.SpeakerVerificationResult result)
+        {
+            switch (result)
+            {
+                case VerificationResult.SpeakerVerificationResult.Accept:
+                    return "Accept";
+                case VerificationResult.SpeakerVerificationResult.Reject:
+                    return "Reject";
+                default:
+                    return "Unknown value";
+            }
         }
     }
 }

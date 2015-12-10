@@ -29,24 +29,23 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// 
+//
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SPIDVerificationAPI_WPF_Sample
+namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
 {
     /// <summary>
-    /// A class encapsulating the error code returned by either a verification or enrollment response
+    /// A class encapsulating an exception raised during speaker verification
     /// </summary>
-    internal class EnrollmentVerificationError
+    public class VerificationException : Exception
     {
         /// <summary>
-        /// ErrorResponse object encapsulating details about the error
+        /// A public constructor creating the exception with a specified message
         /// </summary>
-        public ErrorResponse Error { get; set; }
+        /// <param name="message">Exception message</param>
+        public VerificationException(string message) : base(message)
+        {
+        }
     }
 }
