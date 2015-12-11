@@ -38,13 +38,18 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class VerifyResult
     {
+        #region Properties
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is same.
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is same; otherwise, <c>false</c>.
         /// </value>
-        public bool IsIdentical { get; set; }
+        public bool IsIdentical
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the confidence.
@@ -52,6 +57,11 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The confidence.
         /// </value>
-        public double Confidence { get; set; }
+        public double Confidence
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }

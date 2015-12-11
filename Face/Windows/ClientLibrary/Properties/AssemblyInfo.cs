@@ -30,17 +30,16 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 using System.Reflection;
 using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft.ProjectOxford.Face")]
-[assembly: AssemblyDescription("Microsoft Project Oxford Face API Client Library")]
+[assembly: AssemblyDescription("Microsoft.ProjectOxford.Face")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft ProjectOxford")]
 [assembly: AssemblyCopyright("Copyright © 2015 Microsoft")]
 [assembly: AssemblyTrademark("Microsoft")]
 [assembly: NeutralResourcesLanguage("en")]
 
-[assembly: AssemblyVersion("0.5.0.2")]
-[assembly: AssemblyFileVersion("0.5.0.2")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
