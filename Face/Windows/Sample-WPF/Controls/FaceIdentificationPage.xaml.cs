@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK Github:
+// ProjectOxford SDK GitHub:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -30,6 +30,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,29 +41,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 
 using ClientContract = Microsoft.ProjectOxford.Face.Contract;
 
 namespace Microsoft.ProjectOxford.Face.Controls
 {
-
     /// <summary>
     /// Interaction logic for FaceDetection.xaml
     /// </summary>
-    public partial class FaceIdentification : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class FaceIdentificationPage : Page, INotifyPropertyChanged
     {
         #region Fields
 
         /// <summary>
         /// Description dependency property
         /// </summary>
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceIdentification));
-
-        /// <summary>
-        /// Output dependency property
-        /// </summary>
-        public static readonly DependencyProperty OutputProperty = DependencyProperty.Register("Output", typeof(string), typeof(FaceIdentification));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceIdentificationPage));
 
         /// <summary>
         /// Temporary group name for create person database
@@ -89,9 +84,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FaceIdentification" /> class
+        /// Initializes a new instance of the <see cref="FaceIdentificationPage" /> class
         /// </summary>
-        public FaceIdentification()
+        public FaceIdentificationPage()
         {
             InitializeComponent();
         }
@@ -144,22 +139,6 @@ namespace Microsoft.ProjectOxford.Face.Controls
             get
             {
                 return 300;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets output
-        /// </summary>
-        public string Output
-        {
-            get
-            {
-                return (string)GetValue(OutputProperty);
-            }
-
-            set
-            {
-                SetValue(OutputProperty, value);
             }
         }
 
@@ -221,29 +200,29 @@ namespace Microsoft.ProjectOxford.Face.Controls
             bool groupExists = false;
 
             MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-            string subscriptionKey = mainWindow.SubscriptionKey;
+            string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
 
             var faceServiceClient = new FaceServiceClient(subscriptionKey);
 
             // Test whether the group already exists
             try
             {
-                Output = Output.AppendLine(string.Format("Request: Group {0} will be used for build person database. Checking whether group exists.", GroupName));
+                MainWindow.Log("Request: Group {0} will be used for build person database. Checking whether group exists.", GroupName);
 
                 await faceServiceClient.GetPersonGroupAsync(GroupName);
                 groupExists = true;
-                Output = Output.AppendLine(string.Format("Response: Group {0} exists.", GroupName));
+                MainWindow.Log("Response: Group {0} exists.", GroupName);
             }
-            catch (ClientException ex)
+            catch (FaceAPIException ex)
             {
-                if (ex.Error.Code != "PersonGroupNotFound")
+                if (ex.ErrorCode != "PersonGroupNotFound")
                 {
-                    Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
+                    MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
                     return;
                 }
                 else
                 {
-                    Output = Output.AppendLine(string.Format("Response: Group {0} does not exist before.", GroupName));
+                    MainWindow.Log("Response: Group {0} does not exist before.", GroupName);
                 }
             }
 
@@ -261,14 +240,14 @@ namespace Microsoft.ProjectOxford.Face.Controls
             }
 
             // Show folder picker
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
+            System.Windows.Forms.FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
             var result = dlg.ShowDialog();
 
-            // Set the suggestion count is intent to minimum the data preparetion step only,
+            // Set the suggestion count is intent to minimum the data preparation step only,
             // it's not corresponding to service side constraint
             const int SuggestionCount = 15;
 
-            if (result == DialogResult.OK)
+            if (result == System.Windows.Forms.DialogResult.OK)
             {
                 // User picked a root person database folder
                 // Clear person database
@@ -278,22 +257,22 @@ namespace Microsoft.ProjectOxford.Face.Controls
 
                 // Call create person group REST API
                 // Create person group API call will failed if group with the same name already exists
-                Output = Output.AppendLine(string.Format("Request: Creating group \"{0}\"", GroupName));
+                MainWindow.Log("Request: Creating group \"{0}\"", GroupName);
                 try
                 {
                     await faceServiceClient.CreatePersonGroupAsync(GroupName, GroupName);
-                    Output = Output.AppendLine(string.Format("Response: Success. Group \"{0}\" created", GroupName));
+                    MainWindow.Log("Response: Success. Group \"{0}\" created", GroupName);
                 }
-                catch (ClientException ex)
+                catch (FaceAPIException ex)
                 {
-                    Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
+                    MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
                     return;
                 }
 
                 int processCount = 0;
                 bool forceContinue = false;
 
-                Output = Output.AppendLine("Request: Preparing faces for identification, detecting faces in choosen folder.");
+                MainWindow.Log("Request: Preparing faces for identification, detecting faces in chosen folder.");
 
                 // Enumerate top level directories, each directory contains one person's images
                 foreach (var dir in System.IO.Directory.EnumerateDirectories(dlg.SelectedPath))
@@ -303,10 +282,13 @@ namespace Microsoft.ProjectOxford.Face.Controls
                     Person p = new Person();
                     p.PersonName = tag;
 
-                    // Call create person REST API, the new create person id will be returned
                     var faces = new ObservableCollection<Face>();
                     p.Faces = faces;
-                    Persons.Add(p);
+
+                    // Call create person REST API, the new create person id will be returned
+                    MainWindow.Log("Request: Creating person \"{0}\"", p.PersonName);
+                    p.PersonId = (await faceServiceClient.CreatePersonAsync(GroupName, p.PersonName)).PersonId.ToString();
+                    MainWindow.Log("Response: Success. Person \"{0}\" (PersonID:{1}) created", p.PersonName, p.PersonId);
 
                     // Enumerate images under the person folder, call detection
                     foreach (var img in System.IO.Directory.EnumerateFiles(dir, "*.jpg", System.IO.SearchOption.AllDirectories))
@@ -316,19 +298,19 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             {
                                 var imgPath = obj as string;
 
-                                // Call detection REST API
                                 using (var fStream = File.OpenRead(imgPath))
                                 {
                                     try
                                     {
-                                        var face = await faceServiceClient.DetectAsync(fStream);
-                                    return new Tuple<string, ClientContract.Face[]>(imgPath, face);
+                                        // Update person faces on server side
+                                        var persistFace = await faceServiceClient.AddPersonFaceAsync(GroupName, Guid.Parse(p.PersonId), fStream, imgPath);
+                                        return new Tuple<string, ClientContract.AddPersistedFaceResult>(imgPath, persistFace);
                                     }
-                                    catch (ClientException)
+                                    catch (FaceAPIException)
                                     {
                                         // Here we simply ignore all detection failure in this sample
-                                        // You may handle these exceptions by check the Error.Code and Error.Message property for ClientException object
-                                        return new Tuple<string, ClientContract.Face[]>(imgPath, null);
+                                        // You may handle these exceptions by check the Error.Error.Code and Error.Message property for ClientException object
+                                        return new Tuple<string, ClientContract.AddPersistedFaceResult>(imgPath, null);
                                     }
                                 }
                             },
@@ -341,19 +323,16 @@ namespace Microsoft.ProjectOxford.Face.Controls
                                     return;
                                 }
 
-                                foreach (var f in detectionResult.Item2)
-                                {
-                                    this.Dispatcher.Invoke(
-                                        new Action<ObservableCollection<Face>, string, ClientContract.Face>(UIHelper.UpdateFace),
-                                        faces,
-                                        detectionResult.Item1,
-                                        f);
-                                }
+                                this.Dispatcher.Invoke(
+                                    new Action<ObservableCollection<Face>, string, ClientContract.AddPersistedFaceResult>(UIHelper.UpdateFace),
+                                    faces,
+                                    detectionResult.Item1,
+                                    detectionResult.Item2);
                             }));
                         if (processCount >= SuggestionCount && !forceContinue)
                         {
-                            var continueProcess = System.Windows.Forms.MessageBox.Show("The images loaded have reached the recommended count, may take long time if proceed. Would you like to continue to load images?", "Warning", MessageBoxButtons.YesNo);
-                            if (continueProcess == DialogResult.Yes)
+                            var continueProcess = System.Windows.Forms.MessageBox.Show("The images loaded have reached the recommended count, may take long time if proceed. Would you like to continue to load images?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo);
+                            if (continueProcess == System.Windows.Forms.DialogResult.Yes)
                             {
                                 forceContinue = true;
                             }
@@ -364,24 +343,17 @@ namespace Microsoft.ProjectOxford.Face.Controls
                         }
                     }
 
+                    Persons.Add(p);
+
                     await Task.WhenAll(tasks);
                 }
 
-                Output = Output.AppendLine(string.Format("Response: Success. Total {0} faces are detected.", Persons.Sum(p => p.Faces.Count)));
+                MainWindow.Log("Response: Success. Total {0} faces are detected.", Persons.Sum(p => p.Faces.Count));
 
                 try
                 {
-                    // Update person faces on server side
-                    foreach (var p in Persons)
-                    {
-                        // Call person update REST API
-                        Output = Output.AppendLine(string.Format("Request: Creating person \"{0}\"", p.PersonName));
-                        p.PersonId = (await faceServiceClient.CreatePersonAsync(GroupName, p.Faces.Select(face => Guid.Parse(face.FaceId)).ToArray(), p.PersonName)).PersonId.ToString();
-                        Output = Output.AppendLine(string.Format("Response: Success. Person \"{0}\" (PersonID:{1}) created, {2} face(s) added.", p.PersonName, p.PersonId, p.Faces.Count));
-                    }
-
                     // Start train person group
-                    Output = Output.AppendLine(string.Format("Request: Training group \"{0}\"", GroupName));
+                    MainWindow.Log("Request: Training group \"{0}\"", GroupName);
                     await faceServiceClient.TrainPersonGroupAsync(GroupName);
 
                     // Wait until train completed
@@ -389,16 +361,16 @@ namespace Microsoft.ProjectOxford.Face.Controls
                     {
                         await Task.Delay(1000);
                         var status = await faceServiceClient.GetPersonGroupTrainingStatusAsync(GroupName);
-                        Output = Output.AppendLine(string.Format("Response: {0}. Group \"{1}\" training process is {2}", "Success", GroupName, status.Status));
-                        if (status.Status != "running")
+                        MainWindow.Log("Response: {0}. Group \"{1}\" training process is {2}", "Success", GroupName, status.Status);
+                        if (status.Status != Contract.Status.Running)
                         {
                             break;
                         }
                     }
                 }
-                catch (ClientException ex)
+                catch (FaceAPIException ex)
                 {
-                    Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
+                    MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
                 }
             }
         }
@@ -428,7 +400,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 var imageInfo = UIHelper.GetImageInfoForRendering(dlg.FileName);
 
                 MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                string subscriptionKey = mainWindow.SubscriptionKey;
+                string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
 
                 var faceServiceClient = new FaceServiceClient(subscriptionKey);
 
@@ -445,7 +417,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             TargetFaces.Add(face);
                         }
 
-                        Output = Output.AppendLine(string.Format("Request: Identifying {0} face(s) in group \"{1}\"", faces.Length, GroupName));
+                        MainWindow.Log("Request: Identifying {0} face(s) in group \"{1}\"", faces.Length, GroupName);
 
                         // Identify each face
                         // Call identify REST API, the result contains identified person information
@@ -471,11 +443,11 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             outString.AppendFormat("Face {0} is identified as {1}. ", face.FaceId, face.PersonName);
                         }
 
-                        Output = Output.AppendLine(string.Format("Response: Success. {0}", outString));
+                        MainWindow.Log("Response: Success. {0}", outString);
                     }
-                    catch (ClientException ex)
+                    catch (FaceAPIException ex)
                     {
-                        Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
+                        MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
                     }
                 }
             }
