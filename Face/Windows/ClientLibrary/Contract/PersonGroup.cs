@@ -38,13 +38,18 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class PersonGroup
     {
+        #region Properties
+
         /// <summary>
         /// Gets or sets the person group identifier.
         /// </summary>
         /// <value>
         /// The person group identifier.
         /// </value>
-        public string PersonGroupId { get; set; }
+        public string PersonGroupId
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the name.
@@ -52,7 +57,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The name of the person group.
         /// </value>
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the user data.
@@ -60,6 +68,11 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The user data.
         /// </value>
-        public string UserData { get; set; }
+        public string UserData
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }
