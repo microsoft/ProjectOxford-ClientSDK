@@ -3,8 +3,7 @@ Microsoft Project Oxford Video client SDK
 
 This repo contains the client libraries that demonstrate Microsoft’s cloud-based
 video algorithms for tracking faces, detecting motion, and stabilizing video. 
-These APIs allow you to build more personalized and intelligent apps by understanding and automatically transforming your video content.
-See the demo [our demo
+These APIs allow you to build more personalized and intelligent apps by understanding and automatically transforming your video content. See [our demo
 page](<https://www.projectoxford.ai/demo/video#stabilization>).
 
 ### Face Detection and Tracking
@@ -62,3 +61,4 @@ All Project Oxford SDKs and samples are licensed with the MIT License. For more 
 [LICENSE](</LICENSE.md>).
 
 Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).
+
