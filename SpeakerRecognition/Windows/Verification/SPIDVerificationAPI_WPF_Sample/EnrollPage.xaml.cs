@@ -56,7 +56,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         private WaveIn _waveIn;
         private WaveFileWriter _fileWriter;
         private Stream _stream;
-        private SpeechVerServiceClient _serviceClient;
+        private SpeechVerificationServiceClient _serviceClient;
 
         /// <summary>
         /// Creates a new EnrollPage 
@@ -66,7 +66,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         {
             InitializeComponent();
             _subscriptionKey = ((MainWindow)Application.Current.MainWindow).SubscriptionKey;
-            _serviceClient = new SpeechVerServiceClient(_subscriptionKey);
+            _serviceClient = new SpeechVerificationServiceClient(_subscriptionKey);
             initializeRecorder();
             initializeSpeaker();
         }

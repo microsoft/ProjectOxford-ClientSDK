@@ -54,7 +54,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         private WaveIn _waveIn;
         private WaveFileWriter _fileWriter;
         private Stream _stream;
-        private SpeechVerServiceClient _serviceClient;
+        private SpeechVerificationServiceClient _serviceClient;
         /// <summary>
         /// Initialization constructor for the verify speaker page
         /// </summary>
@@ -73,7 +73,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             else
             {
                 initializeRecorder();
-                _serviceClient = new SpeechVerServiceClient(_subscriptionKey);
+                _serviceClient = new SpeechVerificationServiceClient(_subscriptionKey);
                 string userPhrase = _storageHelper.readValue(MainWindow.SPEAKER_PHRASE_FILENAME);
                 userPhraseTxt.Text = userPhrase;
                 stopRecordBtn.IsEnabled = false;

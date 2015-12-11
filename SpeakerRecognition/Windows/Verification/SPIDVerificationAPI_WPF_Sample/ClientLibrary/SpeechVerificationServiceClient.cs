@@ -45,7 +45,7 @@ namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
     /// <summary>
     /// A service client class to perform all the verification service calls.
     /// </summary>
-    public class SpeechVerServiceClient
+    public class SpeechVerificationServiceClient
     {
         /// <summary>
         /// Address of the verification profiles API
@@ -101,7 +101,7 @@ namespace Microsoft.ProjectOxford.Speech.SpeakerVerification
         /// Creates a new service client using a subscription key
         /// </summary>
         /// <param name="SubscriptionKey">The subscription key</param>
-        public SpeechVerServiceClient(string SubscriptionKey)
+        public SpeechVerificationServiceClient(string SubscriptionKey)
         {
             _DefaultHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(_JSON_HEADER));
             _DefaultHttpClient.DefaultRequestHeaders.Add(_OCP_SUBSCRIPTION_KEY_HEADER, SubscriptionKey);

@@ -76,14 +76,10 @@
     <Compile Include="ClientLibrary\PhraseResponse.cs" />
     <Compile Include="ClientLibrary\SpeakerProfile.cs" />
     <Compile Include="ClientLibrary\VerificationResult.cs" />
-    <Compile Include="ClientLibrary\SpeechVerServiceClient.cs" />
+    <Compile Include="ClientLibrary\SpeechVerificationServiceClient.cs" />
     <Compile Include="VerifySpeakerPage.xaml.cs">
       <DependentUpon>VerifySpeakerPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="CreateProfilePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="EnrollPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,9 +91,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CreateProfilePage.xaml.cs">
-      <DependentUpon>CreateProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientLibrary\EnrollmentResponse.cs" />
     <Compile Include="IsolatedStorageHelper.cs" />
