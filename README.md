@@ -46,7 +46,7 @@ your choice:
 
 -   [Speech](</Speech/>)
 
--   [Speech](</SpeakerRcognition/>)
+-   [Speaker Recognition](</SpeakerRecognition/>)
 
 -   [Video](</Video/>)
 
