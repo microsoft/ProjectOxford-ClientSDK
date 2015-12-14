@@ -46,9 +46,9 @@ your choice:
 
 -   [Speech](</Speech/>)
 
--   [Speech](</SpeakerrRcognition/>)
+-   [Speech](</SpeakerRcognition/>)
 
--   [Video](</video/>)
+-   [Video](</Video/>)
 
 **Don't see what you're looking for?** We're working on expanding our offerings and would love to hear from you what SDKs you want to see next. Let us know on the [Project Oxford Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>).
 
