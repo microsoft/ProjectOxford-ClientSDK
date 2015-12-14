@@ -58,7 +58,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +67,8 @@ public class FaceServiceRestClient implements FaceServiceClient {
     private final WebServiceRequest mRestCall;
     private Gson mGson = new GsonBuilder().setDateFormat("M/d/yyyy h:m:s a").create();
 
-    private static String sServiceHost = "https://api.projectoxford.ai/face/v1.0";
+    private String mServiceHost = "https://api.projectoxford.ai/face/v1.0";
+
     private static final String DETECT_QUERY = "detect";
     private static final String VERIFY_QUERY = "verify";
     private static final String TRAIN_QUERY = "train";
@@ -88,7 +88,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     }
 
     public FaceServiceRestClient(String serviceHost, String subscriptionKey) {
-        sServiceHost = serviceHost;
+        mServiceHost = serviceHost;
         mRestCall = new WebServiceRequest(subscriptionKey);
     }
 
@@ -114,7 +114,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
             params.put("returnFaceAttributes", faceAttributesStringBuilder.toString());
         }
 
-        String path = String.format("%s/%s", sServiceHost, DETECT_QUERY);
+        String path = String.format("%s/%s", mServiceHost, DETECT_QUERY);
         String uri = WebServiceRequest.getUrl(path, params);
 
         params.clear();
@@ -150,7 +150,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
             params.put("returnFaceAttributes", faceAttributesStringBuilder.toString());
         }
 
-        String path = String.format("%s/%s", sServiceHost, DETECT_QUERY);
+        String path = String.format("%s/%s", mServiceHost, DETECT_QUERY);
         String uri = WebServiceRequest.getUrl(path, params);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -175,7 +175,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     public VerifyResult verify(UUID faceId1, UUID faceId2) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
 
-        String uri = String.format("%s/%s", sServiceHost, VERIFY_QUERY);
+        String uri = String.format("%s/%s", mServiceHost, VERIFY_QUERY);
         params.put("faceId1", faceId1);
         params.put("faceId2", faceId2);
 
@@ -187,7 +187,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     public IdentifyResult[] identity(String personGroupId, UUID[] faceIds, int maxNumOfCandidatesReturned) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
 
-        String uri = String.format("%s/%s", sServiceHost, IDENTIFY_QUERY);
+        String uri = String.format("%s/%s", mServiceHost, IDENTIFY_QUERY);
         params.put("personGroupId", personGroupId);
         params.put("faceIds", faceIds);
         params.put("maxNumOfCandidatesReturned", maxNumOfCandidatesReturned);
@@ -203,14 +203,14 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public void trainPersonGroup(String personGroupId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, TRAIN_QUERY);
+        String uri = String.format("%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, TRAIN_QUERY);
         mRestCall.request(uri, RequestMethod.POST, params, null);
     }
 
     @Override
     public TrainingStatus getPersonGroupTrainingStatus(String personGroupId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, TRAINING_QUERY);
+        String uri = String.format("%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, TRAINING_QUERY);
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
         return mGson.fromJson(json, TrainingStatus.class);
     }
@@ -218,7 +218,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public void createPersonGroup(String personGroupId, String name, String userData) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId);
+        String uri = String.format("%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId);
         params.put("name", name);
         if (userData != null) {
             params.put("userData", userData);
@@ -230,14 +230,14 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public void deletePersonGroup(String personGroupId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId);
+        String uri = String.format("%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId);
         mRestCall.request(uri, RequestMethod.DELETE, params, null);
     }
 
     @Override
     public void updatePersonGroup(String personGroupId, String name, String userData) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId);
+        String uri = String.format("%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId);
         params.put("name", name);
         if (userData != null) {
             params.put("userData", userData);
@@ -249,7 +249,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public PersonGroup getPersonGroup(String personGroupId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId);
+        String uri = String.format("%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId);
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
         return mGson.fromJson(json, PersonGroup.class);
     }
@@ -257,7 +257,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public PersonGroup[] getPersonGroups() throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s", sServiceHost, PERSON_GROUPS_QUERY);
+        String uri = String.format("%s/%s", mServiceHost, PERSON_GROUPS_QUERY);
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
 
         Type listType = new TypeToken<List<PersonGroup>>() {
@@ -270,7 +270,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     public CreatePersonResult createPerson(String personGroupId, String name, String userData) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
 
-        String uri = String.format("%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY);
+        String uri = String.format("%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY);
         params.put("name", name);
         if (userData != null) {
             params.put("userData", userData);
@@ -284,7 +284,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     public Person getPerson(String personGroupId, UUID personId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
 
-        String uri = String.format("%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId.toString());
+        String uri = String.format("%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId.toString());
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
         return mGson.fromJson(json, Person.class);
     }
@@ -293,7 +293,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     public Person[] getPersons(String personGroupId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
 
-        String uri = String.format("%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY);
+        String uri = String.format("%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY);
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
         Type listType = new TypeToken<List<Person>>() {
         }.getType();
@@ -305,7 +305,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     public AddPersistedFaceResult addPersonFace(String personGroupId, UUID personId, String url, String userData, FaceRectangle targetFace) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
 
-        String path = String.format("%s/%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY);
+        String path = String.format("%s/%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY);
         if (userData != null && userData.length() > 0) {
             params.put("userData", userData);
         }
@@ -328,7 +328,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     {
         Map<String, Object> params = new HashMap<>();
 
-        String path = String.format("%s/%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY);
+        String path = String.format("%s/%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY);
         if (userData != null && userData.length() > 0) {
             params.put("userData", userData);
         }
@@ -357,7 +357,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public PersonFace getPersonFace(String personGroupId, UUID personId, UUID persistedFaceId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY,  persistedFaceId);
+        String uri = String.format("%s/%s/%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY,  persistedFaceId);
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
         return mGson.fromJson(json, PersonFace.class);
     }
@@ -369,7 +369,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
             params.put("userData", userData);
         }
 
-        String uri = String.format("%s/%s/%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY,  persistedFaceId);
+        String uri = String.format("%s/%s/%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY,  persistedFaceId);
         mRestCall.request(uri, RequestMethod.PATCH, params, null);
     }
 
@@ -384,28 +384,28 @@ public class FaceServiceRestClient implements FaceServiceClient {
             params.put("userData", userData);
         }
 
-        String uri = String.format("%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId);
+        String uri = String.format("%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId);
         mRestCall.request(uri, RequestMethod.PATCH, params, null);
     }
 
     @Override
     public void deletePerson(String personGroupId, UUID personId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId);
+        String uri = String.format("%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId);
         mRestCall.request(uri, RequestMethod.DELETE, params, null);
     }
 
     @Override
     public void deletePersonFace(String personGroupId, UUID personId, UUID persistedFaceId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s/%s/%s/%s/%s", sServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY, persistedFaceId);
+        String uri = String.format("%s/%s/%s/%s/%s/%s/%s", mServiceHost, PERSON_GROUPS_QUERY, personGroupId, PERSONS_QUERY, personId, PERSISTED_FACES_QUERY, persistedFaceId);
         mRestCall.request(uri, RequestMethod.DELETE, params, null);
     }
 
     @Override
     public SimilarFace[] findSimilar(UUID faceId, UUID[] faceIds, int maxNumOfCandidatesReturned) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s", sServiceHost, FIND_SIMILARS_QUERY);
+        String uri = String.format("%s/%s", mServiceHost, FIND_SIMILARS_QUERY);
         params.put("faceId", faceId);
         params.put("faceIds", faceIds);
         params.put("maxNumOfCandidatesReturned", maxNumOfCandidatesReturned);
@@ -419,7 +419,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public SimilarPersistedFace[] findSimilar(UUID faceId, String faceListId, int maxNumOfCandidatesReturned) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s", sServiceHost, FIND_SIMILARS_QUERY);
+        String uri = String.format("%s/%s", mServiceHost, FIND_SIMILARS_QUERY);
         params.put("faceId", faceId);
         params.put("faceListId", faceListId);
         params.put("maxNumOfCandidatesReturned", maxNumOfCandidatesReturned);
@@ -433,7 +433,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public GroupResult group(UUID[] faceIds) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s", sServiceHost, GROUP_QUERY);
+        String uri = String.format("%s/%s", mServiceHost, GROUP_QUERY);
         params.put("faceIds", faceIds);
         String json = (String)this.mRestCall.request(uri, RequestMethod.POST, params, null);
         return this.mGson.fromJson(json, GroupResult.class);
@@ -442,7 +442,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public void createFaceList(String faceListId, String name, String userData) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s", sServiceHost, FACE_LISTS_QUERY, faceListId);
+        String uri = String.format("%s/%s/%s", mServiceHost, FACE_LISTS_QUERY, faceListId);
         params.put("name", name);
         params.put("userData", userData);
         this.mRestCall.request(uri, RequestMethod.PUT, params, null);
@@ -451,7 +451,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public FaceList getFaceList(String faceListId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s", sServiceHost, FACE_LISTS_QUERY, faceListId);
+        String uri = String.format("%s/%s/%s", mServiceHost, FACE_LISTS_QUERY, faceListId);
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
         return mGson.fromJson(json, FaceList.class);
     }
@@ -459,7 +459,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public FaceListMetadata[] listFaceLists() throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s", sServiceHost, FACE_LISTS_QUERY);
+        String uri = String.format("%s/%s", mServiceHost, FACE_LISTS_QUERY);
         String json = (String)mRestCall.request(uri, RequestMethod.GET, params, null);
         Type listType = new TypeToken<List<FaceListMetadata>>() {
         }.getType();
@@ -478,14 +478,14 @@ public class FaceServiceRestClient implements FaceServiceClient {
             params.put("userData", userData);
         }
 
-        String uri = String.format("%s/%s/%s", sServiceHost, FACE_LISTS_QUERY, faceListId);
+        String uri = String.format("%s/%s/%s", mServiceHost, FACE_LISTS_QUERY, faceListId);
         mRestCall.request(uri, RequestMethod.PATCH, params, null);
     }
 
     @Override
     public void deleteFaceList(String faceListId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s", sServiceHost, FACE_LISTS_QUERY, faceListId);
+        String uri = String.format("%s/%s/%s", mServiceHost, FACE_LISTS_QUERY, faceListId);
         mRestCall.request(uri, RequestMethod.DELETE, params, null);
     }
 
@@ -493,7 +493,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     public AddPersistedFaceResult addFacesToFaceList(String faceListId, String url, String userData, FaceRectangle targetFace) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
 
-        String path = String.format("%s/%s/%s/%s", sServiceHost, FACE_LISTS_QUERY, faceListId, PERSISTED_FACES_QUERY);
+        String path = String.format("%s/%s/%s/%s", mServiceHost, FACE_LISTS_QUERY, faceListId, PERSISTED_FACES_QUERY);
         if (userData != null && userData.length() > 0) {
             params.put("userData", userData);
         }
@@ -513,7 +513,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public AddPersistedFaceResult AddFaceToFaceList(String faceListId, InputStream imageStream, String userData, FaceRectangle targetFace) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String path = String.format("%s/%s/%s/%s", sServiceHost, FACE_LISTS_QUERY, faceListId, PERSISTED_FACES_QUERY);
+        String path = String.format("%s/%s/%s/%s", mServiceHost, FACE_LISTS_QUERY, faceListId, PERSISTED_FACES_QUERY);
         if (userData != null && userData.length() > 0) {
             params.put("userData", userData);
         }
@@ -541,7 +541,7 @@ public class FaceServiceRestClient implements FaceServiceClient {
     @Override
     public void deleteFacesFromFaceList(String faceListId, UUID persistedFaceId) throws ClientException, IOException {
         Map<String, Object> params = new HashMap<>();
-        String uri = String.format("%s/%s/%s/%s/%s", sServiceHost, FACE_LISTS_QUERY, faceListId, PERSISTED_FACES_QUERY, persistedFaceId);
+        String uri = String.format("%s/%s/%s/%s/%s", mServiceHost, FACE_LISTS_QUERY, faceListId, PERSISTED_FACES_QUERY, persistedFaceId);
         mRestCall.request(uri, RequestMethod.DELETE, params, null);
     }
 }

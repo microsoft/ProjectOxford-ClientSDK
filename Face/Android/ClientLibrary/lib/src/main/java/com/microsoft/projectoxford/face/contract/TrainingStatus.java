@@ -39,19 +39,19 @@ import java.util.Date;
 public class TrainingStatus {
     public enum Status {
         /**
-         * Training succeed.
+         * Training is succeeded.
          */
         @SerializedName("succeeded")
         Succeeded,
 
         /**
-         * Training succeed.
+         * Training is failed.
          */
         @SerializedName("failed")
         Failed,
 
         /**
-         * Training succeed.
+         * Training is in progress.
          */
         @SerializedName("running")
         Running
@@ -63,7 +63,7 @@ public class TrainingStatus {
     public Status status;
 
     /**
-     * Create date time.
+     * Creation date time.
      */
     public Date createdDateTime;
 
