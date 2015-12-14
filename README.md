@@ -8,21 +8,21 @@ understanding and easily add intelligent services into their solutions. The
 Project Oxford APIs are divided into three areas:  
 
 ##### Vision
--  **[Computer Vision APIs](<https://www.projectoxford.ai/vision>) (Beta):** Understand images and intelligently generate thumbnails
--  **[Face APIs](<https://www.projectoxford.ai/face>) (Beta):** See your users with face detection and recognition
--  **[Emotion APIs](<https://www.projectoxford.ai/emotion>) (Beta):** Understand your users with emotion recognition
--  **Video APIs (Coming soon):** Understand and transform your videos
+-  **[Computer Vision APIs](<https://www.projectoxford.ai/vision>) (Preview):** Understand images and intelligently generate thumbnails
+-  **[Face APIs](<https://www.projectoxford.ai/face>) (Preview):** See your users with face detection and recognition
+-  **[Emotion APIs](<https://www.projectoxford.ai/emotion>) (Preview):** Understand your users with emotion recognition
+-  **[Video APIs](<https://www.projectoxford.ai/video>) (Preview):** Understand and transform your videos
 
 
 ##### Speech
--  **[Speech APIs](<https://www.projectoxford.ai/speech>) (Beta):** Communicate with your users with speech recognition and synthesis powered by Bing
--  **Speaker Recognition APIs (Coming soon):** Recognize your users from their voice 
--  **CRIS, Custom Recognition Intelligent Service (Coming soon):** Customize both language and acoustic models for better speech recognition tailored to your application
+-  **[Speech APIs](<https://www.projectoxford.ai/speech>) (Preview):** Communicate with your users with speech recognition and synthesis powered by Bing
+-  **[Speaker Recognition APIs](https://www.projectoxford.ai/spid) (Preview):** Recognize your users from their voice 
+-  **[CRIS, Custom Recognition Intelligent Service](<https://www.projectoxford.ai/cris>) (Private Preview):** Customize both language and acoustic models for better speech recognition tailored to your application
 
 
 ##### Language
--  **[Spell Check APIS](<https://www.projectoxford.ai/spellcheck>) (Beta):** Detect and correct common and uncommon spelling errors via the Bing document index
--  **[LUIS, Language Understanding Intelligent Services](<https://www.projectoxford.ai/luis>) (Beta):** Understand natural language commands tailored to your application
+-  **[Spell Check APIS](<https://www.projectoxford.ai/spellcheck>) (Preview):** Detect and correct common and uncommon spelling errors via the Bing document index
+-  **[LUIS, Language Understanding Intelligent Services](<https://www.projectoxford.ai/luis>) (Preview):** Understand natural language commands tailored to your application
 
 To learn more and sign-up for Project Oxford, [visit our
 website](<http://www.ProjectOxford.ai>). You must obtain [subscription
