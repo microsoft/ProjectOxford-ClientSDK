@@ -174,7 +174,7 @@ public class GroupingActivity extends ActionBarActivity {
             textView.setText(String.format(
                     "%d face%s in total",
                     mFaceListAdapter.faces.size(),
-                    mFaceListAdapter.faces.size() > 1 ? "s" : ""));
+                    mFaceListAdapter.faces.size() != 1 ? "s" : ""));
         }
 
         if (mFaceListAdapter.faces.size() >= 2 && mFaceListAdapter.faces.size() <= 100) {

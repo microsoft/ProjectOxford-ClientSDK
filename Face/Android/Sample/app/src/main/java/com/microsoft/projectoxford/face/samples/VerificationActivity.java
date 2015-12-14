@@ -393,7 +393,7 @@ public class VerificationActivity extends ActionBarActivity {
             addLog("Response: Success. Detected "
                     + result.length + " face(s) in image" + index);
 
-            setInfo(result.length + " face" + (result.length > 1 ? "s": "")  + " detected");
+            setInfo(result.length + " face" + (result.length != 1 ? "s": "")  + " detected");
 
             // Show the detailed list of detected faces.
             FaceListAdapter faceListAdapter = new FaceListAdapter(result, index);

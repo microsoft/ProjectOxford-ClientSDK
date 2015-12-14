@@ -222,7 +222,7 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
             // Set the information about the detection result.
             if (result != null) {
                 setInfo(result.length + " face"
-                        + (result.length > 1 ? "s" : "") + " detected");
+                        + (result.length != 1 ? "s" : "") + " detected");
             } else {
                 setInfo("0 face detected");
             }

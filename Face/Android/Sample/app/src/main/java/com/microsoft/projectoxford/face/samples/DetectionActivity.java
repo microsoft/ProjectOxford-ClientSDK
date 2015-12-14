@@ -251,7 +251,7 @@ public class DetectionActivity extends ActionBarActivity {
             String detectionResult;
             if (result != null) {
                 detectionResult = result.length + " face"
-                        + (result.length > 1 ? "s" : "") + " detected";
+                        + (result.length != 1 ? "s" : "") + " detected";
 
                 // Show the detected faces on original image.
                 ImageView imageView = (ImageView) findViewById(R.id.image);

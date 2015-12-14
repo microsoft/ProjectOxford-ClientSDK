@@ -114,7 +114,7 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
             if (mSucceed) {
                 String resultString = "Found "
                         + (result == null ? "0": result.length)
-                        + " similar face" + ((result != null && result.length > 1)? "s": "");
+                        + " similar face" + ((result != null && result.length != 1)? "s": "");
                 addLog("Response: Success. " + resultString);
                 setInfo(resultString);
             }
