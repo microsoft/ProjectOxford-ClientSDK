@@ -31,20 +31,22 @@ Build the sample
 Run the sample
 --------------
 
-1. First, you must obtain a [subscription
-key](<http://www.projectoxford.ai/subscription>) for Computer Vision API and will
-need a Microsoft account.
+1. First, you will
+need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
 
-2. Locate the folder where you are going to run the compiled sample. You should be able to find the path in the Output window in Visual Studio after a successful build.
+2. You must obtain a subscription key for Vision API by following instructions in [Subscription
+key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
 
-3. In the folder above, find the file with the name of Microsoft.ProjectOXford.Vision.Sample.exe.config.
+3. Locate the folder where you are going to run the compiled sample. You should be able to find the path in the Output window in Visual Studio after a successful build.
 
-4. Use a text editor to open the file.
+4. In the folder above, find the file with the name of Microsoft.ProjectOXford.Vision.Sample.exe.config.
 
-5. Find the text: \<add key="subscriptionKey" value="Please\_add\_the\_subscription\_key\_here"/\>.
+5. Use a text editor to open the file.
+
+6. Find the text: \<add key="subscriptionKey" value="Please\_add\_the\_subscription\_key\_here"/\>.
 Replace "Please\_add\_the\_subscription\_key\_here" with your subscription key.
 
-6. Go back to Visual Studio, and press F5 to run the sample.
+7. Go back to Visual Studio, and press F5 to run the sample.
 
 The console application will ask for image path or URL to analyze.
 

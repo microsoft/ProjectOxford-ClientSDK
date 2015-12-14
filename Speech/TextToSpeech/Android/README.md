@@ -19,9 +19,9 @@ Requirements
 Build the sample
 ----------------
 
-1.  First, you must obtain a [subscription
-key](<http://www.projectoxford.ai/subscription>) for Speech API and will
-need a Microsoft account.
+1.  You must obtain an [Speech API subscription
+    key](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>) and
+    will need a [Microsoft Azure Account](<http://www.azure.com>).
 
 2.  Start Android Studio and open project by File \> Import Project. Choose
     subfolder "Sample" in the Speech \> TextToSpeech \> Android folder.

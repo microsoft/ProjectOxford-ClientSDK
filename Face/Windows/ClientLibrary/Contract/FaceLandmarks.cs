@@ -38,13 +38,18 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class FaceLandmarks
     {
+        #region Properties
+
         /// <summary>
         /// Gets or sets the pupil left.
         /// </summary>
         /// <value>
         /// The pupil left.
         /// </value>
-        public FeatureCoordinate PupilLeft { get; set; }
+        public FeatureCoordinate PupilLeft
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the pupil right.
@@ -52,7 +57,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The pupil right.
         /// </value>
-        public FeatureCoordinate PupilRight { get; set; }
+        public FeatureCoordinate PupilRight
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the nose tip.
@@ -60,7 +68,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The nose tip.
         /// </value>
-        public FeatureCoordinate NoseTip { get; set; }
+        public FeatureCoordinate NoseTip
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the mouth left.
@@ -68,7 +79,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The mouth left.
         /// </value>
-        public FeatureCoordinate MouthLeft { get; set; }
+        public FeatureCoordinate MouthLeft
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the mouth right.
@@ -76,7 +90,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The mouth right.
         /// </value>
-        public FeatureCoordinate MouthRight { get; set; }
+        public FeatureCoordinate MouthRight
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eyebrow left outer.
@@ -84,7 +101,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eyebrow left outer.
         /// </value>
-        public FeatureCoordinate EyebrowLeftOuter { get; set; }
+        public FeatureCoordinate EyebrowLeftOuter
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eyebrow left inner.
@@ -92,7 +112,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eyebrow left inner.
         /// </value>
-        public FeatureCoordinate EyebrowLeftInner { get; set; }
+        public FeatureCoordinate EyebrowLeftInner
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye left outer.
@@ -100,7 +123,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye left outer.
         /// </value>
-        public FeatureCoordinate EyeLeftOuter { get; set; }
+        public FeatureCoordinate EyeLeftOuter
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye left top.
@@ -108,7 +134,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye left top.
         /// </value>
-        public FeatureCoordinate EyeLeftTop { get; set; }
+        public FeatureCoordinate EyeLeftTop
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye left bottom.
@@ -116,7 +145,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye left bottom.
         /// </value>
-        public FeatureCoordinate EyeLeftBottom { get; set; }
+        public FeatureCoordinate EyeLeftBottom
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye left inner.
@@ -124,7 +156,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye left inner.
         /// </value>
-        public FeatureCoordinate EyeLeftInner { get; set; }
+        public FeatureCoordinate EyeLeftInner
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eyebrow right inner.
@@ -132,7 +167,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eyebrow right inner.
         /// </value>
-        public FeatureCoordinate EyebrowRightInner { get; set; }
+        public FeatureCoordinate EyebrowRightInner
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eyebrow right outer.
@@ -140,7 +178,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eyebrow right outer.
         /// </value>
-        public FeatureCoordinate EyebrowRightOuter { get; set; }
+        public FeatureCoordinate EyebrowRightOuter
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye right inner.
@@ -148,7 +189,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye right inner.
         /// </value>
-        public FeatureCoordinate EyeRightInner { get; set; }
+        public FeatureCoordinate EyeRightInner
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye right top.
@@ -156,7 +200,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye right top.
         /// </value>
-        public FeatureCoordinate EyeRightTop { get; set; }
+        public FeatureCoordinate EyeRightTop
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye right bottom.
@@ -164,7 +211,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye right bottom.
         /// </value>
-        public FeatureCoordinate EyeRightBottom { get; set; }
+        public FeatureCoordinate EyeRightBottom
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the eye right outer.
@@ -172,7 +222,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The eye right outer.
         /// </value>
-        public FeatureCoordinate EyeRightOuter { get; set; }
+        public FeatureCoordinate EyeRightOuter
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the nose root left.
@@ -180,7 +233,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The nose root left.
         /// </value>
-        public FeatureCoordinate NoseRootLeft { get; set; }
+        public FeatureCoordinate NoseRootLeft
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the nose root right.
@@ -188,7 +244,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The nose root right.
         /// </value>
-        public FeatureCoordinate NoseRootRight { get; set; }
+        public FeatureCoordinate NoseRootRight
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the nose left alar top.
@@ -196,7 +255,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The nose left alar top.
         /// </value>
-        public FeatureCoordinate NoseLeftAlarTop { get; set; }
+        public FeatureCoordinate NoseLeftAlarTop
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the nose right alar top.
@@ -204,7 +266,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The nose right alar top.
         /// </value>
-        public FeatureCoordinate NoseRightAlarTop { get; set; }
+        public FeatureCoordinate NoseRightAlarTop
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the nose left alar out tip.
@@ -212,7 +277,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The nose left alar out tip.
         /// </value>
-        public FeatureCoordinate NoseLeftAlarOutTip { get; set; }
+        public FeatureCoordinate NoseLeftAlarOutTip
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the nose right alar out tip.
@@ -220,7 +288,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The nose right alar out tip.
         /// </value>
-        public FeatureCoordinate NoseRightAlarOutTip { get; set; }
+        public FeatureCoordinate NoseRightAlarOutTip
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the upper lip top.
@@ -228,7 +299,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The upper lip top.
         /// </value>
-        public FeatureCoordinate UpperLipTop { get; set; }
+        public FeatureCoordinate UpperLipTop
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the upper lip bottom.
@@ -236,7 +310,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The upper lip bottom.
         /// </value>
-        public FeatureCoordinate UpperLipBottom { get; set; }
+        public FeatureCoordinate UpperLipBottom
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the under lip top.
@@ -244,7 +321,10 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The under lip top.
         /// </value>
-        public FeatureCoordinate UnderLipTop { get; set; }
+        public FeatureCoordinate UnderLipTop
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the under lip bottom.
@@ -252,6 +332,11 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The under lip bottom.
         /// </value>
-        public FeatureCoordinate UnderLipBottom { get; set; }
+        public FeatureCoordinate UnderLipBottom
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }

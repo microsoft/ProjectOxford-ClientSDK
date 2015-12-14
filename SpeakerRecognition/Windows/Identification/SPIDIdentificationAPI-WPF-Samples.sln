@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPIDIdentificationAPI-WPF-Samples", "SPIDIdentificationAPI-WPF-Samples\SPIDIdentificationAPI-WPF-Samples.csproj", "{D4C60FF7-ED2B-4302-B73E-09D01EEFE1B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleUserControlLibrary", "..\..\..\SampleUtil\Windows\SampleUserControlLibrary\SampleUserControlLibrary.csproj", "{735929F0-F8F1-4D93-B027-5D034FA7892B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4C60FF7-ED2B-4302-B73E-09D01EEFE1B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C60FF7-ED2B-4302-B73E-09D01EEFE1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C60FF7-ED2B-4302-B73E-09D01EEFE1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C60FF7-ED2B-4302-B73E-09D01EEFE1B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735929F0-F8F1-4D93-B027-5D034FA7892B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735929F0-F8F1-4D93-B027-5D034FA7892B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735929F0-F8F1-4D93-B027-5D034FA7892B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735929F0-F8F1-4D93-B027-5D034FA7892B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

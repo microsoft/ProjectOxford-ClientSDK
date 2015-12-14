@@ -42,13 +42,18 @@ Build the sample
 
 For intent recognition to work, you need to sign up [Language Understanding Intelligent Service (LUIS)](<https://www.projectoxford.ai/luis>). Please put your LUIS App ID and Subscription ID in app.config file. app.config file can be located from Solution Explorer.
 
+<img src="SampleScreenshots/SampleRunning1.png" width="100%"/>
+
 Run the sample
 --------------
-First, you must obtain a [subscription
-key](<http://www.projectoxford.ai/subscription>) for Speech API and will
-need a Microsoft account.
 
 After the build is complete, press F5 to run the sample.
+
+First, you will
+need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
+
+You must obtain a subscription key for Speech API by following instructions in [Subscription
+key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
 
 Locate the text edit box saying "Paste your subscription key here to start" on
 the top right corner. Paste your subscription key. You can choose to persist
@@ -59,9 +64,6 @@ remove it from your machine.
 Microsoft will receive the audio you upload and may use them to improve Speech
 API and related services. By submitting an audio, you confirm you have consent
 from everyone in it.
-
-<img src="SampleScreenshots/SampleRunning1.png" width="100%"/>
-
 
 Contributing
 ============

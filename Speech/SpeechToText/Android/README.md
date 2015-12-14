@@ -53,9 +53,11 @@ Requirements
 Build the sample
 ----------------
 
-1.  First, you must obtain a [subscription
-key](<http://www.projectoxford.ai/subscription>) for Speech API and will
-need a Microsoft account.
+You will
+need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
+
+1. You must obtain a subscription key for Face API by following instructions in [Subscription
+key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
 
 2.  Start Android Studio and open project from Speech \> TextToSpeech \> Android folder.
 
