@@ -47,7 +47,7 @@
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
             </TextBox.Background>Status text goes here</TextBox>
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5">Microsoft will receive the images you upload and may use them to improve Face API and related services. By submitting an image, you confirm you have consent from everyone in it.</TextBlock>
+            <TextBlock x:Name="_disclaimerTextBlock" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5">Microsoft will receive the images you upload and may use them to improve Face API and related services. By submitting an image, you confirm you have consent from everyone in it.</TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>
