@@ -67,7 +67,7 @@
     <string name="select_face_tip">Select this person\'s faces (if exist) by click on the checkbox.</string>
 
     <!-- Find similar faces and grouping activity -->
-    <string name="zero_face">Face database: 0 face in total</string>
+    <string name="zero_face">Face database: 0 faces in total</string>
     <string name="target_face">Target face:</string>
     <string name="all_faces">All Faces:</string>
     <string name="add_faces">Add\nFaces</string>
