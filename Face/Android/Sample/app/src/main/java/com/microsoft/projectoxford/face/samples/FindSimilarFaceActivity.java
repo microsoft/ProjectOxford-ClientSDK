@@ -207,7 +207,7 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
         textView.setText(String.format(
                 "Face database: %d face%s in total",
                 mFaceListAdapter.faces.size(),
-                mFaceListAdapter.faces.size() > 1 ? "s" : ""));
+                mFaceListAdapter.faces.size() != 1 ? "s" : ""));
 
         refreshFindSimilarFaceButtonEnabledStatus();
 
