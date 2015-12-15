@@ -38,30 +38,20 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class FeatureCoordinate
     {
-        #region Properties
-
         /// <summary>
-        /// Gets or sets the x in pixel.
+        /// Gets or sets the x.
         /// </summary>
         /// <value>
         /// The x of the feature coordinate.
         /// </value>
-        public double X
-        {
-            get; set;
-        }
+        public double X { get; set; }
 
         /// <summary>
-        /// Gets or sets the y in pixel.
+        /// Gets or sets the y.
         /// </summary>
         /// <value>
         /// The y of the feature coordinate.
         /// </value>
-        public double Y
-        {
-            get; set;
-        }
-
-        #endregion Properties
+        public double Y { get; set; }
     }
 }

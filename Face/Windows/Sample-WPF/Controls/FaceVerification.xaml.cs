@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK GitHub:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -44,17 +44,23 @@ using Microsoft.ProjectOxford.Face;
 
 namespace Microsoft.ProjectOxford.Face.Controls
 {
+
     /// <summary>
     /// Interaction logic for FaceVerification.xaml
     /// </summary>
-    public partial class FaceVerificationPage : Page, INotifyPropertyChanged
+    public partial class FaceVerification : UserControl, INotifyPropertyChanged
     {
         #region Fields
 
         /// <summary>
         /// Description dependency property
         /// </summary>
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceVerificationPage));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceVerification));
+
+        /// <summary>
+        /// Output dependency property
+        /// </summary>
+        public static readonly DependencyProperty OutputProperty = DependencyProperty.Register("Output", typeof(string), typeof(FaceVerification));
 
         /// <summary>
         /// Face detection result container for image on the left
@@ -76,9 +82,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FaceVerificationPage" /> class
+        /// Initializes a new instance of the <see cref="FaceVerification" /> class
         /// </summary>
-        public FaceVerificationPage()
+        public FaceVerification()
         {
             InitializeComponent();
         }
@@ -131,6 +137,22 @@ namespace Microsoft.ProjectOxford.Face.Controls
             get
             {
                 return 300;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets output for UI rendering
+        /// </summary>
+        public string Output
+        {
+            get
+            {
+                return (string)GetValue(OutputProperty);
+            }
+
+            set
+            {
+                SetValue(OutputProperty, value);
             }
         }
 
@@ -194,7 +216,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 // Clear last time detection results
                 LeftResultCollection.Clear();
 
-                MainWindow.Log("Request: Detecting in {0}", pickedImagePath);
+                Output = Output.AppendLine(string.Format("Request: Detecting in {0}", pickedImagePath));
                 var sw = Stopwatch.StartNew();
 
                 // Call detection REST API, detect faces inside the image
@@ -202,8 +224,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 {
                     try
                     {
+
                         MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                        string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
+                        string subscriptionKey = mainWindow.SubscriptionKey;
 
                         var faceServiceClient = new FaceServiceClient(subscriptionKey);
                         var faces = await faceServiceClient.DetectAsync(fileStream);
@@ -214,7 +237,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             return;
                         }
 
-                        MainWindow.Log("Response: Success. Detected {0} face(s) in {1}", faces.Length, pickedImagePath);
+                        Output = Output.AppendLine(string.Format("Response: Success. Detected {0} face(s) in {1}", faces.Length, pickedImagePath));
 
                         // Convert detection results into UI binding object for rendering
                         foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
@@ -223,9 +246,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             LeftResultCollection.Add(face);
                         }
                     }
-                    catch (FaceAPIException ex)
+                    catch (ClientException ex)
                     {
-                        MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
+                        Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
                         return;
                     }
                 }
@@ -257,7 +280,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 // Clear last time detection results
                 RightResultCollection.Clear();
 
-                MainWindow.Log("Request: Detecting in {0}", pickedImagePath);
+                Output = Output.AppendLine(string.Format("Request: Detecting in {0}", pickedImagePath));
                 var sw = Stopwatch.StartNew();
 
                 // Call detection REST API, detect faces inside the image
@@ -266,7 +289,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                     try
                     {
                         MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                        string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
+                        string subscriptionKey = mainWindow.SubscriptionKey;
 
                         var faceServiceClient = new FaceServiceClient(subscriptionKey);
 
@@ -278,7 +301,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             return;
                         }
 
-                        MainWindow.Log("Response: Success. Detected {0} face(s) in {1}", faces.Length, pickedImagePath);
+                        Output = Output.AppendLine(string.Format("Response: Success. Detected {0} face(s) in {1}", faces.Length, pickedImagePath));
 
                         // Convert detection results into UI binding object for rendering
                         foreach (var face in UIHelper.CalculateFaceRectangleForRendering(faces, MaxImageSize, imageInfo))
@@ -287,10 +310,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             RightResultCollection.Add(face);
                         }
                     }
-                    catch (FaceAPIException ex)
+                    catch (ClientException ex)
                     {
-                        MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
-
+                        Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
                         return;
                     }
                 }
@@ -312,13 +334,13 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 var faceId1 = LeftResultCollection[0].FaceId;
                 var faceId2 = RightResultCollection[0].FaceId;
 
-                MainWindow.Log("Request: Verifying face {0} and {1}", faceId1, faceId2);
+                Output = Output.AppendLine(string.Format("Request: Verifying face {0} and {1}", faceId1, faceId2));
 
                 // Call verify REST API with two face id
                 try
                 {
                     MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                    string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
+                    string subscriptionKey = mainWindow.SubscriptionKey;
 
                     var faceServiceClient = new FaceServiceClient(subscriptionKey);
                     var res = await faceServiceClient.VerifyAsync(Guid.Parse(faceId1), Guid.Parse(faceId2));
@@ -326,12 +348,11 @@ namespace Microsoft.ProjectOxford.Face.Controls
                     // Verification result contains IsIdentical (true or false) and Confidence (in range 0.0 ~ 1.0),
                     // here we update verify result on UI by VerifyResult binding
                     VerifyResult = string.Format("{0} ({1:0.0})", res.IsIdentical ? "Equals" : "Does not equal", res.Confidence);
-                    MainWindow.Log("Response: Success. Face {0} and {1} {2} to the same person", faceId1, faceId2, res.IsIdentical ? "belong" : "not belong");
+                    Output = Output.AppendLine(string.Format("Response: Success. Face {0} and {1} {2} to the same person", faceId1, faceId2, res.IsIdentical ? "belong" : "not belong"));
                 }
-                catch (FaceAPIException ex)
+                catch (ClientException ex)
                 {
-                    MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
-
+                    Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
                     return;
                 }
             }

@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{25D58BA5-660F-407B-803C-22B4547C09DC}</ProjectGuid>
+    <ProjectGuid>{34DAA01D-3F6B-4622-9425-726B0B4A6C78}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.ProjectOxford.Face</RootNamespace>
@@ -37,24 +37,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CNDebug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\CNDebug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Contract\ClientError.cs" />
-    <Compile Include="Contract\AddPersistedFaceResult.cs" />
+    <Compile Include="ClientError.cs" />
+    <Compile Include="ClientException.cs" />
     <Compile Include="Contract\Face.cs" />
-    <Compile Include="Contract\FaceAttributes.cs" />
-    <Compile Include="Contract\FaceList.cs" />
-    <Compile Include="Contract\FaceListMetadata.cs" />
-    <Compile Include="Contract\FaceMetadata.cs" />
-    <Compile Include="Contract\FacialHair.cs" />
+    <Compile Include="Contract\FaceAttribute.cs" />
     <Compile Include="Contract\HeadPose.cs" />
     <Compile Include="Contract\FaceRectangle.cs" />
     <Compile Include="Contract\FaceLandmarks.cs" />
@@ -67,18 +54,15 @@
     <Compile Include="Contract\PersonGroup.cs" />
     <Compile Include="Contract\FeatureCoordinate.cs" />
     <Compile Include="Contract\SimilarFace.cs" />
-    <Compile Include="Contract\SimilarPersistedFace.cs" />
     <Compile Include="Contract\TrainingStatus.cs" />
     <Compile Include="Contract\VerifyResult.cs" />
-    <Compile Include="FaceAPIException.cs" />
     <Compile Include="FaceServiceClient.cs" />
     <Compile Include="IFaceServiceClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

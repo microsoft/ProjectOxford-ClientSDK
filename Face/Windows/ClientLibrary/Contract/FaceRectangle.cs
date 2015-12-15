@@ -38,18 +38,13 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class FaceRectangle
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the width.
         /// </summary>
         /// <value>
         /// The width.
         /// </value>
-        public int Width
-        {
-            get; set;
-        }
+        public int Width { get; set; }
 
         /// <summary>
         /// Gets or sets the height.
@@ -57,10 +52,7 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The height.
         /// </value>
-        public int Height
-        {
-            get; set;
-        }
+        public int Height { get; set; }
 
         /// <summary>
         /// Gets or sets the left.
@@ -68,10 +60,7 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The left of the face rectangle.
         /// </value>
-        public int Left
-        {
-            get; set;
-        }
+        public int Left { get; set; }
 
         /// <summary>
         /// Gets or sets the top.
@@ -79,11 +68,6 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The top of the face rectangle.
         /// </value>
-        public int Top
-        {
-            get; set;
-        }
-
-        #endregion Properties
+        public int Top { get; set; }
     }
 }

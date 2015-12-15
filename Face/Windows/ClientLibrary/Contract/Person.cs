@@ -31,38 +31,30 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 namespace Microsoft.ProjectOxford.Face.Contract
 {
+    using System;
+
     /// <summary>
     /// The person entity.
     /// </summary>
     public class Person
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the person identifier.
         /// </summary>
         /// <value>
         /// The person identifier.
         /// </value>
-        public Guid PersonId
-        {
-            get; set;
-        }
+        public Guid PersonId { get; set; }
 
         /// <summary>
-        /// Gets or sets the persisted face ids.
+        /// Gets or sets the face ids.
         /// </summary>
         /// <value>
-        /// The persisted face ids.
+        /// The face ids.
         /// </value>
-        public Guid[] PersistedFaceIds
-        {
-            get; set;
-        }
+        public Guid[] FaceIds { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -70,10 +62,7 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The name of the person.
         /// </value>
-        public string Name
-        {
-            get; set;
-        }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the profile.
@@ -81,11 +70,6 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The profile.
         /// </value>
-        public string UserData
-        {
-            get; set;
-        }
-
-        #endregion Properties
+        public string UserData { get; set; }
     }
 }

@@ -40,20 +40,12 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class CreatePersonResult
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the person identifier.
         /// </summary>
         /// <value>
         /// The person identifier.
         /// </value>
-        public Guid PersonId
-        {
-            get;
-            set;
-        }
-
-        #endregion Properties
+        public Guid PersonId { get; set; }
     }
 }
