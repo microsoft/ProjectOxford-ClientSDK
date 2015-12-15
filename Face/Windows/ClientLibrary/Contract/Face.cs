@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK GitHub:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -40,19 +40,13 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class Face
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the face identifier.
         /// </summary>
         /// <value>
         /// The face identifier.
         /// </value>
-        public Guid FaceId
-        {
-            get;
-            set;
-        }
+        public Guid FaceId { get; set; }
 
         /// <summary>
         /// Gets or sets the face rectangle.
@@ -60,11 +54,7 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The face rectangle.
         /// </value>
-        public FaceRectangle FaceRectangle
-        {
-            get;
-            set;
-        }
+        public FaceRectangle FaceRectangle { get; set; }
 
         /// <summary>
         /// Gets or sets the face landmarks.
@@ -72,24 +62,14 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The face landmarks.
         /// </value>
-        public FaceLandmarks FaceLandmarks
-        {
-            get;
-            set;
-        }
+        public FaceLandmarks FaceLandmarks { get; set; }
 
         /// <summary>
-        /// Gets or sets the face attributes.
+        /// Gets or sets the attributes.
         /// </summary>
         /// <value>
-        /// The face attributes.
+        /// The attributes.
         /// </value>
-        public FaceAttributes FaceAttributes
-        {
-            get;
-            set;
-        }
-
-        #endregion Properties
+        public FaceAttribute Attributes { get; set; }
     }
 }

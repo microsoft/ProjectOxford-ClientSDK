@@ -36,35 +36,26 @@ using System.Collections.Generic;
 
 namespace Microsoft.ProjectOxford.Face.Contract
 {
+
     /// <summary>
     /// The class for group result.
     /// </summary>
     public class GroupResult
     {
-        #region Properties
-
         /// <summary>
-        /// Gets or sets the groups. The groups are ranked by number of faces.
+        /// Gets or sets the groups.
         /// </summary>
         /// <value>
         /// The groups.
         /// </value>
-        public List<Guid[]> Groups
-        {
-            get; set;
-        }
+        public List<Guid[]> Groups { get; set; }
 
         /// <summary>
-        /// Gets or sets the messy group. Messy group contains all the faces which cannot find any similar faces from original faces.
+        /// Gets or sets the messy group.
         /// </summary>
         /// <value>
         /// The messy group.
         /// </value>
-        public Guid[] MessyGroup
-        {
-            get; set;
-        }
-
-        #endregion Properties
+        public Guid[] MessyGroup { get; set; }
     }
 }

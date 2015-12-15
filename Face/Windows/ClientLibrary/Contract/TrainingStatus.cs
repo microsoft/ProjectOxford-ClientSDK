@@ -31,86 +31,37 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 namespace Microsoft.ProjectOxford.Face.Contract
 {
-    #region Enumerations
-
-    /// <summary>
-    /// Enumeration represents status of training
-    /// </summary>
-    public enum Status
-    {
-        /// <summary>
-        /// Training succeeded
-        /// </summary>
-        Succeeded,
-
-        /// <summary>
-        /// Training failed
-        /// </summary>
-        Failed,
-
-        /// <summary>
-        /// Training still in progress
-        /// </summary>
-        Running
-    }
-
-    #endregion Enumerations
+    using System;
 
     /// <summary>
     /// The training status entity.
     /// </summary>
     public class TrainingStatus
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the status.
         /// </summary>
         /// <value>
         /// The status.
         /// </value>
-        public Status Status
-        {
-            get; set;
-        }
+        public string Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the create time.
+        /// Gets or sets the start time.
         /// </summary>
         /// <value>
-        /// The create time.
+        /// The start time.
         /// </value>
-        public DateTime CreatedDateTime
-        {
-            get; set;
-        }
+        public DateTime StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the last action time.
+        /// Gets or sets the end time.
         /// </summary>
         /// <value>
-        /// The last action time.
+        /// The end time.
         /// </value>
-        public DateTime LastActionDateTime
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Gets or sets the message.
-        /// </summary>
-        /// <value>
-        /// The message.
-        /// </value>
-        public string Message
-        {
-            get; set;
-        }
-
-        #endregion Properties
+        public DateTime EndTime { get; set; }
     }
 }

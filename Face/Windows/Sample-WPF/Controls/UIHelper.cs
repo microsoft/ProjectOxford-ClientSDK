@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK GitHub:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -111,21 +111,6 @@ namespace Microsoft.ProjectOxford.Face.Controls
             {
                 return new Tuple<int, int>(0, 0);
             }
-        }
-
-        /// <summary>
-        /// Append detected face to UI binding collection
-        /// </summary>
-        /// <param name="collections">UI binding collection</param>
-        /// <param name="path">Original image path, used for rendering face region</param>
-        /// <param name="face">Face structure returned from service</param>
-        public static void UpdateFace(ObservableCollection<Face> collections, string path, Microsoft.ProjectOxford.Face.Contract.AddPersistedFaceResult face)
-        {
-            collections.Add(new Face()
-            {
-                ImagePath = path,
-                FaceId = face.PersistedFaceId.ToString(),
-            });
         }
 
         /// <summary>
