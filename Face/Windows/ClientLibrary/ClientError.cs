@@ -33,37 +33,47 @@
 
 using System;
 
-namespace Microsoft.ProjectOxford.Face.Contract
+namespace Microsoft.ProjectOxford.Face
 {
     /// <summary>
-    /// Face metadata class.
+    /// Container of ClientError and Error Entity.
     /// </summary>
-    public class FaceMetadata
+    public class ClientError
     {
-        #region Properties
-
         /// <summary>
-        /// Gets or sets the face identifier.
+        /// Gets or sets error code in error entity.
         /// </summary>
         /// <value>
-        /// The face identifier.
+        /// The code of client error.
         /// </value>
-        public Guid FaceId
+        public string Code
         {
-            get; set;
+            get;
+            set;
         }
 
         /// <summary>
-        /// Gets or sets the user data.
+        /// Gets or sets the message.
         /// </summary>
         /// <value>
-        /// The user data.
+        /// The message.
         /// </value>
-        public string UserData
+        public string Message
         {
-            get; set;
+            get;
+            set;
         }
 
-        #endregion Properties
+        /// <summary>
+        /// Gets or sets the request identifier.
+        /// </summary>
+        /// <value>
+        /// The request identifier.
+        /// </value>
+        public Guid RequestId
+        {
+            get;
+            set;
+        }
     }
 }

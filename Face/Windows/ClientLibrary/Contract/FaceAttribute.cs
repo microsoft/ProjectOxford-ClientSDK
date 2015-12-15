@@ -31,39 +31,35 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 namespace Microsoft.ProjectOxford.Face.Contract
 {
     /// <summary>
-    /// The class for similar persisted face.
+    /// The face attribute class that holds Age/Gender/Pose information.
     /// </summary>
-    public class SimilarPersistedFace
+    public class FaceAttribute
     {
-        #region Properties
-
         /// <summary>
-        /// Gets or sets the persisted face identifier.
+        /// Gets or sets the age.
         /// </summary>
         /// <value>
-        /// The persisted face identifier.
+        /// The age of detected face.
         /// </value>
-        public Guid PersistedFaceId
-        {
-            get; set;
-        }
+        public double Age { get; set; }
 
         /// <summary>
-        /// Gets or sets the confidence value.
+        /// Gets or sets the gender.
         /// </summary>
         /// <value>
-        /// The confidence value.
+        /// The gender.
         /// </value>
-        public double Confidence
-        {
-            get; set;
-        }
+        public string Gender { get; set; }
 
-        #endregion Properties
+        /// <summary>
+        /// Gets or sets the head pose.
+        /// </summary>
+        /// <value>
+        /// The head pose.
+        /// </value>
+        public HeadPose HeadPose { get; set; }
     }
 }

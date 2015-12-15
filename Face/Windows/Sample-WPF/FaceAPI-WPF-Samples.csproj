@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ClientLibrary</RootNamespace>
     <AssemblyName>FaceAPI-WPF-Samples</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -30,7 +30,6 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,13 +51,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.ProjectOxford.Face, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ProjectOxford.Face.1.0.0\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Microsoft.ProjectOxford.Face.dll</HintPath>
+    <Reference Include="Microsoft.ProjectOxford.Face, Version=0.5.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ProjectOxford.Face.0.5.0.1\lib\portable-net45+dnxcore50+win+wpa81\Microsoft.ProjectOxford.Face.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -81,23 +79,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\FaceIdentificationPage.xaml">
+    <Page Include="Controls\FunctionPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FaceIdentification.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FaceFindSimilarPage.xaml">
+    <Page Include="Controls\FaceFindSimilar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FaceGroupingPage.xaml">
+    <Page Include="Controls\FaceGrouping.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FaceVerificationPage.xaml">
+    <Page Include="Controls\FaceVerification.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FaceDetectionPage.xaml">
+    <Page Include="Controls\FaceDetection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,20 +112,23 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\Face.cs" />
-    <Compile Include="Controls\FaceIdentificationPage.xaml.cs">
-      <DependentUpon>FaceIdentificationPage.xaml</DependentUpon>
+    <Compile Include="Controls\FunctionPanel.xaml.cs">
+      <DependentUpon>FunctionPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FaceFindSimilarPage.xaml.cs">
-      <DependentUpon>FaceFindSimilarPage.xaml</DependentUpon>
+    <Compile Include="Controls\FaceIdentification.xaml.cs">
+      <DependentUpon>FaceIdentification.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FaceGroupingPage.xaml.cs">
-      <DependentUpon>FaceGroupingPage.xaml</DependentUpon>
+    <Compile Include="Controls\FaceFindSimilar.xaml.cs">
+      <DependentUpon>FaceFindSimilar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FaceVerificationPage.xaml.cs">
-      <DependentUpon>FaceVerificationPage.xaml</DependentUpon>
+    <Compile Include="Controls\FaceGrouping.xaml.cs">
+      <DependentUpon>FaceGrouping.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FaceDetectionPage.xaml.cs">
-      <DependentUpon>FaceDetectionPage.xaml</DependentUpon>
+    <Compile Include="Controls\FaceVerification.xaml.cs">
+      <DependentUpon>FaceVerification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FaceDetection.xaml.cs">
+      <DependentUpon>FaceDetection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\UIHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -135,15 +140,31 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="packages.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\default.jpg" />
@@ -159,15 +180,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Microsoft-logo_rgb_c-gray.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\SampleUtil\Windows\SampleUserControlLibrary\SampleUserControlLibrary.csproj">
-      <Project>{735929f0-f8f1-4d93-b027-5d034fa7892b}</Project>
-      <Name>SampleUserControlLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
