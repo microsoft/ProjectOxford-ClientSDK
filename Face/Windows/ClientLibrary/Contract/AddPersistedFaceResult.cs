@@ -31,35 +31,27 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace Microsoft.ProjectOxford.Face.Contract
 {
     /// <summary>
-    /// The verify result entity.
+    /// Represents face stored in FaceList or Person
     /// </summary>
-    public class VerifyResult
+    public class AddPersistedFaceResult
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is same.
+        /// Gets or sets the persisted face identifier.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is same; otherwise, <c>false</c>.
+        /// The persisted face identifier.
         /// </value>
-        public bool IsIdentical
+        public Guid PersistedFaceId
         {
-            get; set;
-        }
-
-        /// <summary>
-        /// Gets or sets the confidence.
-        /// </summary>
-        /// <value>
-        /// The confidence.
-        /// </value>
-        public double Confidence
-        {
-            get; set;
+            get;
+            set;
         }
 
         #endregion Properties

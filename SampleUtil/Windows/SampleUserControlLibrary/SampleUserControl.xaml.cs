@@ -146,6 +146,7 @@ namespace SampleUserControlLibrary
             if (scenario != null)
             {
                 Page page = Activator.CreateInstance(scenario.PageClass) as Page;
+                page.DataContext = this.DataContext;
                 _scenarioFrame.Navigate(page);
             }
         }

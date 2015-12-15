@@ -31,33 +31,65 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Microsoft.ProjectOxford.Face.Contract
+using System;
+using System.Net;
+
+namespace Microsoft.ProjectOxford.Face
 {
     /// <summary>
-    /// The verify result entity.
+    /// Represents client error with detailed error message and error code
     /// </summary>
-    public class VerifyResult
+    public class FaceAPIException : Exception
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FaceAPIException" /> class
+        /// </summary>
+        public FaceAPIException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FaceAPIException" /> class
+        /// </summary>
+        /// <param name="errorCode">Code represents the error category</param>
+        /// <param name="errorMessage">Message represents the detailed error description</param>
+        /// <param name="statusCode">Http status code</param>
+        public FaceAPIException(string errorCode, string errorMessage, HttpStatusCode statusCode)
+        {
+            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
+            HttpStatus = statusCode;
+        }
+
+        #endregion Constructors
+
         #region Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is same.
+        /// Gets or sets the error code
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is same; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsIdentical
+        public string ErrorCode
         {
             get; set;
         }
 
         /// <summary>
-        /// Gets or sets the confidence.
+        /// Gets or sets the error message
+        /// </summary>
+        public string ErrorMessage
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets http status of http response.
         /// </summary>
         /// <value>
-        /// The confidence.
+        /// The HTTP status.
         /// </value>
-        public double Confidence
+        public HttpStatusCode HttpStatus
         {
             get; set;
         }

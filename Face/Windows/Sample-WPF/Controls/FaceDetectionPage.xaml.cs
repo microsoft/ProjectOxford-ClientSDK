@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK Github:
+// ProjectOxford SDK GitHub:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -31,6 +31,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -38,27 +39,19 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
-using Microsoft.ProjectOxford.Face;
-
 namespace Microsoft.ProjectOxford.Face.Controls
 {
-
     /// <summary>
-    /// Interaction logic for FaceDetection.xaml
+    /// Interaction logic for FaceDetectionPage.xaml
     /// </summary>
-    public partial class FaceDetection : UserControl, INotifyPropertyChanged
+    public partial class FaceDetectionPage : Page, INotifyPropertyChanged
     {
         #region Fields
 
         /// <summary>
         /// Description dependency property
         /// </summary>
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceDetection));
-
-        /// <summary>
-        /// Output dependency property
-        /// </summary>
-        public static readonly DependencyProperty OutputProperty = DependencyProperty.Register("Output", typeof(string), typeof(FaceDetection));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceDetectionPage));
 
         /// <summary>
         /// Face detection results in list container
@@ -85,9 +78,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FaceDetection" /> class
+        /// Initializes a new instance of the <see cref="FaceDetectionPage" /> class
         /// </summary>
-        public FaceDetection()
+        public FaceDetectionPage()
         {
             InitializeComponent();
         }
@@ -164,22 +157,6 @@ namespace Microsoft.ProjectOxford.Face.Controls
         }
 
         /// <summary>
-        /// Gets or sets output for rendering
-        /// </summary>
-        public string Output
-        {
-            get
-            {
-                return (string)GetValue(OutputProperty);
-            }
-
-            set
-            {
-                SetValue(OutputProperty, value);
-            }
-        }
-
-        /// <summary>
         /// Gets face detection results
         /// </summary>
         public ObservableCollection<Face> ResultCollection
@@ -238,7 +215,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 DetectedFaces.Clear();
                 DetectedResultsInText = string.Format("Detecting...");
 
-                Output = Output.AppendLine(string.Format("Request: Detecting {0}", SelectedFile));
+                MainWindow.Log("Request: Detecting {0}", SelectedFile);
                 var sw = Stopwatch.StartNew();
 
                 // Call detection REST API
@@ -247,11 +224,11 @@ namespace Microsoft.ProjectOxford.Face.Controls
                     try
                     {
                         MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                        string subscriptionKey = mainWindow.SubscriptionKey;
+                        string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
 
                         var faceServiceClient = new FaceServiceClient(subscriptionKey);
-                        Contract.Face[] faces = await faceServiceClient.DetectAsync(fileStream, false, true, true, false);
-                        Output = Output.AppendLine(string.Format("Response: Success. Detected {0} face(s) in {1}", faces.Length, SelectedFile));
+                        Contract.Face[] faces = await faceServiceClient.DetectAsync(fileStream, false, true, new FaceAttributeType[] { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.FacialHair, FaceAttributeType.Smile });
+                        MainWindow.Log("Response: Success. Detected {0} face(s) in {1}", faces.Length, SelectedFile);
 
                         DetectedResultsInText = string.Format("{0} face(s) has been detected", faces.Length);
 
@@ -265,8 +242,14 @@ namespace Microsoft.ProjectOxford.Face.Controls
                                 Width = face.FaceRectangle.Width,
                                 Height = face.FaceRectangle.Height,
                                 FaceId = face.FaceId.ToString(),
-                                Gender = face.Attributes.Gender,
-                                Age = string.Format("{0:#} years old", face.Attributes.Age),
+                                Gender = face.FaceAttributes.Gender,
+                                Age = string.Format("{0:#} years old", face.FaceAttributes.Age),
+                                FacialHair = string.Format(
+                                    "Moustache: {0}, Beard: {1}, Sideburn: {2}",
+                                    face.FaceAttributes.FacialHair == null ? "None" : face.FaceAttributes.FacialHair.Moustache.ToString(),
+                                    face.FaceAttributes.FacialHair == null ? "None" : face.FaceAttributes.FacialHair.Beard.ToString(),
+                                    face.FaceAttributes.FacialHair == null ? "None" : face.FaceAttributes.FacialHair.Sideburns.ToString()),
+                                IsSmiling = face.FaceAttributes.Smile > 0.0 ? "Smile" : "Not Smile",
                             });
                         }
 
@@ -276,9 +259,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
                             ResultCollection.Add(face);
                         }
                     }
-                    catch (ClientException ex)
+                    catch (FaceAPIException ex)
                     {
-                        Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
+                        MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
                         return;
                     }
                 }

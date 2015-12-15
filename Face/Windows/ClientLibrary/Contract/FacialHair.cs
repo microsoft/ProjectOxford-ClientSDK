@@ -31,19 +31,48 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Microsoft.ProjectOxford.Face.Properties {
-    
-    
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
-                return defaultInstance;
-            }
+namespace Microsoft.ProjectOxford.Face.Contract
+{
+    /// <summary>
+    /// Represents length of moustache, beard and sideburn
+    /// </summary>
+    public class FacialHair
+    {
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the moustache value. Represents the length of moustache.
+        /// </summary>
+        /// <value>
+        /// The moustache value.
+        /// </value>
+        public double Moustache
+        {
+            get; set;
         }
+
+        /// <summary>
+        /// Gets or sets the beard value. Represents the length of beard.
+        /// </summary>
+        /// <value>
+        /// The beard value.
+        /// </value>
+        public double Beard
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the sideburns value. Represents the length of sideburns.
+        /// </summary>
+        /// <value>
+        /// The sideburns value.
+        /// </value>
+        public double Sideburns
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }
