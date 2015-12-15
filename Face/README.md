@@ -48,19 +48,6 @@ For questions, feedback, or suggestions about Project Oxford services, feel free
 
 -   [Blog](<https://blogs.technet.com/b/machinelearning/archive/tags/project+oxford/default.aspx>)
 
-Changes
-============
-This document is targeting Project Oxford Face V1.0 service. For user who has experiences on using Project Oxford Face V0, there are some major changes we would like you to know before switching from Project Oxford Face V0 to Project Oxford Face V1.0 service.
-
--   **API Signature**
-
-    In Project Oxford Face V1.0, Service root endpoint changes from [https://api.projectoxford.ai/face/v0/]() to [https://api.projectoxford.ai/face/v1.0/]()
-There are several signature changes for API, such as [Face - Detect](https://dev.projectoxford.ai/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395236), [Face - Identify](https://dev.projectoxford.ai/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239), [Face - Find Similar](https://dev.projectoxford.ai/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237), [Face - Group](https://dev.projectoxford.ai/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395238).
-
--   **Persisted Data**
-
-    Existing Person Group and Person data which has been setup with Project Oxford Face V0 cannot be accessed with Project Oxford Face V1.0 service. This incompatible issue will occur for only this one time, following API updates will not affect persisted data any more.
-
 License
 =======
 
