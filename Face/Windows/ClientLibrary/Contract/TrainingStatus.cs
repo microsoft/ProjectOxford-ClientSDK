@@ -31,37 +31,86 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace Microsoft.ProjectOxford.Face.Contract
 {
-    using System;
+    #region Enumerations
+
+    /// <summary>
+    /// Enumeration represents status of training
+    /// </summary>
+    public enum Status
+    {
+        /// <summary>
+        /// Training succeeded
+        /// </summary>
+        Succeeded,
+
+        /// <summary>
+        /// Training failed
+        /// </summary>
+        Failed,
+
+        /// <summary>
+        /// Training still in progress
+        /// </summary>
+        Running
+    }
+
+    #endregion Enumerations
 
     /// <summary>
     /// The training status entity.
     /// </summary>
     public class TrainingStatus
     {
+        #region Properties
+
         /// <summary>
         /// Gets or sets the status.
         /// </summary>
         /// <value>
         /// The status.
         /// </value>
-        public string Status { get; set; }
+        public Status Status
+        {
+            get; set;
+        }
 
         /// <summary>
-        /// Gets or sets the start time.
+        /// Gets or sets the create time.
         /// </summary>
         /// <value>
-        /// The start time.
+        /// The create time.
         /// </value>
-        public DateTime StartTime { get; set; }
+        public DateTime CreatedDateTime
+        {
+            get; set;
+        }
 
         /// <summary>
-        /// Gets or sets the end time.
+        /// Gets or sets the last action time.
         /// </summary>
         /// <value>
-        /// The end time.
+        /// The last action time.
         /// </value>
-        public DateTime EndTime { get; set; }
+        public DateTime LastActionDateTime
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the message.
+        /// </summary>
+        /// <value>
+        /// The message.
+        /// </value>
+        public string Message
+        {
+            get; set;
+        }
+
+        #endregion Properties
     }
 }

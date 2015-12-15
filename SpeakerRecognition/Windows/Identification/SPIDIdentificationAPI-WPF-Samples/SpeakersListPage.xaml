@@ -1,0 +1,29 @@
+﻿<Page x:Class="SPIDIdentificationAPI_WPF_Samples.SpeakersListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="SpeakersListPage" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="_speakersListView" Grid.Row="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Speaker ID" DisplayMemberBinding="{Binding IdentificationProfileId}"/>
+                    <GridViewColumn Header="Enrollment Status" DisplayMemberBinding="{Binding EnrollmentStatus}"/>
+                    <GridViewColumn Header="Remaining Enrollment Time" DisplayMemberBinding="{Binding RemainingEnrollmentSpeechTime}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Row="1" Margin="0,5,0,0" Orientation="Horizontal">
+            <TextBlock>Click on [Update List] to load all profiles</TextBlock>
+            <Button x:Name="_UpdateBtn" Margin="5,0,0,0" Content="_Update List" Click="_UpdateBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

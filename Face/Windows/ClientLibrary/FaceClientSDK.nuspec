@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Microsoft.ProjectOxford.Face</id>
+    <title>Microsoft Project Oxford Face API Client Library</title>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://github.com/Microsoft/ProjectOxford-ClientSDK/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/Microsoft/ProjectOxford-ClientSDK/tree/master/Face</projectUrl>
+    <iconUrl>https://www.projectoxford.ai/images/bright/face/FaceAPI-Main.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Microsoft Project Oxford Face API Client Library</description>
+    <summary>Use Face API Client Library to enrich your apps with Microsoft's state-of-the-art cloud-based face algorithms.</summary>
+    <releaseNotes>Project Oxford Face API V1.0 Client SDK</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Face, Oxford, ProjectOxford</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="6.0.8" />
+    </dependencies>
+  </metadata>
+</package>
