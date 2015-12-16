@@ -83,6 +83,15 @@ namespace SampleUserControlLibrary
             }
         }
 
+        /// <summary>
+        /// Gets or sets the disclaimer
+        /// </summary>
+        public string Disclaimer
+        {
+            get { return _disclaimerTextBlock.Text; }
+            set { _disclaimerTextBlock.Text = value; }
+        }
+
         public string SubscriptionKey
         {
             get;
@@ -137,7 +146,6 @@ namespace SampleUserControlLibrary
             if (scenario != null)
             {
                 Page page = Activator.CreateInstance(scenario.PageClass) as Page;
-                page.DataContext = this.DataContext;
                 _scenarioFrame.Navigate(page);
             }
         }

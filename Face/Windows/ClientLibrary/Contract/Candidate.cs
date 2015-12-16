@@ -40,19 +40,13 @@ namespace Microsoft.ProjectOxford.Face.Contract
     /// </summary>
     public class Candidate
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the person identifier.
         /// </summary>
         /// <value>
         /// The person identifier.
         /// </value>
-        public Guid PersonId
-        {
-            get;
-            set;
-        }
+        public Guid PersonId { get; set; }
 
         /// <summary>
         /// Gets or sets the confidence.
@@ -60,12 +54,6 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The confidence.
         /// </value>
-        public double Confidence
-        {
-            get;
-            set;
-        }
-
-        #endregion Properties
+        public double Confidence { get; set; }
     }
 }

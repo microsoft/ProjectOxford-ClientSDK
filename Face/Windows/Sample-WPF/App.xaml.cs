@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK GitHub:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -35,11 +35,16 @@ using System.Windows;
 
 namespace Microsoft.ProjectOxford.Face
 {
+
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
+        #region Fields
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -61,10 +66,10 @@ namespace Microsoft.ProjectOxford.Face
         /// <param name="e">Event arguments</param>
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            if (e.Exception is FaceAPIException)
+            if (e.Exception is ClientException)
             {
-                var ex = e.Exception as FaceAPIException;
-                MessageBox.Show(ex.ErrorMessage, "Face API Calling Error", MessageBoxButton.OK);
+                var ex = e.Exception as ClientException;
+                MessageBox.Show(ex.Error.Message, "Face API Calling Error", MessageBoxButton.OK);
             }
             else
             {
