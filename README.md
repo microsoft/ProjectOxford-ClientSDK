@@ -5,12 +5,12 @@ This repo contains the client libraries and samples that demonstrate the [Micros
 Oxford APIs](<https://www.projectoxford.ai>), an evolving portfolio of REST APIs
 that enable developers to leverage the power of Microsoft's natural data
 understanding and easily add intelligent services into their solutions. The
-Project Oxford APIs are divided into four areas:  
+Project Oxford APIs are divided into five areas:  
  
 
-| [Face API](<https://www.projectoxford.ai/face>) (Beta) | [Computer Vision API](<https://www.projectoxford.ai/vision>) (Beta) | [Speech API](<https://www.projectoxford.ai/speech>) (Beta) | [Language Understanding Intelligent Service](<https://www.projectoxford.ai/luis>) (Beta) |
-|----------------------------------------------------|----------------------------------------------------|----------------------------------------------------|----------------------------------------------------|
-| See your users with face detection and recognition | Understand images and intelligently generate thumbnails | Communicate with your users with speech recognition and synthesis | Understand natural language commands tailored to your app |
+| [Face API](<https://www.projectoxford.ai/face>) (Beta) | [Emotion API](<https://www.projectoxford.ai/emotion>) (Beta) | [Computer Vision API](<https://www.projectoxford.ai/vision>) (Beta) | [Speech API](<https://www.projectoxford.ai/speech>) (Beta) | [Language Understanding Intelligent Service](<https://www.projectoxford.ai/luis>) (Beta) |
+|----------------------------------------------------|----------------------------------------------------|----------------------------------------------------|----------------------------------------------------|----------------------------------------------------|
+| See your users with face detection and recognition | Understand your users with Emotion Recognition  | Understand images and intelligently generate thumbnails | Communicate with your users with speech recognition and synthesis | Understand natural language commands tailored to your app |
 
 Getting started
 ===============
@@ -21,6 +21,8 @@ installation and use. To begin, navigate to a tech area and pick the platform of
 your choice:
 
 -   [Face](</Face/>)
+
+-   [Emotion](</Emotion/>)
 
 -   [Computer Vision](</Vision/>)
 

@@ -1,13 +1,17 @@
-Microsoft Project Oxford Computer Emotion client SDK and samples
-===================================================
+Microsoft Project Oxford Emotion client SDK and samples
+========================================
 
+This repo contains the client libraries that demonstrate Microsoft’s cloud-based algorithms to detect emotions based on facial expressions. See the tech in
+action on [our demo page](<https://www.projectoxford.ai/demo/Emotion#detection>) or
+learn more about the API with [our documentation](<https://www.projectoxford.ai/doc/Emotion/overview>).
 
 Getting started
 ===============
 
 To get started, select the platform for which you're developing.
 
--   [Android](<Android>)
+-   [Windows](</Emotion/Windows/>)
+-   [Android](</Emotion/Android/>)
 
 Contributing
 ============

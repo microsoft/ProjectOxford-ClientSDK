@@ -33,9 +33,9 @@
 package com.microsoft.projectoxford.face.contract;
 
 public class HeadPose {
-    public float roll;
+    public double roll;
 
-    public float yaw;
+    public double yaw;
 
-    public float pitch;
+    public double pitch;
 }
