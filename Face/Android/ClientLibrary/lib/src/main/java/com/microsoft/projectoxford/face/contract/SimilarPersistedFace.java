@@ -34,8 +34,14 @@ package com.microsoft.projectoxford.face.contract;
 
 import java.util.UUID;
 
-public class SimilarFace {
-    public UUID faceId;
+public class SimilarPersistedFace {
+    /**
+     * The persisted face identifier
+     */
+    public UUID persistedFaceId;
 
+    /**
+     * The confidence value.
+     */
     public double confidence;
 }

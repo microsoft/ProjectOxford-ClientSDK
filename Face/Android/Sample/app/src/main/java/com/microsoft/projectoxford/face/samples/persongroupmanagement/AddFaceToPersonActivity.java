@@ -51,7 +51,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
+import com.microsoft.projectoxford.face.contract.AddPersistedFaceResult;
 import com.microsoft.projectoxford.face.contract.Face;
+import com.microsoft.projectoxford.face.contract.FaceRectangle;
 import com.microsoft.projectoxford.face.samples.R;
 import com.microsoft.projectoxford.face.samples.helper.ImageHelper;
 import com.microsoft.projectoxford.face.samples.helper.LogHelper;
@@ -85,11 +87,22 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
                 publishProgress("Adding face...");
                 UUID personId = UUID.fromString(mPersonId);
 
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                InputStream imageInputStream = new ByteArrayInputStream(stream.toByteArray());
+
                 for (Integer index: mFaceIndices) {
-                    UUID faceId = mFaceGridViewAdapter.faceIdList.get(index);
-                    addLog("Request: Adding face " + faceId.toString() + " to person " + mPersonId);
+                    FaceRectangle faceRect = mFaceGridViewAdapter.faceRectList.get(index);
+                    addLog("Request: Adding face to person " + mPersonId);
                     // Start the request to add face.
-                    faceServiceClient.addPersonFace(mPersonGroupId, personId, faceId, "User Data");
+                    AddPersistedFaceResult result = faceServiceClient.addPersonFace(
+                            mPersonGroupId,
+                            personId,
+                            imageInputStream,
+                            "User data",
+                            faceRect);
+
+                    mFaceGridViewAdapter.faceIdList.set(index, result.persistedFaceId);
                 }
                 return true;
             } catch (Exception e) {
@@ -128,11 +141,12 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
 
                 // Start detection.
                 return faceServiceClient.detect(
-                        params[0],   /* Input stream of image to detect */
-                        false,       /* Whether to analyzes facial landmarks */
-                        false,       /* Whether to analyzes age */
-                        false,       /* Whether to analyzes gender */
-                        false);      /* Whether to analyzes head pose */
+                        params[0],  /* Input stream of image to detect */
+                        true,       /* Whether to return face ID */
+                        false,       /* Whether to return face landmarks */
+                        /* Which face attributes to analyze, currently we support:
+                           age,gender,headPose,smile,facialHair */
+                        null);
             }  catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());
@@ -208,7 +222,7 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
             // Set the information about the detection result.
             if (result != null) {
                 setInfo(result.length + " face"
-                        + (result.length > 1 ? "s" : "") + " detected");
+                        + (result.length != 1 ? "s" : "") + " detected");
             } else {
                 setInfo("0 face detected");
             }
@@ -285,7 +299,7 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
         if (mFaceGridViewAdapter != null) {
             List<Integer> faceIndices = new ArrayList<>();
 
-            for (int i = 0; i < mFaceGridViewAdapter.faceIdList.size(); ++i) {
+            for (int i = 0; i < mFaceGridViewAdapter.faceRectList.size(); ++i) {
                 if (mFaceGridViewAdapter.faceChecked.get(i)) {
                     faceIndices.add(i);
                 }
@@ -312,11 +326,13 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
 
     private class FaceGridViewAdapter extends BaseAdapter {
         List<UUID> faceIdList;
+        List<FaceRectangle> faceRectList;
         List<Bitmap> faceThumbnails;
         List<Boolean> faceChecked;
 
         FaceGridViewAdapter(Face[] detectionResult) {
             faceIdList = new ArrayList<>();
+            faceRectList = new ArrayList<>();
             faceThumbnails = new ArrayList<>();
             faceChecked = new ArrayList<>();
 
@@ -328,7 +344,8 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
                         faceThumbnails.add(ImageHelper.generateFaceThumbnail(
                                 mBitmap, face.faceRectangle));
 
-                        faceIdList.add(face.faceId);
+                        faceIdList.add(null);
+                        faceRectList.add(face.faceRectangle);
 
                         faceChecked.add(false);
                     } catch (IOException e) {
@@ -341,12 +358,12 @@ public class AddFaceToPersonActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            return faceIdList.size();
+            return faceRectList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return faceIdList.get(position);
+            return faceRectList.get(position);
         }
 
         @Override

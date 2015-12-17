@@ -30,17 +30,12 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-package com.microsoft.projectoxford.face.rest;
+package com.microsoft.projectoxford.face.contract;
 
-import org.json.JSONObject;
+public class FaceListMetadata {
+    public String faceGroupId;
 
-public class RESTException extends Exception {
+    public String name;
 
-    public RESTException(String message) {
-        super(message);
-    }
-
-    public RESTException(JSONObject errorObject) {
-        super(errorObject.toString());
-    }
+    public String userData;
 }

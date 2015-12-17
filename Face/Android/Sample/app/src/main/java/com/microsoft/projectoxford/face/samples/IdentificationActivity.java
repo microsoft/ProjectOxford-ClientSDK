@@ -57,6 +57,7 @@ import com.microsoft.projectoxford.face.contract.IdentifyResult;
 import com.microsoft.projectoxford.face.contract.TrainingStatus;
 import com.microsoft.projectoxford.face.samples.helper.ImageHelper;
 import com.microsoft.projectoxford.face.samples.helper.LogHelper;
+import com.microsoft.projectoxford.face.samples.helper.SampleApp;
 import com.microsoft.projectoxford.face.samples.helper.SelectImageActivity;
 import com.microsoft.projectoxford.face.samples.helper.StorageHelper;
 import com.microsoft.projectoxford.face.samples.log.IdentificationLogActivity;
@@ -94,15 +95,14 @@ public class IdentificationActivity extends ActionBarActivity {
             addLog(logString);
 
             // Get an instance of face service client to detect faces in image.
-            FaceServiceClient faceServiceClient =
-                    new FaceServiceClient(getString(R.string.subscription_key));
+            FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
             try{
                 publishProgress("Getting person group status...");
 
                 TrainingStatus trainingStatus = faceServiceClient.getPersonGroupTrainingStatus(
                         this.mPersonGroupId);     /* personGroupId */
 
-                if (!trainingStatus.status.equals("succeeded")) {
+                if (trainingStatus.status != TrainingStatus.Status.Succeeded) {
                     publishProgress("Person group training status is " + trainingStatus.status);
                     mSucceed = false;
                     return null;
@@ -110,9 +110,9 @@ public class IdentificationActivity extends ActionBarActivity {
 
                 publishProgress("Identifying...");
 
-                // Start detection.
+                // Start identification.
                 return faceServiceClient.identity(
-                        this.mPersonGroupId,     /* personGroupId */
+                        this.mPersonGroupId,   /* personGroupId */
                         params,                  /* faceIds */
                         1);                      /* maxNumOfCandidatesReturned */
             }  catch (Exception e) {
@@ -196,14 +196,14 @@ public class IdentificationActivity extends ActionBarActivity {
         } else if (position < 0) {
             setIdentifyButtonEnabledStatus(false);
             textView.setTextColor(Color.RED);
-            textView.setText("No person group selected");
+            textView.setText(R.string.no_person_group_selected_for_identification_warning);
         } else {
             mPersonGroupId = mPersonGroupListAdapter.personGroupIdList.get(0);
             String personGroupName = StorageHelper.getPersonGroupName(
                     mPersonGroupId, IdentificationActivity.this);
             refreshIdentifyButtonEnabledStatus();
             textView.setTextColor(Color.BLACK);
-            textView.setText("Person group to use: " + personGroupName);
+            textView.setText(String.format("Person group to use: %s", personGroupName));
         }
     }
 
@@ -254,18 +254,18 @@ public class IdentificationActivity extends ActionBarActivity {
         @Override
         protected Face[] doInBackground(InputStream... params) {
             // Get an instance of face service client to detect faces in image.
-            FaceServiceClient faceServiceClient =
-                    new FaceServiceClient(getString(R.string.subscription_key));
+            FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
             try{
                 publishProgress("Detecting...");
 
                 // Start detection.
                 return faceServiceClient.detect(
-                        params[0],   /* Input stream of image to detect */
-                        false,       /* Whether to analyzes facial landmarks */
-                        false,       /* Whether to analyzes age */
-                        false,       /* Whether to analyzes gender */
-                        false);      /* Whether to analyzes head pose */
+                        params[0],  /* Input stream of image to detect */
+                        true,       /* Whether to return face ID */
+                        false,       /* Whether to return face landmarks */
+                        /* Which face attributes to analyze, currently we support:
+                           age,gender,headPose,smile,facialHair */
+                        null);
             }  catch (Exception e) {
                 publishProgress(e.getMessage());
                 return null;
@@ -531,7 +531,7 @@ public class IdentificationActivity extends ActionBarActivity {
                             identity);
                 } else {
                     ((TextView) convertView.findViewById(R.id.text_detected_face)).setText(
-                            "Unknown person");
+                            R.string.face_cannot_be_identified);
                 }
             }
 
@@ -591,8 +591,10 @@ public class IdentificationActivity extends ActionBarActivity {
             int personNumberInGroup = StorageHelper.getAllPersonIds(
                     personGroupIdList.get(position), IdentificationActivity.this).size();
             ((TextView)convertView.findViewById(R.id.text_person_group)).setText(
-                    personGroupName + " (" + personNumberInGroup
-                            + " Person" + (personNumberInGroup > 0 ? "s)": ")"));
+                    String.format(
+                            "%s (Person count: %d)",
+                            personGroupName,
+                            personNumberInGroup));
 
             if (position == 0) {
                 ((TextView)convertView.findViewById(R.id.text_person_group)).setTextColor(
