@@ -62,7 +62,7 @@ Contributing
 ============
 We welcome contributions and are always looking for new SDKs, input, and
 suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
-Rules & Guidelines](<CONTRIBUTING.md>).
+Rules & Guidelines](</CONTRIBUTING.md>).
 
 For questions, feedback, or suggestions about Project Oxford services, feel free to reach out to us directly.
 

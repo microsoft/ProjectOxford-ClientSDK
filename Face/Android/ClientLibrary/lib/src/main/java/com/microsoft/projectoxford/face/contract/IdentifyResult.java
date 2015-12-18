@@ -39,5 +39,5 @@ import java.util.UUID;
 public class IdentifyResult {
     public UUID faceId;
 
-    public List<Candidate> candidates = new ArrayList<Candidate>();
+    public List<Candidate> candidates = new ArrayList<>();
 }

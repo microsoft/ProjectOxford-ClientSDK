@@ -32,298 +32,402 @@
 //
 package com.microsoft.projectoxford.face;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.microsoft.projectoxford.face.contract.AddPersistedFaceResult;
 import com.microsoft.projectoxford.face.contract.CreatePersonResult;
 import com.microsoft.projectoxford.face.contract.Face;
+import com.microsoft.projectoxford.face.contract.FaceList;
+import com.microsoft.projectoxford.face.contract.FaceListMetadata;
+import com.microsoft.projectoxford.face.contract.FaceRectangle;
 import com.microsoft.projectoxford.face.contract.GroupResult;
 import com.microsoft.projectoxford.face.contract.IdentifyResult;
 import com.microsoft.projectoxford.face.contract.Person;
 import com.microsoft.projectoxford.face.contract.PersonFace;
 import com.microsoft.projectoxford.face.contract.PersonGroup;
 import com.microsoft.projectoxford.face.contract.SimilarFace;
+import com.microsoft.projectoxford.face.contract.SimilarPersistedFace;
 import com.microsoft.projectoxford.face.contract.TrainingStatus;
 import com.microsoft.projectoxford.face.contract.VerifyResult;
-import com.microsoft.projectoxford.face.rest.RESTException;
-import com.microsoft.projectoxford.face.rest.WebServiceRequest;
+import com.microsoft.projectoxford.face.rest.ClientException;
 
-import org.json.JSONArray;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 import java.util.UUID;
 
-public class FaceServiceClient implements IFaceServiceClient {
-    private static final String ServiceHost = "https://api.projectoxford.ai/face/v0";
-    private WebServiceRequest restCall = null;
-    private Gson gson = new Gson();
+public interface FaceServiceClient {
 
-    public FaceServiceClient(String subscriptKey) {
-        this.restCall = new WebServiceRequest(subscriptKey);
-    }
+    /**
+     * Supported face attribute types
+     */
+    public enum FaceAttributeType
+    {
+        /**
+         * Analyses age
+         */
+        Age {
+            public String toString() {
+                return "age";
+            }
+        },
 
-    @Override
-    public Face[] detect(String url, boolean analyzesFacialLandmarks, boolean analyzesAge, boolean analyzesGender, boolean analyzesHeadPose) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+        /**
+         * Analyses gender
+         */
+        Gender {
+            public String toString() {
+                return "gender";
+            }
+        },
 
-        params.put("analyzesFacialLandmarks", analyzesFacialLandmarks);
-        params.put("analyzesAge", analyzesAge);
-        params.put("analyzesGender", analyzesGender);
-        params.put("analyzesHeadPose", analyzesHeadPose);
+        /**
+         * Analyses facial hair
+         */
+        FacialHair {
+            public String toString() {
+                return "facialHair";
+            }
+        },
 
-        String path = ServiceHost + "/detections";
-        String uri = WebServiceRequest.getUrl(path, params);
+        /**
+         * Analyses whether is smiling
+         */
+        Smile {
+            public String toString() {
+                return "smile";
+            }
+        },
 
-        params.clear();
-        params.put("url", url);
-
-        String json = this.restCall.request(uri, "POST", params, null);
-        Type listType = new TypeToken<List<Face>>() {
-        }.getType();
-        List<Face> faces = this.gson.fromJson(json, listType);
-
-        return faces.toArray(new Face[faces.size()]);
-    }
-
-    @Override
-    public Face[] detect(InputStream image, boolean analyzesFacialLandmarks, boolean analyzesAge, boolean analyzesGender, boolean analyzesHeadPose) throws RESTException, IOException {
-        Map<String, Object> params = new HashMap<>();
-
-        params.put("analyzesAge", analyzesAge);
-        params.put("analyzesGender", analyzesGender);
-        params.put("analyzesFacialLandmarks", analyzesFacialLandmarks);
-        params.put("analyzesHeadPose", analyzesHeadPose);
-
-        String path = ServiceHost + "/detections";
-        String uri = WebServiceRequest.getUrl(path, params);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        int bytesRead;
-        byte[] bytes = new byte[1024];
-        while ((bytesRead = image.read(bytes)) > 0) {
-            byteArrayOutputStream.write(bytes, 0, bytesRead);
+        /**
+         * Analyses head pose
+         */
+        HeadPose {
+            public String toString() {
+                return "headPose";
+            }
         }
-        byte[] data = byteArrayOutputStream.toByteArray();
-        params.clear();
-        params.put("data", data);
-
-        String json = this.restCall.request(uri, "POST", params, "application/octet-stream");
-        Type listType = new TypeToken<List<Face>>() {
-        }.getType();
-        List<Face> faces = this.gson.fromJson(json, listType);
-
-        return faces.toArray(new Face[faces.size()]);
     }
 
-    @Override
-    public VerifyResult verify(UUID faceId1, UUID faceId2) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+    /**
+     * Detects faces in an URL image.
+     * @param url url.
+     * @param returnFaceId If set to <c>true</c> [return face ID].
+     * @param returnFaceLandmarks If set to <c>true</c> [return face landmarks].
+     * @param returnFaceAttributes Return face attributes.
+     * @return detected faces.
+     * @throws ClientException
+     * @throws IOException
+     */
+    Face[] detect(String url, boolean returnFaceId, boolean returnFaceLandmarks, FaceAttributeType[] returnFaceAttributes) throws ClientException, IOException;
 
-        params.put("faceId1", faceId1.toString());
-        params.put("faceId2", faceId2.toString());
+    /**
+     * Detects faces in an uploaded image.
+     * @param imageStream The image stream.
+     * @param returnFaceId If set to <c>true</c> [return face ID].
+     * @param returnFaceLandmarks If set to <c>true</c> [return face landmarks]
+     * @param returnFaceAttributes Return face attributes.
+     * @return detected faces.
+     * @throws ClientException
+     * @throws IOException
+     */
+    Face[] detect(InputStream imageStream, boolean returnFaceId, boolean returnFaceLandmarks, FaceAttributeType[] returnFaceAttributes) throws ClientException, IOException;
 
-        String uri = ServiceHost + "/verifications";
-        String json = this.restCall.request(uri, "POST", params, null);
-        Type listType = new TypeToken<VerifyResult>() {
-        }.getType();
-        return this.gson.fromJson(json, listType);
-    }
+    /**
+     * Verifies whether the specified two faces belong to the same person.
+     * @param faceId1 The face id 1.
+     * @param faceId2 The face id 2.
+     * @return The verification result.
+     * @throws ClientException
+     * @throws IOException
+     */
+    VerifyResult verify(UUID faceId1, UUID faceId2) throws ClientException, IOException;
 
-    @Override
-    public IdentifyResult[] identity(String personGroupId, UUID[] faceIds, int maxNumOfCandidatesReturned) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+    /**
+     * Identities the faces in a given person group.
+     * @param personGroupId The person group id.
+     * @param faceIds The face ids.
+     * @param maxNumOfCandidatesReturned The maximum number of candidates returned for each face.
+     * @return The identification results.
+     * @throws ClientException
+     * @throws IOException
+     */
+    IdentifyResult[] identity(String personGroupId, UUID[] faceIds, int maxNumOfCandidatesReturned) throws ClientException, IOException;
 
-        params.put("personGroupId", personGroupId);
-        JSONArray jsonArray = new JSONArray(Arrays.asList(faceIds));
-        params.put("faceIds", jsonArray);
-        params.put("maxNumOfCandidatesReturned", maxNumOfCandidatesReturned);
+    /**
+     * Trains the person group.
+     * @param personGroupId The person group id
+     * @throws ClientException
+     * @throws IOException
+     */
+    void trainPersonGroup(String personGroupId) throws ClientException, IOException;
 
-        String uri = ServiceHost + "/identifications";
-        String json = this.restCall.request(uri, "POST", params, null);
-        Type listType = new TypeToken<List<IdentifyResult>>() {
-        }.getType();
-        List<IdentifyResult> result = this.gson.fromJson(json, listType);
+    /**
+     * Gets person group training status.
+     * @param personGroupId The person group id.
+     * @return The person group training status.
+     * @throws ClientException
+     * @throws IOException
+     */
+    TrainingStatus getPersonGroupTrainingStatus(String personGroupId) throws ClientException, IOException;
 
-        return result.toArray(new IdentifyResult[result.size()]);
-    }
+    /**
+     *  Creates the person group.
+     * @param personGroupId The person group identifier.
+     * @param name The name.
+     * @param userData The user data.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void createPersonGroup(String personGroupId, String name, String userData) throws ClientException, IOException;
 
-    @Override
-    public TrainingStatus trainPersonGroup(String personGroupId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/training";
-        String json = this.restCall.request(uri, "POST", params, null);
-        return this.gson.fromJson(json, TrainingStatus.class);
-    }
+    /**
+     * Deletes a person group.
+     * @param personGroupId The person group id.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void deletePersonGroup(String personGroupId) throws ClientException, IOException;
 
-    @Override
-    public TrainingStatus getPersonGroupTrainingStatus(String personGroupId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/training";
-        String json = this.restCall.request(uri, "GET", params, null);
-        return this.gson.fromJson(json, TrainingStatus.class);
-    }
+    /**
+     * Updates a person group.
+     * @param personGroupId The person group id.
+     * @param name The name.
+     * @param userData The user data.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void updatePersonGroup(String personGroupId, String name, String userData) throws ClientException, IOException;
 
-    @Override
-    public void createPersonGroup(String personGroupId, String name, String userData) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId;
-        params.put("name", name);
-        params.put("userData", userData);
-        this.restCall.request(uri, "PUT", params, null);
-    }
+    /**
+     * Gets a person group.
+     * @param personGroupId The person group id.
+     * @return The person group entity.
+     * @throws ClientException
+     * @throws IOException
+     */
+    PersonGroup getPersonGroup(String personGroupId) throws ClientException, IOException;
 
-    @Override
-    public void deletePersonGroup(String personGroupId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId;
-        this.restCall.request(uri, "DELETE", params, null);
-    }
+    /**
+     *  Gets all person groups.
+     * @return Person group entity array.
+     * @throws ClientException
+     * @throws IOException
+     */
+    PersonGroup[] getPersonGroups() throws ClientException, IOException;
 
-    @Override
-    public void updatePersonGroup(String personGroupId, String name, String userData) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+    /**
+     * Creates a person.
+     * @param personGroupId The person group id.
+     * @param name The name.
+     * @param userData The user data.
+     * @return The CreatePersonResult entity.
+     * @throws ClientException
+     * @throws IOException
+     */
+    CreatePersonResult createPerson(String personGroupId, String name, String userData) throws ClientException, IOException;
 
-        String uri = ServiceHost + "/persongroups/" + personGroupId;
-        params.put("name", name);
-        params.put("userData", userData);
+    /**
+     *  Gets a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @return The person entity.
+     * @throws ClientException
+     * @throws IOException
+     */
+    Person getPerson(String personGroupId, UUID personId) throws ClientException, IOException;
 
-        this.restCall.request(uri, "PATCH", params, null);
-    }
+    /**
+     * Gets all persons inside a person group.
+     * @param personGroupId The person group id.
+     * @return The person entity array.
+     * @throws ClientException
+     * @throws IOException
+     */
+    Person[] getPersons(String personGroupId) throws ClientException, IOException;
 
-    @Override
-    public PersonGroup getPersonGroup(String personGroupId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId;
-        String json = this.restCall.request(uri, "GET", params, null);
-        return gson.fromJson(json, PersonGroup.class);
-    }
+    /**
+     * Adds a face to a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @param url The face image URL.
+     * @param userData The user data.
+     * @param targetFace The target face.
+     * @return Add person face result.
+     * @throws ClientException
+     * @throws IOException
+     */
+    AddPersistedFaceResult addPersonFace(String personGroupId, UUID personId, String url, String userData, FaceRectangle targetFace) throws ClientException, IOException;
 
-    @Override
-    public PersonGroup[] getPersonGroups() throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups";
-        String json = this.restCall.request(uri, "GET", params, null);
+    /**
+     * Adds a face to a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @param imageStream The face image stream
+     * @param userData The user data.
+     * @param targetFace The Target Face.
+     * @return Add person face result.
+     * @throws ClientException
+     * @throws IOException
+     */
+    AddPersistedFaceResult addPersonFace(String personGroupId, UUID personId, InputStream imageStream, String userData, FaceRectangle targetFace) throws ClientException, IOException;
 
-        Type listType = new TypeToken<List<PersonGroup>>() {
-        }.getType();
-        List<PersonGroup> result = this.gson.fromJson(json, listType);
+    /**
+     * Gets a face of a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @param persistedFaceId The persisted face id.
+     * @return The person face entity.
+     * @throws ClientException
+     * @throws IOException
+     */
+    PersonFace getPersonFace(String personGroupId, UUID personId, UUID persistedFaceId) throws ClientException, IOException;
 
-        return result.toArray(new PersonGroup[result.size()]);
-    }
+    /**
+     * Updates a face of a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @param persistedFaceId The persisted face id.
+     * @param userData The person face entity.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void updatePersonFace(String personGroupId, UUID personId, UUID persistedFaceId, String userData) throws ClientException, IOException;
 
-    @Override
-    public CreatePersonResult createPerson(String personGroupId, UUID[] faceIds, String name, String userData) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+    /**
+     * Updates a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @param name The name.
+     * @param userData The user data.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void updatePerson(String personGroupId, UUID personId, String name, String userData) throws ClientException, IOException;
 
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons";
-        JSONArray jsonArray = new JSONArray(Arrays.asList(faceIds));
-        params.put("faceIds", jsonArray);
-        params.put("name", name);
-        params.put("userData", userData);
+    /**
+     * Deletes a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void deletePerson(String personGroupId, UUID personId) throws ClientException, IOException;
 
-        String json = this.restCall.request(uri, "POST", params, null);
-        return this.gson.fromJson(json, CreatePersonResult.class);
-    }
+    /**
+     * Deletes a face of a person.
+     * @param personGroupId The person group id.
+     * @param personId The person id.
+     * @param persistedFaceId The persisted face id.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void deletePersonFace(String personGroupId, UUID personId, UUID persistedFaceId) throws ClientException, IOException;
 
-    @Override
-    public Person getPerson(String personGroupId, UUID personId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+    /**
+     * Finds the similar faces.
+     * @param faceId The face identifier.
+     * @param faceIds The face list identifier.
+     * @param maxNumOfCandidatesReturned The max number of candidates returned.
+     * @return The similar persisted faces.
+     * @throws ClientException
+     * @throws IOException
+     */
+    SimilarFace[] findSimilar(UUID faceId, UUID[] faceIds, int maxNumOfCandidatesReturned) throws ClientException, IOException;
 
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons/" + personId;
-        String json = this.restCall.request(uri, "GET", params, null);
-        return this.gson.fromJson(json, Person.class);
-    }
+    /**
+     * Finds the similar faces.
+     * @param faceId The face identifier.
+     * @param faceListId The face list identifier.
+     * @param maxNumOfCandidatesReturned The max number of candidates returned.
+     * @return The similar persisted faces.
+     * @throws ClientException
+     * @throws IOException
+     */
+    SimilarPersistedFace[] findSimilar(UUID faceId, String faceListId, int maxNumOfCandidatesReturned) throws ClientException, IOException;
 
-    @Override
-    public Person[] getPersons(String personGroupId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+    /**
+     * Groups the face.
+     * @param faceIds The face ids.
+     * @return Group result.
+     * @throws ClientException
+     * @throws IOException
+     */
+    GroupResult group(UUID[] faceIds) throws ClientException, IOException;
 
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons";
-        String json = this.restCall.request(uri, "GET", params, null);
-        Type listType = new TypeToken<List<Person>>() {
-        }.getType();
-        List<Person> result = this.gson.fromJson(json, listType);
-        return result.toArray(new Person[result.size()]);
-    }
+    /**
+     *  Creates the face list.
+     * @param faceListId The face list identifier.
+     * @param name The name.
+     * @param userData The user data.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void createFaceList(String faceListId, String name, String userData) throws ClientException, IOException;
 
-    @Override
-    public void addPersonFace(String personGroupId, UUID personId, UUID faceId, String userData) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
+    /**
+     * Gets the face list.
+     * @param faceListId The face list identifier.
+     * @return Face list object.
+     * @throws ClientException
+     * @throws IOException
+     */
+    FaceList getFaceList(String faceListId) throws ClientException, IOException;
 
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons/" + personId + "/faces/" + faceId;
-        params.put("userData", userData);
+    /**
+     * Lists the face lists.
+     * @return Face list metadata objects.
+     * @throws ClientException
+     * @throws IOException
+     */
+    FaceListMetadata[] listFaceLists() throws ClientException, IOException;
 
-        this.restCall.request(uri, "PUT", params, null);
-    }
+    /**
+     * Updates the face list.
+     * @param faceListId The face list identifier.
+     * @param name The name.
+     * @param userData The user data.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void updateFaceList(String faceListId, String name, String userData) throws ClientException, IOException;
 
-    @Override
-    public PersonFace getPersonFace(String personGroupId, UUID personId, UUID faceId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons/" + personId + "/faces/" + faceId;
-        String json = this.restCall.request(uri, "GET", params, null);
-        return this.gson.fromJson(json, PersonFace.class);
-    }
+    /**
+     * Deletes the face list
+     * @param faceListId The face group identifier.
+     * @throws ClientException
+     * @throws IOException
+     */
+    void deleteFaceList(String faceListId) throws ClientException, IOException;
 
-    @Override
-    public void updatePersonFace(String personGroupId, UUID personId, UUID faceId, String userData) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons/" + personId + "/faces/" + faceId;
-        params.put("userData", userData);
-        this.restCall.request(uri, "PATCH", params, null);
-    }
+    /**
+     * Adds the face to face list.
+     * @param faceListId he face list identifier.
+     * @param url The face image URL.
+     * @param userData The user data.
+     * @param targetFace
+     * @return The target face.
+     * @throws ClientException
+     * @throws IOException
+     */
+    AddPersistedFaceResult addFacesToFaceList(String faceListId, String url, String userData, FaceRectangle targetFace) throws ClientException, IOException;
 
-    @Override
-    public void updatePerson(String personGroupId, UUID personId, UUID[] faceIds, String name, String userData) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons/" + personId;
-        JSONArray jsonArray = new JSONArray(Arrays.asList(faceIds));
-        params.put("faceIds", jsonArray);
-        params.put("name", name);
-        params.put("userData", userData);
-        this.restCall.request(uri, "PATCH", params, null);
-    }
+    /**
+     *  Adds the face to face list
+     * @param faceListId The face list identifier.
+     * @param imageStream The face image stream.
+     * @param userData The user data.
+     * @param targetFace The target face.
+     * @return Add face result.
+     * @throws ClientException
+     * @throws IOException
+     */
+    AddPersistedFaceResult AddFaceToFaceList(String faceListId, InputStream imageStream, String userData, FaceRectangle targetFace) throws ClientException, IOException;
 
-    @Override
-    public void deletePerson(String personGroupId, UUID personId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons/" + personId;
-        this.restCall.request(uri, "DELETE", params, null);
-    }
-
-    @Override
-    public void deletePersonFace(String personGroupId, UUID personId, UUID faceId) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/persongroups/" + personGroupId + "/persons/" + personId + "/faces/" + faceId;
-        this.restCall.request(uri, "DELETE", params, null);
-    }
-
-    @Override
-    public SimilarFace[] findSimilar(UUID faceId, UUID[] faceIds) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/findsimilars";
-        params.put("faceId", faceId);
-        JSONArray jsonArray = new JSONArray(Arrays.asList(faceIds));
-        params.put("faceIds", jsonArray);
-        String json = this.restCall.request(uri, "POST", params, null);
-        Type listType = new TypeToken<List<SimilarFace>>() {
-        }.getType();
-        List<SimilarFace> result = this.gson.fromJson(json, listType);
-        return result.toArray(new SimilarFace[result.size()]);
-    }
-
-    @Override
-    public GroupResult group(UUID[] faceIds) throws RESTException {
-        Map<String, Object> params = new HashMap<>();
-        String uri = ServiceHost + "/groupings";
-        JSONArray jsonArray = new JSONArray(Arrays.asList(faceIds));
-        params.put("faceIds", jsonArray);
-        String json = this.restCall.request(uri, "POST", params, null);
-        return this.gson.fromJson(json, GroupResult.class);
-    }
+    /**
+     * Deletes the face from face list.
+     * @param faceListId The face list identifier.
+     * @param persistedFaceId The face identifier
+     * @throws ClientException
+     * @throws IOException
+     */
+    void deleteFacesFromFaceList(String faceListId, UUID persistedFaceId) throws ClientException, IOException;
 }

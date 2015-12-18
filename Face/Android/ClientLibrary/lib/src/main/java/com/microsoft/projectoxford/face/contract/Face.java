@@ -41,5 +41,5 @@ public class Face {
 
     public FaceLandmarks faceLandmarks;
 
-    public FaceAttribute attributes;
+    public FaceAttribute faceAttributes;
 }

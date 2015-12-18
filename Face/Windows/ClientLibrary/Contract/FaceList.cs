@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
@@ -30,9 +30,27 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-package com.microsoft.projectoxford.face.rest;
 
-public class ServiceCallException {
-    String code;
-    String message;
+namespace Microsoft.ProjectOxford.Face.Contract
+{
+    /// <summary>
+    /// The face list class
+    /// </summary>
+    public class FaceList : FaceListMetadata
+    {
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the persisted faces.
+        /// </summary>
+        /// <value>
+        /// The persisted faces.
+        /// </value>
+        public PersonFace[] PersistedFaces
+        {
+            get; set;
+        }
+
+        #endregion Properties
+    }
 }

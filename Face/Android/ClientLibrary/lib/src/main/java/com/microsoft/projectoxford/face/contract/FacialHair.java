@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
@@ -30,27 +30,12 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+package com.microsoft.projectoxford.face.contract;
 
-using System.Windows.Controls;
+public class FacialHair {
+    public double moustache;
 
-namespace Microsoft.ProjectOxford.Face.Controls
-{
+    public double beard;
 
-    /// <summary>
-    /// Interaction logic for FunctionPanel.xaml
-    /// </summary>
-    public partial class FunctionPanel : UserControl
-    {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FunctionPanel" /> class
-        /// </summary>
-        public FunctionPanel()
-        {
-            InitializeComponent();
-        }
-
-        #endregion Constructors
-    }
+    public double sideburns;
 }
