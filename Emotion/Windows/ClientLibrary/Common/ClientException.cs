@@ -36,7 +36,6 @@ using System.Net;
 
 namespace Microsoft.ProjectOxford.Common
 {
-    [Serializable]
     /// <summary>
     /// The Exception will be shown to client.
     /// </summary>
