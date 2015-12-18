@@ -31,27 +31,22 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 namespace Microsoft.ProjectOxford.Face.Contract
 {
+    using System;
+
     /// <summary>
     /// The identification result.
     /// </summary>
     public class IdentifyResult
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the face identifier.
         /// </summary>
         /// <value>
         /// The face identifier.
         /// </value>
-        public Guid FaceId
-        {
-            get; set;
-        }
+        public Guid FaceId { get; set; }
 
         /// <summary>
         /// Gets or sets the candidates.
@@ -59,11 +54,6 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// <value>
         /// The candidates.
         /// </value>
-        public Candidate[] Candidates
-        {
-            get; set;
-        }
-
-        #endregion Properties
+        public Candidate[] Candidates { get; set; }
     }
 }

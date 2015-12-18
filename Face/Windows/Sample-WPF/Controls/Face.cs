@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK GitHub:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -77,16 +77,6 @@ namespace Microsoft.ProjectOxford.Face.Controls
         /// Face width in pixel
         /// </summary>
         private int _width;
-
-        /// <summary>
-        /// Facial hair display string
-        /// </summary>
-        private string _facialHair;
-
-        /// <summary>
-        /// Indicates whether the face is smile or not
-        /// </summary>
-        private string _isSmiling;
 
         #endregion Fields
 
@@ -246,40 +236,6 @@ namespace Microsoft.ProjectOxford.Face.Controls
             {
                 _width = value;
                 OnPropertyChanged<int>();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets facial hair display string
-        /// </summary>
-        public string FacialHair
-        {
-            get
-            {
-                return _facialHair;
-            }
-
-            set
-            {
-                _facialHair = value;
-                OnPropertyChanged<string>();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the face is smile or not
-        /// </summary>
-        public string IsSmiling
-        {
-            get
-            {
-                return _isSmiling;
-            }
-
-            set
-            {
-                _isSmiling = value;
-                OnPropertyChanged<bool>();
             }
         }
 

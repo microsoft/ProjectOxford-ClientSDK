@@ -4,7 +4,7 @@
 //
 // Project Oxford: http://ProjectOxford.ai
 //
-// ProjectOxford SDK GitHub:
+// ProjectOxford SDK Github:
 // https://github.com/Microsoft/ProjectOxfordSDK-Windows
 //
 // Copyright (c) Microsoft Corporation
@@ -30,7 +30,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,23 +38,30 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 
 using ClientContract = Microsoft.ProjectOxford.Face.Contract;
 
+
 namespace Microsoft.ProjectOxford.Face.Controls
 {
+
     /// <summary>
     /// Interaction logic for FaceDetection.xaml
     /// </summary>
-    public partial class FaceGroupingPage : Page
+    public partial class FaceGrouping : System.Windows.Controls.UserControl
     {
         #region Fields
 
         /// <summary>
         /// Description dependency property
         /// </summary>
-        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceGroupingPage));
+        public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register("Description", typeof(string), typeof(FaceGrouping));
+
+        /// <summary>
+        /// Output dependency property
+        /// </summary>
+        public static readonly DependencyProperty OutputProperty = DependencyProperty.Register("Output", typeof(string), typeof(FaceGrouping));
 
         /// <summary>
         /// Faces to group
@@ -72,9 +78,9 @@ namespace Microsoft.ProjectOxford.Face.Controls
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FaceGroupingPage"/> class
+        /// Initializes a new instance of the <see cref="FaceGrouping"/> class
         /// </summary>
-        public FaceGroupingPage()
+        public FaceGrouping()
         {
             InitializeComponent();
         }
@@ -121,6 +127,22 @@ namespace Microsoft.ProjectOxford.Face.Controls
             }
         }
 
+        /// <summary>
+        /// Gets or sets output
+        /// </summary>
+        public string Output
+        {
+            get
+            {
+                return (string)GetValue(OutputProperty);
+            }
+
+            set
+            {
+                SetValue(OutputProperty, value);
+            }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -133,14 +155,14 @@ namespace Microsoft.ProjectOxford.Face.Controls
         private async void Grouping_Click(object sender, RoutedEventArgs e)
         {
             // Show folder picker
-            System.Windows.Forms.FolderBrowserDialog dlg = new System.Windows.Forms.FolderBrowserDialog();
+            FolderBrowserDialog dlg = new FolderBrowserDialog();
             var result = dlg.ShowDialog();
 
-            // Set the suggestion count is intent to minimum the data preparation step only,
+            // Set the suggestion count is intent to minimum the data preparetion step only,
             // it's not corresponding to service side constraint
             const int SuggestionCount = 10;
 
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (result == DialogResult.OK)
             {
                 // User picked one folder
                 List<Task> tasks = new List<Task>();
@@ -152,11 +174,11 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 Faces.Clear();
 
                 MainWindow mainWindow = Window.GetWindow(this) as MainWindow;
-                string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
+                string subscriptionKey = mainWindow.SubscriptionKey;
 
                 var faceServiceClient = new FaceServiceClient(subscriptionKey);
 
-                MainWindow.Log("Request: Preparing faces for grouping, detecting faces in chosen folder.");
+                Output = Output.AppendLine("Request: Preparing faces for grouping, detecting faces in choosen folder.");
                 foreach (var img in Directory.EnumerateFiles(dlg.SelectedPath, "*.jpg", SearchOption.AllDirectories))
                 {
                     tasks.Add(Task.Factory.StartNew(
@@ -172,10 +194,10 @@ namespace Microsoft.ProjectOxford.Face.Controls
                                     var faces = await faceServiceClient.DetectAsync(fStream);
                                     return new Tuple<string, ClientContract.Face[]>(imgPath, faces);
                                 }
-                                catch (FaceAPIException)
+                                catch (ClientException)
                                 {
                                     // Here we simply ignore all detection failure in this sample
-                                    // You may handle these exceptions by check the Error.Error.Code and Error.Message property for ClientException object
+                                    // You may handle these exceptions by check the Error.Code and Error.Message property for ClientException object
                                     return new Tuple<string, ClientContract.Face[]>(imgPath, null);
                                 }
                             }
@@ -200,8 +222,8 @@ namespace Microsoft.ProjectOxford.Face.Controls
                         }));
                     if (processCount >= SuggestionCount && !forceContinue)
                     {
-                        var continueProcess = System.Windows.Forms.MessageBox.Show("Found many images under chosen folder, may take long time if proceed. Continue?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo);
-                        if (continueProcess == System.Windows.Forms.DialogResult.Yes)
+                        var continueProcess = System.Windows.Forms.MessageBox.Show("Found many images under choosen folder, may take long time if proceed. Continue?", "Warning", MessageBoxButtons.YesNo);
+                        if (continueProcess == DialogResult.Yes)
                         {
                             forceContinue = true;
                         }
@@ -213,11 +235,11 @@ namespace Microsoft.ProjectOxford.Face.Controls
                 }
 
                 await Task.WhenAll(tasks);
-                MainWindow.Log("Response: Success. Total {0} faces are detected.", Faces.Count);
+                Output = Output.AppendLine(string.Format("Response: Success. Total {0} faces are detected.", Faces.Count));
 
                 try
                 {
-                    MainWindow.Log("Request: Grouping {0} faces.", Faces.Count);
+                    Output = Output.AppendLine(string.Format("Request: Grouping {0} faces.", Faces.Count));
 
                     // Call grouping, the grouping result is a group collection, each group contains similar faces
                     var groupRes = await faceServiceClient.GroupAsync(Faces.Select(f => Guid.Parse(f.FaceId)).ToArray());
@@ -240,7 +262,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                     }
 
                     // MessyGroup contains all faces which are not similar to any other faces.
-                    // Take an extreme case for example:
+                    // Take an extreme case for exampe: 
                     // On grouping faces which are not similar to any other faces, the grouping result will contains only one messy group
                     if (groupRes.MessyGroup.Length > 0)
                     {
@@ -257,11 +279,11 @@ namespace Microsoft.ProjectOxford.Face.Controls
                         GroupedFaces.Add(messyGroup);
                     }
 
-                    MainWindow.Log("Response: Success. {0} faces are grouped into {1} groups.", Faces.Count, GroupedFaces.Count);
+                    Output = Output.AppendLine(string.Format("Response: Success. {0} faces are grouped into {1} groups.", Faces.Count, GroupedFaces.Count));
                 }
-                catch (FaceAPIException ex)
+                catch (ClientException ex)
                 {
-                    MainWindow.Log("Response: {0}. {1}", ex.ErrorCode, ex.ErrorMessage);
+                    Output = Output.AppendLine(string.Format("Response: {0}. {1}", ex.Error.Code, ex.Error.Message));
                 }
             }
         }
