@@ -35,7 +35,7 @@ package com.microsoft.projectoxford.face.contract;
 import java.util.UUID;
 
 public class PersonFace {
-    public UUID faceId;
+    public UUID persistedFaceId;
 
     public String userData;
 }

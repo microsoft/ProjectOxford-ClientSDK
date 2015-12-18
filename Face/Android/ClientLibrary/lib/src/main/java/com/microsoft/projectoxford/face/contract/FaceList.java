@@ -32,10 +32,6 @@
 //
 package com.microsoft.projectoxford.face.contract;
 
-import java.util.UUID;
-
-public class SimilarFace {
-    public UUID faceId;
-
-    public double confidence;
+public class FaceList extends FaceListMetadata {
+    public FaceMetadata[] faces;
 }

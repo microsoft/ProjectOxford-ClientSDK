@@ -30,12 +30,8 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-package com.microsoft.projectoxford.face.contract;
+package com.microsoft.projectoxford.face.common;
 
-import java.util.UUID;
-
-public class SimilarFace {
-    public UUID faceId;
-
-    public double confidence;
+public class ServiceError {
+    public ClientError error;
 }

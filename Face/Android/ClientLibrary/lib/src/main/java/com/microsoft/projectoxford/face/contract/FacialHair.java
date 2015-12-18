@@ -30,9 +30,12 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-package com.microsoft.projectoxford.face.rest;
+package com.microsoft.projectoxford.face.contract;
 
-public class ServiceCallException {
-    String code;
-    String message;
+public class FacialHair {
+    public double moustache;
+
+    public double beard;
+
+    public double sideburns;
 }
