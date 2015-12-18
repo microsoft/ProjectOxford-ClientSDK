@@ -34,30 +34,63 @@
 namespace Microsoft.ProjectOxford.Face.Contract
 {
     /// <summary>
-    /// The verify result entity.
+    /// The face attributes class that holds Age/Gender/Head Pose/Smile/Facial Hair information.
     /// </summary>
-    public class VerifyResult
+    public class FaceAttributes
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is same.
+        /// Gets or sets the age value.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is same; otherwise, <c>false</c>.
+        /// The age value.
         /// </value>
-        public bool IsIdentical
+        public double Age
         {
             get; set;
         }
 
         /// <summary>
-        /// Gets or sets the confidence.
+        /// Gets or sets the gender.
         /// </summary>
         /// <value>
-        /// The confidence.
+        /// The gender.
         /// </value>
-        public double Confidence
+        public string Gender
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the head pose.
+        /// </summary>
+        /// <value>
+        /// The head pose.
+        /// </value>
+        public HeadPose HeadPose
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the smile value. Represents the confidence of face is smiling.
+        /// </summary>
+        /// <value>
+        /// The smile value.
+        /// </value>
+        public double Smile
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the facial hair.
+        /// </summary>
+        /// <value>
+        /// The facial hair.
+        /// </value>
+        public FacialHair FacialHair
         {
             get; set;
         }

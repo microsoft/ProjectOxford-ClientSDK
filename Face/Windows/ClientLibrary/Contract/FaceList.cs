@@ -31,26 +31,26 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.Windows.Controls;
-
-namespace Microsoft.ProjectOxford.Face.Controls
+namespace Microsoft.ProjectOxford.Face.Contract
 {
-
     /// <summary>
-    /// Interaction logic for FunctionPanel.xaml
+    /// The face list class
     /// </summary>
-    public partial class FunctionPanel : UserControl
+    public class FaceList : FaceListMetadata
     {
-        #region Constructors
+        #region Properties
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FunctionPanel" /> class
+        /// Gets or sets the persisted faces.
         /// </summary>
-        public FunctionPanel()
+        /// <value>
+        /// The persisted faces.
+        /// </value>
+        public PersonFace[] PersistedFaces
         {
-            InitializeComponent();
+            get; set;
         }
 
-        #endregion Constructors
+        #endregion Properties
     }
 }

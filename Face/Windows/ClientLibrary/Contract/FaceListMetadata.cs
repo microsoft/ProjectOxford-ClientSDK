@@ -34,30 +34,41 @@
 namespace Microsoft.ProjectOxford.Face.Contract
 {
     /// <summary>
-    /// The verify result entity.
+    /// The face list metadata class.
     /// </summary>
-    public class VerifyResult
+    public class FaceListMetadata
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is same.
+        /// Gets or sets the face list identifier.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is same; otherwise, <c>false</c>.
+        /// The face list identifier.
         /// </value>
-        public bool IsIdentical
+        public string FaceListId
         {
             get; set;
         }
 
         /// <summary>
-        /// Gets or sets the confidence.
+        /// Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The confidence.
+        /// The name.
         /// </value>
-        public double Confidence
+        public string Name
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the user data.
+        /// </summary>
+        /// <value>
+        /// The user data.
+        /// </value>
+        public string UserData
         {
             get; set;
         }
