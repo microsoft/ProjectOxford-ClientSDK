@@ -23,6 +23,7 @@ Project Oxford APIs are divided into three areas:
 ##### Language
 -  **[Spell Check APIS](<https://www.projectoxford.ai/spellcheck>) (Preview):** Detect and correct common and uncommon spelling errors via the Bing document index
 -  **[LUIS, Language Understanding Intelligent Services](<https://www.projectoxford.ai/luis>) (Preview):** Understand natural language commands tailored to your application
+-  **[Web Language Model APIs](<https://www.projectoxford.ai/weblm>) (Preview):** Leverage the power of language models trained on web-scale data
 
 To learn more and sign-up for Project Oxford, [visit our
 website](<http://www.ProjectOxford.ai>). You must obtain [subscription
