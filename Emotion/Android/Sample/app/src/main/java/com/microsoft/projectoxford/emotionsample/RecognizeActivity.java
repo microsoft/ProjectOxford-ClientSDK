@@ -53,6 +53,7 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.microsoft.projectoxford.emotion.EmotionServiceClient;
 import com.microsoft.projectoxford.emotion.EmotionServiceRestClient;
+import com.microsoft.projectoxford.emotion.contract.FaceRectangle;
 import com.microsoft.projectoxford.emotion.contract.RecognizeResult;
 import com.microsoft.projectoxford.emotion.rest.EmotionServiceException;
 import com.microsoft.projectoxford.emotionsample.helper.ImageHelper;
@@ -118,14 +119,20 @@ public class RecognizeActivity extends ActionBarActivity {
 
     public void doRecognize() {
         mButtonSelectImage.setEnabled(false);
-        mEditText.setText("Recognizing emotions...");
 
         try {
-            new doRequest().execute();
+            new doRequest(false).execute();
+        } catch (Exception e) {
+            mEditText.setText("Error encountered. Exception is: " + e.toString());
+        }
+
+        try {
+            new doRequest(true).execute();
         } catch (Exception e)
         {
             mEditText.setText("Error encountered. Exception is: " + e.toString());
         }
+
     }
 
     // Called when the "Select Image" button is clicked.
@@ -168,7 +175,7 @@ public class RecognizeActivity extends ActionBarActivity {
     }
 
 
-    private List<RecognizeResult> process() throws EmotionServiceException, IOException {
+    private List<RecognizeResult> process(boolean useFaceRectangles) throws EmotionServiceException, IOException {
         Gson gson = new Gson();
 
         // Put the image into an input stream for detection.
@@ -176,7 +183,16 @@ public class RecognizeActivity extends ActionBarActivity {
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
-        List<RecognizeResult> result = this.client.recognizeImage(inputStream);
+        List<RecognizeResult> result;
+        if (useFaceRectangles == false) {
+            result = this.client.recognizeImage(inputStream);
+        } else {
+            // TEMPORARY. Will change to call Face API in the next iteration.
+            FaceRectangle faceRectangle = new FaceRectangle(0, 0, 50, 50);
+            FaceRectangle faceRectangle2 = new FaceRectangle(50, 50, 100, 100);
+
+            result = this.client.recognizeImage(inputStream, new FaceRectangle[] {faceRectangle, faceRectangle2});
+        }
 
         String json = gson.toJson(result);
         Log.d("result", json);
@@ -187,14 +203,16 @@ public class RecognizeActivity extends ActionBarActivity {
     private class doRequest extends AsyncTask<String, String, List<RecognizeResult>> {
         // Store error message
         private Exception e = null;
+        private boolean useFaceRectangles = false;
 
-        public doRequest() {
+        public doRequest(boolean useFaceRectangles) {
+            this.useFaceRectangles = useFaceRectangles;
         }
 
         @Override
         protected List<RecognizeResult> doInBackground(String... args) {
             try {
-                return process();
+                return process(this.useFaceRectangles);
             } catch (Exception e) {
                 this.e = e;    // Store error
             }
@@ -207,7 +225,11 @@ public class RecognizeActivity extends ActionBarActivity {
             super.onPostExecute(result);
             // Display based on error existence
 
-            mEditText.setText("");
+            if (this.useFaceRectangles == false) {
+                mEditText.append("Recognizing emotions with auto-detected face rectangles...\n");
+            } else {
+                mEditText.append("Recognizing emotions with existing face rectangles...\n");
+            }
             if (e != null) {
                 mEditText.setText("Error: " + e.getMessage());
                 this.e = null;
@@ -234,6 +256,7 @@ public class RecognizeActivity extends ActionBarActivity {
                         mEditText.append(String.format("\t neutral: %1$.5f\n", r.scores.neutral));
                         mEditText.append(String.format("\t sadness: %1$.5f\n", r.scores.sadness));
                         mEditText.append(String.format("\t surprise: %1$.5f\n", r.scores.surprise));
+                        mEditText.append(String.format("%d, %d, %d, %d", r.faceRectangle.left, r.faceRectangle.top, r.faceRectangle.width, r.faceRectangle.height));
                         faceCanvas.drawRect(r.faceRectangle.left,
                                             r.faceRectangle.top,
                                             r.faceRectangle.left + r.faceRectangle.width,

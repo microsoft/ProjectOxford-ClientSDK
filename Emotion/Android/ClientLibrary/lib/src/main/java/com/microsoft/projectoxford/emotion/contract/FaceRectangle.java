@@ -40,4 +40,11 @@ public class FaceRectangle {
     public int left;
 
     public int top;
+
+    public FaceRectangle(int left, int top, int width, int height) {
+        this.left = left;
+        this.top = top;
+        this.width = width;
+        this.height = height;
+    }
 }

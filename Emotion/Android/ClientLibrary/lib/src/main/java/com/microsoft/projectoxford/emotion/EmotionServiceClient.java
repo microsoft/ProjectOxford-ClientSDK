@@ -32,6 +32,7 @@
 //
 package com.microsoft.projectoxford.emotion;
 
+import com.microsoft.projectoxford.emotion.contract.FaceRectangle;
 import com.microsoft.projectoxford.emotion.contract.RecognizeResult;
 import com.microsoft.projectoxford.emotion.rest.EmotionServiceException;
 
@@ -41,5 +42,8 @@ import java.util.List;
 
 public interface EmotionServiceClient {
     public List<RecognizeResult> recognizeImage(String url) throws EmotionServiceException;
+    public List<RecognizeResult> recognizeImage(String url, FaceRectangle[] faceRectangles) throws EmotionServiceException;
+
     public List<RecognizeResult> recognizeImage(InputStream inputStream) throws EmotionServiceException, IOException;
+    public List<RecognizeResult> recognizeImage(InputStream inputStream, FaceRectangle[] faceRectangles) throws EmotionServiceException, IOException;
 }

@@ -33,6 +33,7 @@
 package com.microsoft.projectoxford.emotion;
 
 import com.google.gson.Gson;
+import com.microsoft.projectoxford.emotion.contract.FaceRectangle;
 import com.microsoft.projectoxford.emotion.contract.RecognizeResult;
 import com.microsoft.projectoxford.emotion.rest.EmotionServiceException;
 import com.microsoft.projectoxford.emotion.rest.WebServiceRequest;
@@ -48,6 +49,7 @@ import java.util.Map;
 
 public class EmotionServiceRestClient implements EmotionServiceClient {
     private static final String serviceHost = "https://api.projectoxford.ai/emotion/v1.0";
+    private static final String FACE_RECTANGLES = "faceRectangles";
     private WebServiceRequest restCall = null;
     private Gson gson = new Gson();
 
@@ -57,8 +59,16 @@ public class EmotionServiceRestClient implements EmotionServiceClient {
 
     @Override
     public List<RecognizeResult> recognizeImage(String url) throws EmotionServiceException {
+        return recognizeImage(url, null);
+    }
+
+    @Override
+    public List<RecognizeResult> recognizeImage(String url, FaceRectangle[] faceRectangles) throws EmotionServiceException {
         Map<String, Object> params = new HashMap<>();
         String path = serviceHost + "/recognize";
+        if (faceRectangles != null && faceRectangles.length > 0) {
+            params.put(FACE_RECTANGLES, getFaceRectangleStrings(faceRectangles));
+        }
         String uri = WebServiceRequest.getUrl(path, params);
 
         params.clear();
@@ -72,8 +82,17 @@ public class EmotionServiceRestClient implements EmotionServiceClient {
 
     @Override
     public List<RecognizeResult> recognizeImage(InputStream stream) throws EmotionServiceException, IOException {
+        return recognizeImage(stream, null);
+    }
+
+    @Override
+    public List<RecognizeResult> recognizeImage(InputStream stream, FaceRectangle[] faceRectangles) throws EmotionServiceException, IOException {
         Map<String, Object> params = new HashMap<>();
         String path = serviceHost + "/recognize";
+        if (faceRectangles != null && faceRectangles.length > 0) {
+            params.put(FACE_RECTANGLES, getFaceRectangleStrings(faceRectangles));
+        }
+
         String uri = WebServiceRequest.getUrl(path, params);
 
         params.clear();
@@ -84,5 +103,20 @@ public class EmotionServiceRestClient implements EmotionServiceClient {
         RecognizeResult[] recognizeResult = this.gson.fromJson(json, RecognizeResult[].class);
 
         return Arrays.asList(recognizeResult);
+    }
+
+    private String getFaceRectangleStrings(FaceRectangle[] faceRectangles) {
+        StringBuffer sb = new StringBuffer();
+
+        boolean firstRectangle = true;
+        for (FaceRectangle faceRectangle: faceRectangles) {
+            if (firstRectangle) {
+                firstRectangle = false;
+            } else {
+                sb.append(';');
+            }
+            sb.append(String.format("%d,%d,%d,%d", faceRectangle.left, faceRectangle.top, faceRectangle.width, faceRectangle.height));
+        }
+        return sb.toString();
     }
 }
