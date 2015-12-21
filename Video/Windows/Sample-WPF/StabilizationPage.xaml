@@ -1,0 +1,30 @@
+﻿<Page x:Class="VideoAPI_WPF_Samples.StabilizationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VideoAPI_WPF_Samples"
+      xmlns:videoApiWpfSamples="clr-namespace:VideoAPI_WPF_Samples"
+      VerticalAlignment="Stretch"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="300"
+      Title="StabilizationPage"
+    >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Margin="5, 5, 0, 0" FontWeight="Bold">Stabilize a video</TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Row="1"  >
+            <TextBlock Margin="5, 5, 0, 0">Please click [Load Video] to specify the video to detect.</TextBlock>
+            <Button Click="LoadImageButton_Click" Margin="5, 5, 0, 0" Width="80" HorizontalAlignment="Left">Load Video</Button>
+        </StackPanel>
+        <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="5">Results will be shown in right panel. For processing progress, please see the status.</TextBlock>
+
+        <local:VideoResultControl Grid.Row="4" SourceUri="{Binding Path=SourceUri}" ResultUri="{Binding Path=ResultUri}" IsVideoResult="True"></local:VideoResultControl>
+    </Grid>
+</Page>
