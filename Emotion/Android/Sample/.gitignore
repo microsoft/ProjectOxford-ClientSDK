@@ -4,4 +4,4 @@
 /.idea/libraries
 .DS_Store
 /build
-ClientLibrary.iml
+*.iml

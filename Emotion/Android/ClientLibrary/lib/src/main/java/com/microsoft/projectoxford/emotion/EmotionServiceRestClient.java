@@ -51,8 +51,8 @@ public class EmotionServiceRestClient implements EmotionServiceClient {
     private WebServiceRequest restCall = null;
     private Gson gson = new Gson();
 
-    public EmotionServiceRestClient(String subscriptKey) {
-        this.restCall = new WebServiceRequest(subscriptKey);
+    public EmotionServiceRestClient(String subscriptionKey) {
+        this.restCall = new WebServiceRequest(subscriptionKey);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class EmotionServiceRestClient implements EmotionServiceClient {
         params.clear();
         params.put("url", url);
 
-        String json = (String) this.restCall.request(uri, "POST", params, null, false);
+        String json = (String) this.restCall.post(uri, params, null, false);
         RecognizeResult[] recognizeResult = this.gson.fromJson(json, RecognizeResult[].class);
 
         return Arrays.asList(recognizeResult);
@@ -80,7 +80,7 @@ public class EmotionServiceRestClient implements EmotionServiceClient {
         byte[] data = IOUtils.toByteArray(stream);
         params.put("data", data);
 
-        String json = (String) this.restCall.request(uri, "POST", params, "application/octet-stream", false);
+        String json = (String) this.restCall.post(uri, params, "application/octet-stream", false);
         RecognizeResult[] recognizeResult = this.gson.fromJson(json, RecognizeResult[].class);
 
         return Arrays.asList(recognizeResult);

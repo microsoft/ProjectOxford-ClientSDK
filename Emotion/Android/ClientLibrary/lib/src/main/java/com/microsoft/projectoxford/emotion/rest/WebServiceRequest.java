@@ -62,55 +62,14 @@ public class WebServiceRequest {
         this.subscriptionKey = key;
     }
 
-    public Object request(String url, String method, Map<String, Object> data, String contentType, boolean responseInputStream) throws EmotionServiceException {
-        if (method.matches("GET")) {
-            return get(url);
-        } else if (method.matches("POST")) {
-            return post(url, data, contentType, responseInputStream);
-        } else if (method.matches("PUT")) {
-            return put(url, data);
-        } else if (method.matches("DELETE")) {
-            return delete(url);
-        } else if (method.matches("PATCH")) {
-            return patch(url, data, contentType, false);
-        }
-
-        throw new EmotionServiceException("Error! Incorrect method provided: " + method);
-    }
-
-    private Object get(String url) throws EmotionServiceException {
-        HttpGet request = new HttpGet(url);
-        request.setHeader(headerKey, this.subscriptionKey);
-
-        try {
-            HttpResponse response = this.client.execute(request);
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode == 200) {
-                return readInput(response.getEntity().getContent());
-            } else {
-                throw new Exception("Error executing GET request! Received error code: " + response.getStatusLine().getStatusCode());
-            }
-        } catch (Exception e) {
-            throw new EmotionServiceException(e.getMessage());
-        }
-    }
-
-    private Object post(String url, Map<String, Object> data, String contentType, boolean responseInputStream) throws EmotionServiceException {
+    public Object post(String url, Map<String, Object> data, String contentType, boolean responseInputStream) throws EmotionServiceException {
         return webInvoke("POST", url, data, contentType, responseInputStream);
-    }
-
-    private Object patch(String url, Map<String, Object> data, String contentType, boolean responseInputStream) throws EmotionServiceException {
-        return webInvoke("PATCH", url, data, contentType, responseInputStream);
     }
 
     private Object webInvoke(String method, String url, Map<String, Object> data, String contentType, boolean responseInputStream) throws EmotionServiceException {
         HttpPost request = null;
 
-        if (method.matches("POST")) {
-            request = new HttpPost(url);
-        } else if (method.matches("PATCH")) {
-            request = new HttpPatch(url);
-        }
+        request = new HttpPost(url);
 
         boolean isStream = false;
 
@@ -146,46 +105,6 @@ public class WebServiceRequest {
             } else {
                 throw new Exception("Error executing POST request! Received error code: " + response.getStatusLine().getStatusCode());
             }
-        } catch (Exception e) {
-            throw new EmotionServiceException(e.getMessage());
-        }
-    }
-
-    private Object put(String url, Map<String, Object> data) throws EmotionServiceException {
-        HttpPut request = new HttpPut(url);
-        request.setHeader(headerKey, this.subscriptionKey);
-
-        try {
-            String json = this.gson.toJson(data).toString();
-            StringEntity entity = new StringEntity(json);
-            request.setEntity(entity);
-            request.setHeader("Content-Type", "application/json");
-            HttpResponse response = this.client.execute(request);
-
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode == 200 || statusCode == 201) {
-                return readInput(response.getEntity().getContent());
-            } else {
-                throw new Exception("Error executing PUT request! Received error code: " + response.getStatusLine().getStatusCode());
-            }
-        } catch (Exception e) {
-            throw new EmotionServiceException(e.getMessage());
-        }
-    }
-
-    private Object delete(String url) throws EmotionServiceException {
-        HttpDelete request = new HttpDelete(url);
-        request.setHeader(headerKey, this.subscriptionKey);
-
-        try {
-            HttpResponse response = this.client.execute(request);
-
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != 200) {
-                throw new Exception("Error executing DELETE request! Received error code: " + response.getStatusLine().getStatusCode());
-            }
-
-            return readInput(response.getEntity().getContent());
         } catch (Exception e) {
             throw new EmotionServiceException(e.getMessage());
         }
