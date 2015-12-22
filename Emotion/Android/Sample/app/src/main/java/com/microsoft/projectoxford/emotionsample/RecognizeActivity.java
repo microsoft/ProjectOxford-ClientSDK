@@ -58,7 +58,7 @@ import com.microsoft.projectoxford.emotion.contract.RecognizeResult;
 import com.microsoft.projectoxford.emotion.rest.EmotionServiceException;
 import com.microsoft.projectoxford.emotionsample.helper.ImageHelper;
 
-import com.microsoft.projectoxford.face.*;
+import com.microsoft.projectoxford.face.FaceServiceRestClient;
 import com.microsoft.projectoxford.face.contract.Face;
 
 import java.io.ByteArrayInputStream;
@@ -90,12 +90,12 @@ public class RecognizeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognize);
 
-        if (client==null){
+        if (client == null) {
             client = new EmotionServiceRestClient(getString(R.string.subscription_key));
         }
 
-        mButtonSelectImage = (Button)findViewById(R.id.buttonSelectImage);
-        mEditText = (EditText)findViewById(R.id.editTextResult);
+        mButtonSelectImage = (Button) findViewById(R.id.buttonSelectImage);
+        mEditText = (EditText) findViewById(R.id.editTextResult);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class RecognizeActivity extends ActionBarActivity {
         Log.d("RecognizeActivity", "onActivityResult");
         switch (requestCode) {
             case REQUEST_SELECT_IMAGE:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     // If image is selected successfully, set the image URI and bitmap.
                     mImageUri = data.getData();
 
@@ -303,9 +303,9 @@ public class RecognizeActivity extends ActionBarActivity {
                 mEditText.setText("Error: " + e.getMessage());
                 this.e = null;
             } else {
-                if ( result.size() == 0){
+                if (result.size() == 0) {
                     mEditText.append("No emotion detected :(");
-                } else{
+                } else {
                     Integer count = 0;
                     Canvas faceCanvas = new Canvas(mBitmap);
                     faceCanvas.drawBitmap(mBitmap, 0, 0, null);
@@ -314,7 +314,7 @@ public class RecognizeActivity extends ActionBarActivity {
                     paint.setStrokeWidth(5);
                     paint.setColor(Color.RED);
 
-                    for (RecognizeResult r : result){
+                    for (RecognizeResult r : result) {
                         mEditText.append(String.format("\nFace #%1$d \n", count));
                         mEditText.append(String.format("\t anger: %1$.5f\n", r.scores.anger));
                         mEditText.append(String.format("\t contempt: %1$.5f\n", r.scores.contempt));
@@ -326,13 +326,12 @@ public class RecognizeActivity extends ActionBarActivity {
                         mEditText.append(String.format("\t surprise: %1$.5f\n", r.scores.surprise));
                         mEditText.append(String.format("\t face rectangle: %d, %d, %d, %d", r.faceRectangle.left, r.faceRectangle.top, r.faceRectangle.width, r.faceRectangle.height));
                         faceCanvas.drawRect(r.faceRectangle.left,
-                                            r.faceRectangle.top,
-                                            r.faceRectangle.left + r.faceRectangle.width,
-                                            r.faceRectangle.top + r.faceRectangle.height,
-                                            paint);
+                                r.faceRectangle.top,
+                                r.faceRectangle.left + r.faceRectangle.width,
+                                r.faceRectangle.top + r.faceRectangle.height,
+                                paint);
                         count++;
                     }
-
                     ImageView imageView = (ImageView) findViewById(R.id.selectedImage);
                     imageView.setImageDrawable(new BitmapDrawable(getResources(), mBitmap));
                 }

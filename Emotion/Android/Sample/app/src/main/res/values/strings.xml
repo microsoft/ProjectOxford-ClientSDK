@@ -14,7 +14,7 @@
 
     <!-- Display strings -->
     <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
-    <string name="add_subscription_key_tip">Please put your subscription key to source file \"app/res/values/strings.xml\" to enable Emotion API calls.</string>
+    <string name="add_subscription_key_tip">Please put your two subscription keys for Emotion API/Face API to source file \"app/res/values/strings.xml\" to enable Emotion API and Face API calls.</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_analyze">AnalyzeActivity</string>
     <string name="title_activity_recognize">RecognizeActivity</string>
