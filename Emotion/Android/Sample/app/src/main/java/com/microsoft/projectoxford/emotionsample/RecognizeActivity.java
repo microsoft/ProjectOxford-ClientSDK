@@ -58,6 +58,9 @@ import com.microsoft.projectoxford.emotion.contract.RecognizeResult;
 import com.microsoft.projectoxford.emotion.rest.EmotionServiceException;
 import com.microsoft.projectoxford.emotionsample.helper.ImageHelper;
 
+import com.microsoft.projectoxford.face.*;
+import com.microsoft.projectoxford.face.contract.Face;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -183,19 +186,34 @@ public class RecognizeActivity extends ActionBarActivity {
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
-        List<RecognizeResult> result;
+        List<RecognizeResult> result = null;
         if (useFaceRectangles == false) {
             result = this.client.recognizeImage(inputStream);
         } else {
-            // TEMPORARY. Will change to call Face API in the next iteration.
-            FaceRectangle faceRectangle = new FaceRectangle(0, 0, 50, 50);
-            FaceRectangle faceRectangle2 = new FaceRectangle(50, 50, 100, 100);
 
-            result = this.client.recognizeImage(inputStream, new FaceRectangle[] {faceRectangle, faceRectangle2});
+            FaceServiceRestClient faceClient = new FaceServiceRestClient(getString(R.string.faceSubscription_key));
+            try {
+                Face faces[] = faceClient.detect(inputStream, false, false, null);
+
+                if (faces != null && faces.length > 0) {
+                    FaceRectangle[] faceRectangles = new FaceRectangle[faces.length];
+
+                    for (int i = 0; i < faceRectangles.length; i++) {
+                        com.microsoft.projectoxford.face.contract.FaceRectangle rect = faces[i].faceRectangle;
+                        faceRectangles[i] = new FaceRectangle(rect.left, rect.top, rect.width, rect.height);
+                    }
+
+                    inputStream.reset();
+                    result = this.client.recognizeImage(inputStream, faceRectangles);
+
+                    String json = gson.toJson(result);
+                    Log.d("result", json);
+                }
+            } catch (com.microsoft.projectoxford.face.rest.ClientException e) {
+            }
+
         }
 
-        String json = gson.toJson(result);
-        Log.d("result", json);
 
         return result;
     }
