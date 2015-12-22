@@ -1,8 +1,0 @@
-.gradle
-/local.properties
-/.idea/*
-/.idea/libraries
-.DS_Store
-/build
-lib/*.iml
-ClientLibrary.iml

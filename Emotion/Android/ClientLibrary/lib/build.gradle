@@ -27,7 +27,7 @@ group = "com.microsoft.projectoxford"
 // Artifact name is the name of the technology
 archivesBaseName = "emotion"
 // Update your version
-version = "0.4.0"
+version = "1.0.0"
 
 uploadArchives {
     repositories {

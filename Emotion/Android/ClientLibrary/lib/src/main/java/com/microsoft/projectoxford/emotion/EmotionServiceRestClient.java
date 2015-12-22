@@ -109,7 +109,7 @@ public class EmotionServiceRestClient implements EmotionServiceClient {
         StringBuffer sb = new StringBuffer();
 
         boolean firstRectangle = true;
-        for (FaceRectangle faceRectangle: faceRectangles) {
+        for (FaceRectangle faceRectangle : faceRectangles) {
             if (firstRectangle) {
                 firstRectangle = false;
             } else {
