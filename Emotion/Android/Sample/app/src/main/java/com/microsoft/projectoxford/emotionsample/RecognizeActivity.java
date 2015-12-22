@@ -123,19 +123,24 @@ public class RecognizeActivity extends ActionBarActivity {
     public void doRecognize() {
         mButtonSelectImage.setEnabled(false);
 
+        // Do emotion detection using auto-detected faces.
         try {
             new doRequest(false).execute();
         } catch (Exception e) {
-            mEditText.setText("Error encountered. Exception is: " + e.toString());
+            mEditText.append("Error encountered. Exception is: " + e.toString());
         }
 
-        try {
-            new doRequest(true).execute();
-        } catch (Exception e)
-        {
-            mEditText.setText("Error encountered. Exception is: " + e.toString());
+        String faceSubscriptionKey = getString(R.string.faceSubscription_key);
+        if (faceSubscriptionKey.equalsIgnoreCase("Please_add_the_face_subscription_key_here")) {
+            mEditText.append("\n\nThere is no face subscription key in res/values/strings.xml. Skip the sample for detecting emotions using face rectangles\n");
+        } else {
+            // Do emotion detection using face rectangles provided by Face API.
+            try {
+                new doRequest(true).execute();
+            } catch (Exception e) {
+                mEditText.append("Error encountered. Exception is: " + e.toString());
+            }
         }
-
     }
 
     // Called when the "Select Image" button is clicked.
@@ -178,7 +183,9 @@ public class RecognizeActivity extends ActionBarActivity {
     }
 
 
-    private List<RecognizeResult> process(boolean useFaceRectangles) throws EmotionServiceException, IOException {
+    private List<RecognizeResult> processWithAutoFaceDetection() throws EmotionServiceException, IOException {
+        Log.d("emotion", "Start emotion detection with auto-face detection");
+
         Gson gson = new Gson();
 
         // Put the image into an input stream for detection.
@@ -186,35 +193,72 @@ public class RecognizeActivity extends ActionBarActivity {
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
+        long startTime = System.currentTimeMillis();
+        // -----------------------------------------------------------------------
+        // KEY SAMPLE CODE STARTS HERE
+        // -----------------------------------------------------------------------
+
         List<RecognizeResult> result = null;
-        if (useFaceRectangles == false) {
-            result = this.client.recognizeImage(inputStream);
-        } else {
+        //
+        // Detect emotion by auto-detecting faces in the image.
+        //
+        result = this.client.recognizeImage(inputStream);
 
-            FaceServiceRestClient faceClient = new FaceServiceRestClient(getString(R.string.faceSubscription_key));
-            try {
-                Face faces[] = faceClient.detect(inputStream, false, false, null);
+        String json = gson.toJson(result);
+        Log.d("result", json);
 
-                if (faces != null && faces.length > 0) {
-                    FaceRectangle[] faceRectangles = new FaceRectangle[faces.length];
+        Log.d("emotion", String.format("Detection done. Elapsed time: %d ms", (System.currentTimeMillis() - startTime)));
+        // -----------------------------------------------------------------------
+        // KEY SAMPLE CODE ENDS HERE
+        // -----------------------------------------------------------------------
+        return result;
+    }
 
-                    for (int i = 0; i < faceRectangles.length; i++) {
-                        com.microsoft.projectoxford.face.contract.FaceRectangle rect = faces[i].faceRectangle;
-                        faceRectangles[i] = new FaceRectangle(rect.left, rect.top, rect.width, rect.height);
-                    }
+    private List<RecognizeResult> processWithFaceRectangles() throws EmotionServiceException, com.microsoft.projectoxford.face.rest.ClientException, IOException {
+        Log.d("emotion", "Do emotion detection with known face rectangles");
+        Gson gson = new Gson();
 
-                    inputStream.reset();
-                    result = this.client.recognizeImage(inputStream, faceRectangles);
+        // Put the image into an input stream for detection.
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
-                    String json = gson.toJson(result);
-                    Log.d("result", json);
-                }
-            } catch (com.microsoft.projectoxford.face.rest.ClientException e) {
+        long timeMark = System.currentTimeMillis();
+        Log.d("emotion", "Start face detection using Face API");
+        FaceRectangle[] faceRectangles = null;
+        String faceSubscriptionKey = getString(R.string.faceSubscription_key);
+        FaceServiceRestClient faceClient = new FaceServiceRestClient(faceSubscriptionKey);
+        Face faces[] = faceClient.detect(inputStream, false, false, null);
+        Log.d("emotion", String.format("Face detection is done. Elapsed time: %d ms", (System.currentTimeMillis() - timeMark)));
+
+        if (faces != null) {
+            faceRectangles = new FaceRectangle[faces.length];
+
+            for (int i = 0; i < faceRectangles.length; i++) {
+                // Face API and Emotion API have different FaceRectangle definition. Do the conversion.
+                com.microsoft.projectoxford.face.contract.FaceRectangle rect = faces[i].faceRectangle;
+                faceRectangles[i] = new com.microsoft.projectoxford.emotion.contract.FaceRectangle(rect.left, rect.top, rect.width, rect.height);
             }
-
         }
 
+        List<RecognizeResult> result = null;
+        if (faceRectangles != null) {
+            inputStream.reset();
 
+            timeMark = System.currentTimeMillis();
+            Log.d("emotion", "Start emotion detection using Emotion API");
+            // -----------------------------------------------------------------------
+            // KEY SAMPLE CODE STARTS HERE
+            // -----------------------------------------------------------------------
+            result = this.client.recognizeImage(inputStream, faceRectangles);
+
+            String json = gson.toJson(result);
+            Log.d("result", json);
+            // -----------------------------------------------------------------------
+            // KEY SAMPLE CODE ENDS HERE
+            // -----------------------------------------------------------------------
+            Log.d("emotion", String.format("Emotion detection is done. Elapsed time: %d ms", (System.currentTimeMillis() - timeMark)));
+        }
         return result;
     }
 
@@ -229,12 +273,19 @@ public class RecognizeActivity extends ActionBarActivity {
 
         @Override
         protected List<RecognizeResult> doInBackground(String... args) {
-            try {
-                return process(this.useFaceRectangles);
-            } catch (Exception e) {
-                this.e = e;    // Store error
+            if (this.useFaceRectangles == false) {
+                try {
+                    return processWithAutoFaceDetection();
+                } catch (Exception e) {
+                    this.e = e;    // Store error
+                }
+            } else {
+                try {
+                    return processWithFaceRectangles();
+                } catch (Exception e) {
+                    this.e = e;    // Store error
+                }
             }
-
             return null;
         }
 
@@ -244,18 +295,17 @@ public class RecognizeActivity extends ActionBarActivity {
             // Display based on error existence
 
             if (this.useFaceRectangles == false) {
-                mEditText.append("Recognizing emotions with auto-detected face rectangles...\n");
+                mEditText.append("\n\nRecognizing emotions with auto-detected face rectangles...\n");
             } else {
-                mEditText.append("Recognizing emotions with existing face rectangles...\n");
+                mEditText.append("\n\nRecognizing emotions with existing face rectangles from Face API...\n");
             }
             if (e != null) {
                 mEditText.setText("Error: " + e.getMessage());
                 this.e = null;
             } else {
-                if (result.size() == 0){
+                if ( result.size() == 0){
                     mEditText.append("No emotion detected :(");
-                }
-                else{
+                } else{
                     Integer count = 0;
                     Canvas faceCanvas = new Canvas(mBitmap);
                     faceCanvas.drawBitmap(mBitmap, 0, 0, null);
@@ -265,7 +315,7 @@ public class RecognizeActivity extends ActionBarActivity {
                     paint.setColor(Color.RED);
 
                     for (RecognizeResult r : result){
-                        mEditText.append(String.format("Face #%1$d \n", count));
+                        mEditText.append(String.format("\nFace #%1$d \n", count));
                         mEditText.append(String.format("\t anger: %1$.5f\n", r.scores.anger));
                         mEditText.append(String.format("\t contempt: %1$.5f\n", r.scores.contempt));
                         mEditText.append(String.format("\t disgust: %1$.5f\n", r.scores.disgust));
@@ -274,7 +324,7 @@ public class RecognizeActivity extends ActionBarActivity {
                         mEditText.append(String.format("\t neutral: %1$.5f\n", r.scores.neutral));
                         mEditText.append(String.format("\t sadness: %1$.5f\n", r.scores.sadness));
                         mEditText.append(String.format("\t surprise: %1$.5f\n", r.scores.surprise));
-                        mEditText.append(String.format("%d, %d, %d, %d", r.faceRectangle.left, r.faceRectangle.top, r.faceRectangle.width, r.faceRectangle.height));
+                        mEditText.append(String.format("\t face rectangle: %d, %d, %d, %d", r.faceRectangle.left, r.faceRectangle.top, r.faceRectangle.width, r.faceRectangle.height));
                         faceCanvas.drawRect(r.faceRectangle.left,
                                             r.faceRectangle.top,
                                             r.faceRectangle.left + r.faceRectangle.width,
