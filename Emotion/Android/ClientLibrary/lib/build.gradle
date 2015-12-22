@@ -11,8 +11,8 @@ android {
 }
 
 dependencies {
-    compile files('supportlibs/commons-io-2.4.jar')
     compile 'com.google.code.gson:gson:2.3.1'
+    compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
 }
 
 apply plugin: 'maven'

@@ -16,7 +16,7 @@ dependencies {
     // Use the following line to include client library from Maven Central Repository
     // Change the version number from the search.maven.org result
     //
-    compile 'com.microsoft.projectoxford:emotion:0.0.1'
+    compile 'com.microsoft.projectoxford:emotion:1.0.0'
 
     // Your other Dependencies...
 }
@@ -40,7 +40,7 @@ The sample
 This sample is an Android application to demonstrate the use of Project Oxford
 Emotion API.
 
-It demonstrates emotion detection from an image. It can identify people's faces and interpret their emotions
+It demonstrates emotion detection from an image. It can identify people's faces and interpret their emotions.
 
 Requirements
 ------------
@@ -53,19 +53,27 @@ Build the sample
 You will
 need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
 
-1. You must obtain a subscription key for Emotion API by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
+1. You must obtain a subscription key for Emotion API and Face API by following instructions in [Subscription
+key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>). Please note that Emotion API and Face API
+requires two different subscriptions.
 
 2.  Start Android Studio and open project from Emotion \> Android \> Sample folder.
 
 3.  In Android Studio -\> "Project" panel -\> "Android" view, open file
     "app/res/values/strings.xml", and find the line
-    "Please\_add\_the\_subscription\_key\_here;". Replace the
-    "Please\_add\_the\_subscription\_key\_here" value with your subscription key
+    "Please\_add\_the\_emotion\_subscription\_key\_here;". Replace the
+    "Please\_add\_the\_emotion\_subscription\_key\_here" value with your Emotion subscription key
     string from the first step. If you cannot find the file "strings.xml", it is
     in folder "Sample\app\src\main\res\values\string.xml".
 
-4.  In Android Studio, select menu "Build \> Make Project" to build the sample,
+4.  In Android Studio -\> "Project" panel -\> "Android" view, open file
+    "app/res/values/strings.xml", and find the line
+    "Please\_add\_the\_face\_subscription\_key\_here;". Replace the
+    "Please\_add\_the\_face\_subscription\_key\_here" value with your Face subscription key
+    string from the first step. If you cannot find the file "strings.xml", it is
+    in folder "Sample\app\src\main\res\values\string.xml".
+    
+5.  In Android Studio, select menu "Build \> Make Project" to build the sample,
     and "Run" to launch this sample app.
 
 <img src="SampleScreenshots/SampleRunning1.png" width="50%"/>
