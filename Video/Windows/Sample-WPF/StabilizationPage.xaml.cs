@@ -56,7 +56,7 @@ namespace VideoAPI_WPF_Samples
         public StabilizationPage()
         {
             InitializeComponent();
-            DataContext = _dataContext;
+            Resources.Add("_internalDataContext", _dataContext);
         }
 
         // -----------------------------------------------------------------------

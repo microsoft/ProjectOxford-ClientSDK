@@ -58,7 +58,7 @@ namespace VideoAPI_WPF_Samples
         public MotionDetectionPage()
         {
             InitializeComponent();
-            DataContext = _dataContext;
+            Resources.Add("_internalDataContext", _dataContext);
         }
 
         // -----------------------------------------------------------------------
@@ -124,6 +124,9 @@ namespace VideoAPI_WPF_Samples
             MotionDetectionResult motionDetectionResult = Helpers.FromJson<MotionDetectionResult>(json);
 
             double timescale = motionDetectionResult.Timescale;
+
+            if (motionDetectionResult.Regions == null) yield break;
+
             List<int> regionIds = motionDetectionResult.Regions.Select(x => x.Id).ToList();
 
             Rect hasMotionRect = new Rect(new Point(0, 0), new Size(1, 1));  // Uses this full-frame rectangle to represent motion is detected in one frame

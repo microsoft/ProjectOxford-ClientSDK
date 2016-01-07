@@ -25,6 +25,6 @@
         </StackPanel>
         <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="5">Results will be shown in right panel. For processing progress, please see the status.</TextBlock>
 
-        <local:VideoResultControl Grid.Row="4" SourceUri="{Binding Path=SourceUri}" ResultUri="{Binding Path=ResultUri}" IsVideoResult="True"></local:VideoResultControl>
+        <local:VideoResultControl DataContext="{DynamicResource _internalDataContext}" Grid.Row="4" SourceUri="{Binding Path=SourceUri}" ResultUri="{Binding Path=ResultUri}" IsWorking="{Binding Path=IsWorking}" IsVideoResult="True"></local:VideoResultControl>
     </Grid>
 </Page>

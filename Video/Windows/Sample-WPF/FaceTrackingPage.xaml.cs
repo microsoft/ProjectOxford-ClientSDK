@@ -58,7 +58,7 @@ namespace VideoAPI_WPF_Samples
         public FaceTrackingPage()
         {
             InitializeComponent();
-            DataContext = _dataContext;
+            Resources.Add("_internalDataContext", _dataContext);
         }
 
         // -----------------------------------------------------------------------
@@ -123,6 +123,8 @@ namespace VideoAPI_WPF_Samples
         private static IEnumerable<FrameHighlight> GetHighlights(string json)
         {
             FaceTracking faceTrackingResult = Helpers.FromJson<FaceTracking>(json);
+
+            if (faceTrackingResult.FacesDetected == null) yield break;
 
             float timescale = (float)faceTrackingResult.Timescale;
 
