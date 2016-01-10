@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Project Oxford Emotion API Sample</string>
+    <string name="view_log">View Log</string>
+    <string name="detect">Detect</string>
+    <string name="result">Result</string>
+    <string name="detection">DetectionImage</string>
+    <string name="select_image">Select Image</string>
+    <string name="image">Image</string>
+    <string name="detection_log">Emotion Log</string>
+    <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
+    <string name="add_subscription_key_tip">Please put your subscription key to source file \"app/res/values/strings.xml\" to enable Face API calls.</string>
+    <string name="subscription_key">Please give a valid API Key</string>
+
+</resources>
