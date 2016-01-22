@@ -38,7 +38,7 @@ using System.Text;
 using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 
-namespace Microsoft.ProjectOXford.Vision.Sample
+namespace Microsoft.ProjectOxford.Vision.Sample
 {
 
     /// <summary>

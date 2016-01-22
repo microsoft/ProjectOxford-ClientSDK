@@ -38,4 +38,6 @@ public class PersonGroup {
     public String name;
 
     public String userData;
+
+    public TrainingStatus trainingStatus;
 }

@@ -11,6 +11,7 @@ Getting started
 To get started, select the platform for which you're developing.
 
 -   [Windows](</Emotion/Windows/>)
+-   [Android](</Emotion/Android/>)
 
 Contributing
 ============

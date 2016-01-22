@@ -87,8 +87,9 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
                 UUID[] faceIds = Arrays.copyOfRange(params, 1, params.length);
                 // Start find similar faces.
                 return faceServiceClient.findSimilar(
-                        params[0],      /* The first face ID to verify */
-                        faceIds);     /* The second face ID to verify */
+                        params[0],
+                        faceIds,      /* The first face ID to verify */
+                        faceIds.length);     /* The second face ID to verify */
             }  catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());
@@ -113,7 +114,7 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
             if (mSucceed) {
                 String resultString = "Found "
                         + (result == null ? "0": result.length)
-                        + " similar face" + ((result != null && result.length > 1)? "s": "");
+                        + " similar face" + ((result != null && result.length != 1)? "s": "");
                 addLog("Response: Success. " + resultString);
                 setInfo(resultString);
             }
@@ -139,11 +140,12 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
 
                 // Start detection.
                 return faceServiceClient.detect(
-                        params[0],   /* input stream of image to detect */
-                        false,       /* whether to analyzes facial landmarks */
-                        false,       /* whether to analyzes age */
-                        false,       /* whether to analyzes gender */
-                        false);      /* whether to analyzes head pose */
+                        params[0],  /* Input stream of image to detect */
+                        true,       /* Whether to return face ID */
+                        false,       /* Whether to return face landmarks */
+                        /* Which face attributes to analyze, currently we support:
+                           age,gender,headPose,smile,facialHair */
+                        null);
             }  catch (Exception e) {
                 mSucceed = false;
                 publishProgress(e.getMessage());
@@ -202,8 +204,10 @@ public class FindSimilarFaceActivity extends ActionBarActivity {
         listView.setAdapter(mFaceListAdapter);
 
         TextView textView = (TextView) findViewById(R.id.text_all_faces);
-        textView.setText("Face database: " + mFaceListAdapter.faces.size() + " face"
-                + (mFaceListAdapter.faces.size() > 1 ? "s": "")+ " in total");
+        textView.setText(String.format(
+                "Face database: %d face%s in total",
+                mFaceListAdapter.faces.size(),
+                mFaceListAdapter.faces.size() != 1 ? "s" : ""));
 
         refreshFindSimilarFaceButtonEnabledStatus();
 
