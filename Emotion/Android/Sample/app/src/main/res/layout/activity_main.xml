@@ -18,6 +18,11 @@
             android:id="@+id/button_recognize"
             android:layout_gravity="center_horizontal"
             android:onClick="activityRecognize" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Microsoft will receive the images you upload and may use them to improve Emotion API and related services. By submitting an image, you confirm that you have consent from everyone in it."/>
     </LinearLayout>
 
 </RelativeLayout>
