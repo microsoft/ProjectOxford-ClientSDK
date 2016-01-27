@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.microsoft.emotion">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application
+        android:name="com.microsoft.projectoxford.emotion.samples.helper.SampleApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.microsoft.projectoxford.emotion.samples.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.microsoft.projectoxford.emotion.samples.EmotionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.microsoft.projectoxford.emotion.samples.LogActivity"
+            android:label="@string/detection_log"
+            android:parentActivityName="com.microsoft.projectoxford.emotion.samples.EmotionActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.microsoft.projectoxford.emotion.samples.EmotionActivity" />
+        </activity>
+        <activity
+            android:name="com.microsoft.projectoxford.emotion.samples.helper.SelectImageActivity"
+            android:label="SelectImage"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>
