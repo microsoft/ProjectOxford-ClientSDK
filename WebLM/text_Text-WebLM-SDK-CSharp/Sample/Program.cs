@@ -52,27 +52,27 @@ namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
         /// <param name="args">input args</param>
         static void Main(string[] args)
         {
-            ///Which model to use. Only title/anchor/query/body are currently supported.
+            /// Which model to use. Only title/anchor/query/body are currently supported.
             var model = "body";
 
-            ///The Markov N-gram order to use. If higher than the model's max order, the model's max order is used instead.
+            /// The Markov N-gram order to use. If higher than the model's max order, the model's max order is used instead.
             var order = 5;
 
-            ///The maximum number of results to be returned by next word generation and word breaking. The limit is 1000.
+            /// The maximum number of results to be returned by next word generation and word breaking. The limit is 1000.
             var maxNumCandidates = 5;
 
-            ///List available models.
+            /// List available models.
             var modelsResponse = Client.ListAvailableModelsAsync().GetAwaiter().GetResult();
             foreach (var modelsResult in modelsResponse.Models)
                 Console.WriteLine("Models:  Name={0}  MaxOrder={1}", modelsResult.Name, modelsResult.MaxOrder);
 
-            ///Calculate joint probabilities. (The numbers returned are actualy log-10 probabilities, and therefore always negative.)
+            /// Calculate joint probabilities. (The numbers returned are actualy log-10 probabilities, and therefore always negative.)
             var jpQueries = new string[] { "this is the first string", "the second string" };
             var jpResponse = Client.CalculateJointProbabilitiesAsync(jpQueries, model, order).GetAwaiter().GetResult();
             foreach (var jpResult in jpResponse.Results)
                 Console.WriteLine("Joint probability:  P({0}) = {1}", jpResult.Words, jpResult.Probability);
 
-            ///Calculate conditional probabilities.
+            /// Calculate conditional probabilities.
             var cpQuery1 = new ConditionalProbabilityQuery() { Words = "world wide", Word = "web" };
             var cpQuery2 = new ConditionalProbabilityQuery() { Words = "one two three", Word = "four" };
             var cpQueries = new ConditionalProbabilityQuery[] { cpQuery1, cpQuery2 };
@@ -80,13 +80,13 @@ namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
             foreach (var cpResult in cpResponse.Results)
                 Console.WriteLine("Conditional probability:  P({0}|{1}) = {2}", cpResult.Word, cpResult.Words, cpResult.Probability);
 
-            ///Generate next word completions.
+            /// Generate next word completions.
             var nwQuery = "world wide";
             var nwResponse = Client.GenerateNextWordsAsync(nwQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
             foreach (var nwResult in nwResponse.Candidates)
                 Console.WriteLine("Next words:  {0} -> {1}  {2}", nwQuery, nwResult.Word, nwResult.Probability);
 
-            ///Break a string without spaces into words.
+            /// Break a string without spaces into words.
             var wbQuery = "yourtexttobreak";
             var wbResponse = Client.BreakIntoWordsAsync(wbQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
             foreach (var wbResult in wbResponse.Candidates)
