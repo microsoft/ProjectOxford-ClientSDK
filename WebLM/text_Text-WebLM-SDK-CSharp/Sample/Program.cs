@@ -1,11 +1,41 @@
-﻿namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
-{
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.ProjectOxford.Text.WebLM;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+﻿//
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license.
+//
+// Project Oxford: http://ProjectOxford.ai
+//
+// Project Oxford SDK Github:
+// https://github.com/Microsoft/ProjectOxfordSDK-Windows
+//
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
+//
+// MIT License:
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
+using System;
+using Microsoft.ProjectOxford.Text.WebLM;
+
+namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
+{
     /// <summary>
     /// Program class
     /// </summary>
@@ -14,17 +44,7 @@
         /// <summary>
         /// Initialzes a new instance of <see cref="WebLMClient"/> class.
         /// </summary>
-        private static readonly WebLMClient Client = new WebLMClient("Your subscription key");
-
-        /// <summary>
-        /// Defalut jsonserializer settings
-        /// </summary>
-        private static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings()
-        {
-            DateFormatHandling = DateFormatHandling.IsoDateFormat,
-            NullValueHandling = NullValueHandling.Ignore,
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
+        private static readonly WebLMClient Client = new WebLMClient("bd6e5f04abfb4e3a96c4aa51fe952445");  // UNDO  
 
         /// <summary>
         /// Main Function
@@ -32,160 +52,47 @@
         /// <param name="args">input args</param>
         static void Main(string[] args)
         {
-            ///Which model to use. Only title/anchor/query/body are supported.
+            ///Which model to use. Only title/anchor/query/body are currently supported.
             var model = "body";
 
-            ///The order of N-gram. Valid range: [1, 5]
+            ///The Markov N-gram order to use. If higher than the model's max order, the model's max order is used instead.
             var order = 5;
 
-            ///Max number of candidates would be returned. Valid range: [1, 20]
-            var maxNumOfCandidatesReturned = 5;
+            ///The maximum number of results to be returned by next word generation and word breaking. The limit is 1000.
+            var maxNumCandidates = 5;
 
-            ///Calculate joint probability
-            var queries = new string[] { "your queries to calculate joint probability" };
-            Console.WriteLine("Calculate joint probabilities:");
-            Console.WriteLine(JsonConvert.SerializeObject(queries));
-            var result = CalculateJointProbabilities(queries, model, order);
+            ///List available models.
+            var modelsResponse = Client.ListAvailableModelsAsync().GetAwaiter().GetResult();
+            foreach (var modelsResult in modelsResponse.Models)
+                Console.WriteLine("Models:  Name={0}  MaxOrder={1}", modelsResult.Name, modelsResult.MaxOrder);
 
-            ///Calculate conditional probabilities
-            //var query = new ConditionalProbabilityQuery() { Words = "conditional probability query", Word = "query" };
-            //var queries = new ConditionalProbabilityQuery[] { query };
-            //Console.WriteLine("Calculate conditional probabilities:");
-            //Console.WriteLine(JsonConvert.SerializeObject(queries));
-            //var result = CalculateConditionalProbabilities(queries, model, order);
+            ///Calculate joint probabilities. (The numbers returned are actualy log-10 probabilities, and therefore always negative.)
+            var jpQueries = new string[] { "this is the first string", "the second string" };
+            var jpResponse = Client.CalculateJointProbabilitiesAsync(jpQueries, model, order).GetAwaiter().GetResult();
+            foreach (var jpResult in jpResponse.Results)
+                Console.WriteLine("Joint probability:  P({0}) = {1}", jpResult.Words, jpResult.Probability);
 
-            ///Generate next words
-            //var words = "next word is";
-            //Console.WriteLine("Generate next words:");
-            //Console.WriteLine(JsonConvert.SerializeObject(words));
-            //var result = GenerateNextWords(words, model, order, maxNumOfCandidatesReturned);
+            ///Calculate conditional probabilities.
+            var cpQuery1 = new ConditionalProbabilityQuery() { Words = "world wide", Word = "web" };
+            var cpQuery2 = new ConditionalProbabilityQuery() { Words = "one two three", Word = "four" };
+            var cpQueries = new ConditionalProbabilityQuery[] { cpQuery1, cpQuery2 };
+            var cpResponse = Client.CalculateConditionalProbabilitiesAsync(cpQueries, model, order).GetAwaiter().GetResult();
+            foreach (var cpResult in cpResponse.Results)
+                Console.WriteLine("Conditional probability:  P({0}|{1}) = {2}", cpResult.Word, cpResult.Words, cpResult.Probability);
 
-            ///Break into words
-            //var text = "yourtexttobreak";
-            //Console.WriteLine("Break into words:");
-            //Console.WriteLine(JsonConvert.SerializeObject(text));
-            //var result = BreakIntoWords(text, model, order, maxNumOfCandidatesReturned);
+            ///Generate next word completions.
+            var nwQuery = "world wide";
+            var nwResponse = Client.GenerateNextWordsAsync(nwQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
+            foreach (var nwResult in nwResponse.Candidates)
+                Console.WriteLine("Next words:  {0} -> {1}  {2}", nwQuery, nwResult.Word, nwResult.Probability);
 
-            ///List available models
-            //Console.WriteLine("List available models:");
-            //var result = ListAvailableModels();
+            ///Break a string without spaces into words.
+            var wbQuery = "yourtexttobreak";
+            var wbResponse = Client.BreakIntoWordsAsync(wbQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
+            foreach (var wbResult in wbResponse.Candidates)
+                Console.WriteLine("Word breaking:  {0} -> {1}", wbResult.Words, wbResult.Probability);
 
-            Console.WriteLine(result.Result);
             Console.ReadKey();
-        }
-
-        /// <summary>
-        /// Calculate Joint Probabilities asynchronously.
-        /// </summary>
-        /// <param name="queries">Joint probability queries.</param>
-        /// <param name="model">Which model to use.</param>
-        /// <param name="order">The order of N-gram.</param>
-        /// <returns>Joint probability response.</returns>
-        private static async Task<object> CalculateJointProbabilities(string[] queries, string model, int order = DefaultValues.OrderDefault)
-        {
-            object resultObj = null;
-            try
-            {
-                resultObj = await Client.CalculateJointProbabilitiesAsync(queries, model, order);
-            }
-            catch (Exception exception)
-            {
-                var clientException = exception as ClientException;
-                return clientException.Error.Message;
-            }
-
-            return JsonConvert.SerializeObject(resultObj, Formatting.Indented, jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// Calculate Conditional Probabilities asynchronously.
-        /// </summary>
-        /// <param name="queries">Conditional probability queries.</param>
-        /// <param name="model">Which model to use.</param>
-        /// <param name="order">The order of N-gram.</param>
-        /// <returns>Conditional probability response.</returns>
-        private static async Task<object> CalculateConditionalProbabilities(ConditionalProbabilityQuery[] queries, string model, int order = DefaultValues.OrderDefault)
-        {
-            object resultObj = null;
-            try
-            {
-                resultObj = await Client.CalculateConditionalProbabilitiesAsync(queries, model, order);
-            }
-            catch (Exception exception)
-            {
-                var clientException = exception as ClientException;
-                return clientException.Error.Message;
-            }
-
-            return JsonConvert.SerializeObject(resultObj, Formatting.Indented, jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// Generate next words asynchronously.
-        /// </summary>
-        /// <param name="words">A string containing a sequence of words from which to generate the list of words likely to follow.</param>
-        /// <param name="model">Which model to use</param>
-        /// <param name="order">The order of N-gram.</param>
-        /// <param name="maxNumOfCandidatesReturned">Max number of candidates would be returned.</param>
-        /// <returns>Next word completions response.</returns>
-        private static async Task<object> GenerateNextWords(string words, string model, int order = DefaultValues.OrderDefault, int maxNumOfCandidatesReturned = DefaultValues.CandidatesDefault)
-        {
-            object resultObj = null;
-            try
-            {
-                resultObj = await Client.GenerateNextWordsAsync(words, model, order, maxNumOfCandidatesReturned);
-            }
-            catch (Exception exception)
-            {
-                var clientException = exception as ClientException;
-                return clientException.Error.Message;
-            }
-
-            return JsonConvert.SerializeObject(resultObj, Formatting.Indented, jsonSerializerSettings);              
-        }
-
-        /// <summary>
-        /// Break into words asynchronously.
-        /// </summary>
-        /// <param name="text">The line of text to break into words.</param>
-        /// <param name="model">Which model to use.</param>
-        /// <param name="order">The order of N-gram.</param>
-        /// <param name="maxNumOfCandidatesReturned">Max number of candidates would be returned.</param>
-        /// <returns>Word breaking response.</returns>
-        private static async Task<object> BreakIntoWords(string text, string model, int order = DefaultValues.OrderDefault, int maxNumOfCandidatesReturned = DefaultValues.CandidatesDefault)
-        {
-            object resultObj = null;
-            try
-            {
-                resultObj = await Client.BreakIntoWordsAsync(text, model, order, maxNumOfCandidatesReturned);
-            }
-            catch (Exception exception)
-            {
-                var clientException = exception as ClientException;
-                return clientException.Error.Message;
-            }
-
-            return JsonConvert.SerializeObject(resultObj, Formatting.Indented, jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// List available models asynchronously.
-        /// </summary>
-        /// <returns>List available models response.</returns>
-        private static async Task<object> ListAvailableModels()
-        {
-            object resultObj = null;
-            try
-            {
-                resultObj = await Client.ListAvailableModelsAsync();
-            }
-            catch (Exception exception)
-            {
-                var clientException = exception as ClientException;
-                return clientException.Error.Message;
-            }
-
-            return JsonConvert.SerializeObject(resultObj, Formatting.Indented, jsonSerializerSettings);
         }
     }
 }
