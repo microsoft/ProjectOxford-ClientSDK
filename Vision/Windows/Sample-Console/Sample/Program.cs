@@ -35,7 +35,7 @@ using System;
 using System.Configuration;
 using System.IO;
 
-namespace Microsoft.ProjectOXford.Vision.Sample
+namespace Microsoft.ProjectOxford.Vision.Sample
 {
 
     /// <summary>

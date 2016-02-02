@@ -1,0 +1,82 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 21
+    }
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
+}
+
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+signing {
+    sign configurations.archives
+}
+
+// Group ID is the project name
+group = "com.microsoft.projectoxford"
+// Artifact name is the name of the technology
+archivesBaseName = "emotion"
+// Update your version
+version = "1.0.0"
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                // The readable name of the artifact
+                name 'Microsoft Project Oxford Emotion API Client Library'
+                packaging 'jar'
+
+                // optionally artifactId can be defined here
+
+                // Descriptions of the artifacts.
+                description 'This client library allows the use of Microsoft\'s state-of-the-art cloud-based algorithms to detect emotions based on facial expressions. See https://github.com/Microsoft/ProjectOxford-ClientSDK/tree/master/Emotion for more information.'
+
+                // Project URL
+                url 'https://github.com/Microsoft/ProjectOxford-ClientSDK'
+
+                // Github information
+                scm {
+                    connection 'scm:git:https://github.com/Microsoft/ProjectOxford-ClientSDK'
+                    developerConnection 'scm:git:https://github.com/Microsoft/ProjectOxford-ClientSDK'
+                    url 'scm:git:https://github.com/Microsoft/ProjectOxford-ClientSDK'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://github.com/Microsoft/ProjectOxford-ClientSDK/blob/master/LICENSE.md'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'projectoxfordSDK'
+                        name 'Project Oxford Client SDK'
+                        email 'projectoxfordsdk@microsoft.com'
+                    }
+                }
+            }
+        }
+    }
+}
