@@ -44,7 +44,7 @@ namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
         /// <summary>
         /// Initialzes a new instance of <see cref="WebLMClient"/> class.
         /// </summary>
-        private static readonly WebLMClient Client = new WebLMClient("Paste your subscription key here");
+        private static readonly WebLMClient s_client = new WebLMClient("Past your subscription key here.");
 
         /// <summary>
         /// Main Function
@@ -62,13 +62,13 @@ namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
             var maxNumCandidates = 5;
 
             /// List available models.
-            var modelsResponse = Client.ListAvailableModelsAsync().GetAwaiter().GetResult();
+            var modelsResponse = s_client.ListAvailableModelsAsync().GetAwaiter().GetResult();
             foreach (var modelsResult in modelsResponse.Models)
                 Console.WriteLine("Models:  Name={0}  MaxOrder={1}", modelsResult.Name, modelsResult.MaxOrder);
 
             /// Calculate joint probabilities. (The numbers returned are actualy log-10 probabilities, and therefore always negative.)
             var jpQueries = new string[] { "this is the first string", "the second string" };
-            var jpResponse = Client.CalculateJointProbabilitiesAsync(jpQueries, model, order).GetAwaiter().GetResult();
+            var jpResponse = s_client.CalculateJointProbabilitiesAsync(jpQueries, model, order).GetAwaiter().GetResult();
             foreach (var jpResult in jpResponse.Results)
                 Console.WriteLine("Joint probability:  P({0}) = {1}", jpResult.Words, jpResult.Probability);
 
@@ -76,22 +76,23 @@ namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
             var cpQuery1 = new ConditionalProbabilityQuery() { Words = "world wide", Word = "web" };
             var cpQuery2 = new ConditionalProbabilityQuery() { Words = "one two three", Word = "four" };
             var cpQueries = new ConditionalProbabilityQuery[] { cpQuery1, cpQuery2 };
-            var cpResponse = Client.CalculateConditionalProbabilitiesAsync(cpQueries, model, order).GetAwaiter().GetResult();
+            var cpResponse = s_client.CalculateConditionalProbabilitiesAsync(cpQueries, model, order).GetAwaiter().GetResult();
             foreach (var cpResult in cpResponse.Results)
                 Console.WriteLine("Conditional probability:  P({0}|{1}) = {2}", cpResult.Word, cpResult.Words, cpResult.Probability);
 
             /// Generate next word completions.
             var nwQuery = "world wide";
-            var nwResponse = Client.GenerateNextWordsAsync(nwQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
+            var nwResponse = s_client.GenerateNextWordsAsync(nwQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
             foreach (var nwResult in nwResponse.Candidates)
                 Console.WriteLine("Next words:  {0} -> {1}  {2}", nwQuery, nwResult.Word, nwResult.Probability);
 
             /// Break a string without spaces into words.
             var wbQuery = "yourtexttobreak";
-            var wbResponse = Client.BreakIntoWordsAsync(wbQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
+            var wbResponse = s_client.BreakIntoWordsAsync(wbQuery, model, order, maxNumCandidates).GetAwaiter().GetResult();
             foreach (var wbResult in wbResponse.Candidates)
                 Console.WriteLine("Word breaking:  {0} -> {1}", wbResult.Words, wbResult.Probability);
 
+            Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
         }
     }

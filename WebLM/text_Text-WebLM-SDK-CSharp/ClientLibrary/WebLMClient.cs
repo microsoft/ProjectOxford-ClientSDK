@@ -102,19 +102,19 @@ namespace Microsoft.ProjectOxford.Text.WebLM
         /// <summary>
         /// The subscription key.
         /// </summary>
-        private string subscriptionKey;
+        private string _subscriptionKey;
 
         /// <summary>
         /// The HTTP client
         /// </summary>
-        private HttpClient httpClient;
+        private HttpClient _httpLMServiceClient;
         #endregion
 
         public WebLMClient(string subscriptionKey)
         {
-            this.subscriptionKey = subscriptionKey;
-            httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add(SubscriptionKeyName, subscriptionKey);
+            this._subscriptionKey = subscriptionKey;
+            _httpLMServiceClient = new HttpClient();
+            _httpLMServiceClient.DefaultRequestHeaders.Add(SubscriptionKeyName, subscriptionKey);
         }
 
         #region INgramLookupClient implementations
@@ -238,7 +238,7 @@ namespace Microsoft.ProjectOxford.Text.WebLM
                 request.Content = new StringContent(JsonConvert.SerializeObject(requestBody, settings), Encoding.UTF8, JsonContentTypeHeader);
             }
 
-            HttpResponseMessage response = await httpClient.SendAsync(request);
+            HttpResponseMessage response = await _httpLMServiceClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 string responseContent = null;
