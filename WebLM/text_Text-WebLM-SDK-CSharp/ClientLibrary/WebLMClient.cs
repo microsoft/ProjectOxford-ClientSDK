@@ -40,7 +40,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.ProjectOxford.Text.WebLM
 {
-    public class WebLMClient : IWebLMClient
+    public class LMServiceClient : IWebLMClient
     {
         #region private members
 
@@ -110,7 +110,7 @@ namespace Microsoft.ProjectOxford.Text.WebLM
         private HttpClient _httpLMServiceClient;
         #endregion
 
-        public WebLMClient(string subscriptionKey)
+        public LMServiceClient(string subscriptionKey)
         {
             this._subscriptionKey = subscriptionKey;
             _httpLMServiceClient = new HttpClient();
@@ -127,6 +127,9 @@ namespace Microsoft.ProjectOxford.Text.WebLM
         /// <returns>Joint probabilities response.</returns>
         public async Task<JointProbabilityResponse> CalculateJointProbabilitiesAsync(string[] queries, string model, int order = DefaultValues.OrderDefault)
         {
+            if ((queries == null) || (queries.Length == 0) || (model == null) || (model.Length == 0) || (order <= 0))
+                return null;
+
             var requestUrl = string.Format(
                 "{0}/{1}?model={2}&order={3}",
                 ServiceHost,
@@ -147,6 +150,9 @@ namespace Microsoft.ProjectOxford.Text.WebLM
         /// <returns>Conditional probabilities response.</returns>
         public async Task<ConditionalProbabilityResponse> CalculateConditionalProbabilitiesAsync(ConditionalProbabilityQuery[] queries, string model, int order = DefaultValues.OrderDefault)
         {
+            if ((queries == null) || (queries.Length == 0) || (model == null) || (model.Length == 0) || (order <= 0))
+                return null;
+
             var requestUrl = string.Format(
                 "{0}/{1}?model={2}&order={3}",
                 ServiceHost,
@@ -168,6 +174,9 @@ namespace Microsoft.ProjectOxford.Text.WebLM
         /// <returns>Next word completions response.</returns>
         public async Task<NextWordCompletionResponse> GenerateNextWordsAsync(string words, string model, int order = DefaultValues.OrderDefault, int maxNumOfCandidatesReturned = DefaultValues.CandidatesDefault)
         {
+            if ((words == null) || (words.Length == 0) || (model == null) || (model.Length == 0) || (order <= 0))
+                return null;
+
             var requestUrl = string.Format(
                 "{0}/{1}?model={2}&words={3}&order={4}&maxNumOfCandidatesReturned={5}",
                 ServiceHost,
@@ -190,6 +199,9 @@ namespace Microsoft.ProjectOxford.Text.WebLM
         /// <returns>Word breaking response.</returns>
         public async Task<WordBreakingResponse> BreakIntoWordsAsync(string text, string model, int order = DefaultValues.OrderDefault, int maxNumOfCandidatesReturned = DefaultValues.CandidatesDefault)
         {
+            if ((text == null) || (text.Length == 0) || (model == null) || (model.Length == 0) || (order <= 0))
+                return null;
+
             var requestUrl = string.Format(
                 "{0}/{1}?model={2}&text={3}&order={4}&maxNumOfCandidatesReturned={5}",
                 ServiceHost,

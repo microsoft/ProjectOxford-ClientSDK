@@ -42,9 +42,9 @@ namespace Microsoft.ProjectOxford.CSharpSamples.WebLM
     class Program
     {
         /// <summary>
-        /// Initialzes a new instance of <see cref="WebLMClient"/> class.
+        /// Initialzes a new instance of <see cref="LMServiceClient"/> class.
         /// </summary>
-        private static readonly WebLMClient s_client = new WebLMClient("Paste your subscription key here.");
+        private static readonly LMServiceClient s_client = new LMServiceClient("Paste your subscription key here.");
 
         /// <summary>
         /// Main Function
