@@ -59,7 +59,7 @@
     <Compile Include="Contract\WordBreakingCandidate.cs" />
     <Compile Include="Contract\WordBreakingResponse.cs" />
     <Compile Include="IWebLMClient.cs" />
-    <Compile Include="WebLMClient.cs" />
+    <Compile Include="LMServiceClient.cs" />
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
     <Compile Include="ErrorResponse.cs" />
