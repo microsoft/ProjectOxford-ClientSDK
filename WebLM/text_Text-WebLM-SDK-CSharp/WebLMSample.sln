@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebLMClient", "ClientLibrary\WebLMClient.csproj", "{53D3ADDB-DDBB-4818-ABA3-E5437C566266}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMServiceClient", "ClientLibrary\LMServiceClient.csproj", "{53D3ADDB-DDBB-4818-ABA3-E5437C566266}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSample", "Sample\CSharpSample.csproj", "{91608EA0-C4ED-4873-A6F2-A7988F863E56}"
 EndProject

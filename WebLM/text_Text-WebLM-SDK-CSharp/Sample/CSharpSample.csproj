@@ -45,9 +45,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClientLibrary\WebLMClient.csproj">
+    <ProjectReference Include="..\ClientLibrary\LMServiceClient.csproj">
       <Project>{53d3addb-ddbb-4818-aba3-e5437c566266}</Project>
-      <Name>WebLMClient</Name>
+      <Name>LMServiceClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
