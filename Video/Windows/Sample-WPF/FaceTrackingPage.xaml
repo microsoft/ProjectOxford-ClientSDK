@@ -26,6 +26,6 @@
         <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="5">Results will be shown in right panel. For processing progress, please see the status.</TextBlock>
 
 
-        <local:VideoResultControl Grid.Row="4" SourceUri="{Binding Path=SourceUri}" ResultText="{Binding Path=ResultText}" FrameHighlights="{Binding Path=FrameHighlights}" IsVideoResult="False"></local:VideoResultControl>
+        <local:VideoResultControl DataContext="{DynamicResource _internalDataContext}" Grid.Row="4" SourceUri="{Binding Path=SourceUri}" ResultText="{Binding Path=ResultText}" IsWorking="{Binding Path=IsWorking}" FrameHighlights="{Binding Path=FrameHighlights}" IsVideoResult="False"></local:VideoResultControl>
     </Grid>
 </Page>

@@ -10,8 +10,8 @@
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></local:BoolToVisibilityConverter>
         <local:InvertBoolToVisibilityConverter x:Key="InvertBoolToVisibilityConverter"></local:InvertBoolToVisibilityConverter>
     </UserControl.Resources>
-    <Grid>
-        <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}" >
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>

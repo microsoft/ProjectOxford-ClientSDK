@@ -72,12 +72,12 @@ requires two different subscriptions.
     "Please\_add\_the\_face\_subscription\_key\_here" value with your Face subscription key
     string from the first step. If you cannot find the file "strings.xml", it is
     in folder "Sample\app\src\main\res\values\string.xml".
-    
+
 5.  In Android Studio, select menu "Build \> Make Project" to build the sample,
     and "Run" to launch this sample app.
 
-<img src="SampleScreenshots/SampleRunning1.png" width="50%"/>
-<img src="SampleScreenshots/SampleRunning2.png" width="50%"/>
+<img src="SampleScreenshots/SampleRunning1.png" width="30%"/>
+<img src="SampleScreenshots/SampleRunning2.png" width="30%"/>
 
 Run the sample
 --------------
