@@ -12,7 +12,7 @@ def print_all_profiles(subscription_key):
 
     profiles = helper.get_all_profiles()
 
-    print('Profile ID, Locale, Enrollment Speech Time, Remaining Enrollment Speech Time,'
+    print('Profile ID, Locale, Enrollments Count, Remaining Enrollments Count,'
           ' Created Date Time, Last Action Date Time, Enrollment Status')
     for profile in profiles:
         print('{0}, {1}, {2}, {3}, {4}, {5}, {6}'.format(

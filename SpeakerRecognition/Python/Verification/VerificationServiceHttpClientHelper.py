@@ -13,7 +13,6 @@ class VerificationServiceHttpClientHelper:
     """Abstracts the interaction with the Verification service."""
 
     _STATUS_OK = 200
-    _STATUS_ACCEPTED = 202
     _BASE_URI = 'api.projectoxford.ai'
     _VERIFICATION_PROFILES_URI = '/spid/v1.0/verificationProfiles'
     _VERIFICATION_URI = '/spid/v1.0/verify'
@@ -21,13 +20,6 @@ class VerificationServiceHttpClientHelper:
     _CONTENT_TYPE_HEADER = 'Content-Type'
     _JSON_CONTENT_HEADER_VALUE = 'application/json'
     _STREAM_CONTENT_HEADER_VALUE = 'application/octet-stream'
-    _OPERATION_LOCATION_HEADER = 'Operation-Location'
-    _OPERATION_STATUS_FIELD_NAME = 'status'
-    _OPERATION_PROC_RES_FIELD_NAME = 'processingResult'
-    _OPERATION_MESSAGE_FIELD_NAME = 'message'
-    _OPERATION_STATUS_SUCCEEDED = 'succeeded'
-    _OPERATION_STATUS_FAILED = 'failed'
-    _OPERATION_STATUS_UPDATE_DELAY = 5
 
     def __init__(self, subscription_key):
         """Constructor of the VerificationServiceHttpClientHelper class.
@@ -110,15 +102,9 @@ class VerificationServiceHttpClientHelper:
                     request_url,
                     self._STREAM_CONTENT_HEADER_VALUE,
                     body)
-
-                #            print(message)
             if res.status == self._STATUS_OK:
                 # Parse the response body
                 return EnrollmentResponse.EnrollmentResponse(json.loads(message))
-            elif res.status == self._STATUS_ACCEPTED:
-                operation_url = res.getheader(self._OPERATION_LOCATION_HEADER)
-                return EnrollmentResponse.EnrollmentResponse(
-                    self._poll_operation(operation_url))
             else:
                 raise Exception('Error enrolling profile: ' + res.reason)
         except:
@@ -151,52 +137,10 @@ class VerificationServiceHttpClientHelper:
             if res.status == self._STATUS_OK:
                 # Parse the response body
                 return VerificationResponse.VerificationResponse(json.loads(message))
-            elif res.status == self._STATUS_ACCEPTED:
-                operation_url = res.getheader(self._OPERATION_LOCATION_HEADER)
-
-                return VerificationResponse.VerificationResponse(
-                    self._poll_operation(operation_url))
             else:
                 raise Exception('Error verifying audio from file: ' + res.reason)
         except:
             logging.error('Error performing verification.')
-            raise
-
-    def _poll_operation(self, operation_url):
-        """Polls on an operation till it is done
-
-        Arguments:
-        operation_url -- the url to poll for the operation status
-        """
-        try:
-            # Parse the operation URL
-            parsed_url = urllib.parse.urlparse(operation_url)
-
-            while True:
-                # Send the request
-                res, message = self._send_request(
-                    'GET',
-                    parsed_url.netloc,
-                    parsed_url.path,
-                    self._JSON_CONTENT_HEADER_VALUE)
-
-                if res.status != self._STATUS_OK:
-                    raise Exception('Operation Error: ' + res.reason)
-
-                # Parse the response body
-                operation_response = json.loads(message)
-
-                if operation_response[self._OPERATION_STATUS_FIELD_NAME] == \
-                        self._OPERATION_STATUS_SUCCEEDED:
-                    return operation_response[self._OPERATION_PROC_RES_FIELD_NAME]
-                elif operation_response[self._OPERATION_STATUS_FIELD_NAME] == \
-                        self._OPERATION_STATUS_FAILED:
-                    raise Exception('Operation Error: ' +
-                                    operation_response[self._OPERATION_MESSAGE_FIELD_NAME])
-                else:
-                    time.sleep(self._OPERATION_STATUS_UPDATE_DELAY)
-        except:
-            logging.error('Error polling the operation status.')
             raise
 
     def _send_request(self, method, base_url, request_url, content_type_value, body=None):
