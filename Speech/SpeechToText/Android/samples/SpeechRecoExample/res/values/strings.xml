@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
-    <!-- Please refer to http://oxford-portal.azurewebsites.net/doc/general/subscription-key-mgmt to get your subscription key -->
+    <!-- Please refer to https://www.projectoxford.ai/ to get your subscription key -->
     <!-- If you have one subscription key, you can add it here to use the service -->
     <string name="subscription_key">Please_add_the_subscription_key_here</string>
 
