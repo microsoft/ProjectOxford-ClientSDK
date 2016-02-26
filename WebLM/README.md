@@ -1,23 +1,18 @@
-Microsoft Project Oxford Emotion client SDK and samples
-========================================
+Microsoft Project Oxford Web Language Model API SDK and sample
+==============================================================
 
-This repo contains the client libraries that demonstrate Microsoft’s cloud-based algorithms to detect emotions based on facial expressions. See the tech in
-action on [our demo page](<https://www.projectoxford.ai/demo/Emotion#detection>) or
-learn more about the API with [our documentation](<https://www.projectoxford.ai/doc/Emotion/overview>).
+This repo contains a client library and sample code to demonstrate Microsoft’s state-of-the-art language modeling APIs, which automate a variety of standard natural language processing tasks.
+Learn more about the Web Language Model API at [our documentation](<https://www.projectoxford.ai/weblm>).
 
 Getting started
 ===============
 
-To get started, select the platform for which you're developing.
-
--   [Windows](</Emotion/Windows/>)
--   [Android](</Emotion/Android/>)
+To get started, open, build, and run the accompanying Visual Studio solution for Windows.
 
 Contributing
 ============
 We welcome contributions and are always looking for new SDKs, input, and
-suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
-Rules & Guidelines](</CONTRIBUTING.md>).
+suggestions. Feel free to file issues on the repo and we'll address them as we can. 
 
 For questions, feedback, or suggestions about Project Oxford services, feel free to reach out to us directly.
 
