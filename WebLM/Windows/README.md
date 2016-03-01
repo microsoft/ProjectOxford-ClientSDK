@@ -1,62 +1,38 @@
-The client library
-==================
+Microsoft Project Oxford Web Language Model API SDK and sample
+==============================================================
 
-The Emotion API client library is a thin C\# client wrapper for Project Oxford Emotion
-REST APIs.  
+This repo contains a client library and sample code to demonstrate Microsoft’s state-of-the-art language modeling APIs, which automate a variety of standard natural language processing tasks.
+Learn more about the Web Language Model API at [our documentation](<https://www.projectoxford.ai/weblm>).
 
-The easiest way to use this client library is to get microsoft.projectoxford.emotion package from [nuget](<http://nuget.org>).
+Getting started
+===============
 
-Please go to [Emotion API Package in nuget](https://www.nuget.org/packages/Microsoft.ProjectOxford.Emotion/) for more details.
-
-The sample
-==========
-
-This sample is a Windows WPF application to demonstrate the use of Project
-Oxford Emotion API.
-
-It demonstrates emotion API by specifying a URL or using a stream.
+First obtain a subscription key for WebLM by following instructions in [Subscription
+key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
+Then open, modify, build, and run the accompanying Visual Studio solution.
+This sample is a C# Windows console application demonstrating the use of the Project Oxford Web Language Model API.
 
 Build the sample
 ----------------
 
-1.  Start Microsoft Visual Studio 2015 and select File \> Open \>
-    Project/Solution.
+1.  Start Microsoft Visual Studio 2015 and select File \> Open \> Project/Solution.
 
-2.  Starting in the folder where you clone the repository, go to Emotion \> Windows
-    \> Sample-WPF Folder.
+2.  Starting in the folder where you clone the repository, go to the WebLM \> Windows Folder.
 
-3.  Double-click the Visual Studio 2015 Solution (.sln) file
-    EmotionAPI-WPF-Samples.
+3.  Double-click the Visual Studio 2015 Solution file WebLMSample.sln.
 
-4.  Press Ctrl+Shift+B, or select Build \> Build Solution.
+4.  Paste your Oxford subscription key into the LMServiceClient constructor parameter value in Program.cs.
+
+5.  Press Ctrl+Shift+B, or select Build \> Build Solution.
 
 Run the sample
 --------------
 
 After the build is complete, press F5 to run the sample.
 
-First, you will
-need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
+A number of self-explanatory lines will be printed on the console, showing the results received from the WebLM service.
 
-You must obtain a subscription key for Emotion API by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
-
-Locate the text edit box saying "Paste your subscription key here to start" on
-the top right corner. Paste your subscription key. You can choose to persist
-your subscription key in your machine by clicking "Save Key" button. When you
-want to delete the subscription key from the machine, click "Delete Key" to
-remove it from your machine.
-
-Click on "Select Scenario" to use samples of different scenarios, and
-follow the instructions on screen.
-
-Microsoft will receive the images you upload and may use them to improve Emotion
-API and related services. By submitting an image, you confirm you have consent
-from everyone in it.
-
-There are sample images to be used with this sample application. You can find these images under Face \> Windows \> Data folder. Please note the use of these images is licensed under [LICENSE-IMAGE](</LICENSE-IMAGE.md>).
-
-<img src="SampleScreenshots/SampleRunning.png" width="80%"/>
+Press any key to exit the app.
 
 Contributing
 ============
