@@ -3,7 +3,7 @@ Licensed under the MIT license.
 
 Project Oxford: http://ProjectOxford.ai
 
-Project Oxford SDK Github:
+Project Oxford SDK GitHub:
 https://github.com/Microsoft/ProjectOxford-ClientSDK
 
 Copyright (c) Microsoft Corporation
