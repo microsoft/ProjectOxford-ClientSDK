@@ -5,7 +5,7 @@
 // Project Oxford: http://ProjectOxford.ai
 // 
 // ProjectOxford SDK Github:
-// https://github.com/Microsoft/ProjectOxfordSDK-Windows
+// https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
 // All rights reserved.
