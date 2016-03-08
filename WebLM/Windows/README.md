@@ -1,14 +1,13 @@
 Microsoft Project Oxford Web Language Model API SDK and sample
 ==============================================================
 
-This repo contains a client library and sample code to demonstrate Microsoft’s state-of-the-art language modeling APIs, which automate a variety of standard natural language processing tasks.
+This repo contains a client library and sample code to demonstrate Microsoftâ€™s state-of-the-art language modeling APIs, which automate a variety of standard natural language processing tasks.
 Learn more about the Web Language Model API at [our documentation](<https://www.projectoxford.ai/weblm>).
 
 Getting started
 ===============
 
-First obtain a subscription key for WebLM by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
+To obtain a subscription key for WebLM, visit [our website] (<https://www.projectoxford.ai>) and sign up for free using your Microsoft account.
 Then open, modify, build, and run the accompanying Visual Studio solution.
 This sample is a C# Windows console application demonstrating the use of the Project Oxford Web Language Model API.
 
