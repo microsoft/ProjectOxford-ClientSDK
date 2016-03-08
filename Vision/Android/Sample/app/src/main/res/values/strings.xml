@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Project Oxford Vision Samples</string>
 
-    <!-- Please refer to http://oxford-portal.azurewebsites.net/doc/general/subscription-key-mgmt to get your subscription key -->
+    <!-- Please refer to https://www.projectoxford.ai/ to get your subscription key -->
     <!-- If you have one subscription key, you can add it here to use the service -->
     <string name="subscription_key">Please_add_the_subscription_key_here</string>
     <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>

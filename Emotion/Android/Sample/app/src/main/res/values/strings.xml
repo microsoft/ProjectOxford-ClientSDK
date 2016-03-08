@@ -2,7 +2,7 @@
     <string name="app_name">Project Oxford Emotion Samples</string>
 
     <!-- Emotion subscription key -->
-    <!-- Please refer to http://oxford-portal.azurewebsites.net/doc/general/subscription-key-mgmt to get your subscription key -->
+    <!-- Please refer to https://www.projectoxford.ai/ to get your subscription key -->
     <!-- If you have one subscription key, you can add it here to use the service -->
     <string name="subscription_key">Please_add_the_emotion_subscription_key_here</string>
 
