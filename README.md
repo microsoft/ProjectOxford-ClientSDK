@@ -16,7 +16,7 @@ Project Oxford APIs are divided into three areas:
 
 ##### Speech
 -  **[Speech APIs](<https://www.projectoxford.ai/speech>) (Preview):** Communicate with your users with speech recognition and synthesis powered by Bing
--  **[Speaker Recognition APIs](https://www.projectoxford.ai/spid) (Preview):** Recognize your users from their voice 
+-  **[Speaker Recognition APIs](https://www.projectoxford.ai/spid) (Preview):** Recognize your users from their voice
 -  **[CRIS, Custom Recognition Intelligent Service](<https://www.projectoxford.ai/cris>) (Private Preview):** Customize both language and acoustic models for better speech recognition tailored to your application
 
 
@@ -51,6 +51,8 @@ your choice:
 
 -   [Video](</Video/>)
 
+-   [Web Language Model](</WebLM/>)
+
 **Don't see what you're looking for?** We're working on expanding our offerings and would love to hear from you what SDKs you want to see next. Let us know on the [Project Oxford Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>).
 
 
@@ -71,4 +73,3 @@ All Project Oxford SDKs and samples are licensed with the MIT License. For more 
 [LICENSE](</LICENSE.md>).
 
 Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).
-
