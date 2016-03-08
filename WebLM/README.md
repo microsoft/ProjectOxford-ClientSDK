@@ -7,7 +7,9 @@ Learn more about the Web Language Model API at [our documentation](<https://www.
 Getting started
 ===============
 
-To get started, open, build, and run the accompanying Visual Studio solution for Windows.
+To get started, select the platform for which you're developing.
+
+-   [Windows](</WebLM/Windows/>)
 
 Contributing
 ============
