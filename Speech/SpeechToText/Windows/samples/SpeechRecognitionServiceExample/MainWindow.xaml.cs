@@ -268,8 +268,6 @@ namespace MicrosoftProjectOxfordExample
             intentMicClient.OnResponseReceived += OnMicShortPhraseResponseReceivedHandler;
             intentMicClient.OnConversationError += OnConversationErrorHandler;
 
-            intentMicClient.StartMicAndRecognition();
-
             return intentMicClient;
 
         }
