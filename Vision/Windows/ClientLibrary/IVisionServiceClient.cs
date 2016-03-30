@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -35,10 +35,11 @@ using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.ProjectOxford.Vision.Contract;
+using System.Collections.Generic;
+using System;
 
 namespace Microsoft.ProjectOxford.Vision
 {
-
     /// <summary>
     /// Vision service client interfaces.
     /// </summary>
@@ -48,7 +49,7 @@ namespace Microsoft.ProjectOxford.Vision
         /// Analyzes the image.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <param name="visualFeatures">The visual features.</param>
+        /// <param name="visualFeatures">The visual features. If none are specified, 'Categories' will be analyzed.</param>
         /// <returns>The AnalysisResult object.</returns>
         Task<AnalysisResult> AnalyzeImageAsync(string url, string[] visualFeatures = null);
 
@@ -56,9 +57,77 @@ namespace Microsoft.ProjectOxford.Vision
         /// Analyzes the image.
         /// </summary>
         /// <param name="imageStream">The image stream.</param>
-        /// <param name="visualFeatures">The visual features.</param>
+        /// <param name="visualFeatures">The visual features. If none are specified, 'Categories' will be analyzed.</param>
         /// <returns>The AnalysisResult object.</returns>
         Task<AnalysisResult> AnalyzeImageAsync(Stream imageStream, string[] visualFeatures = null);
+
+        /// <summary>
+        /// Analyzes the image.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="visualFeatures">The visual features. If none are specified, VisualFeatures.Categories will be analyzed.</param>
+        /// <param name="details">Optional domain-specific models to invoke when appropriate.  To obtain names of models supported, invoke the <see cref="ListModelsAsync">ListModelsAsync</see> method.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        Task<AnalysisResult> AnalyzeImageAsync(string url, IEnumerable<VisualFeature> visualFeatures = null, IEnumerable<string> details = null);
+
+        /// <summary>
+        /// Analyzes the image.
+        /// </summary>
+        /// <param name="imageStream">The image stream.</param>
+        /// <param name="visualFeatures">The visual features. If none are specified, VisualFeatures.Categories will be analyzed.</param>
+        /// <param name="details">Optional domain-specific models to invoke when appropriate.  To obtain names of models supported, invoke the <see cref="ListModelsAsync">ListModelsAsync</see> method.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        Task<AnalysisResult> AnalyzeImageAsync(Stream imageStream, IEnumerable<VisualFeature> visualFeatures = null, IEnumerable<string> details = null);
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific image analysis model.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="model">Model representing the domain.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(string url, Model model);
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific image analysis model.
+        /// </summary>
+        /// <param name="stream">The image stream.</param>
+        /// <param name="visualFeatures">The visual features.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(Stream imageStream, Model model);
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific image analysis model.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="modelName">Name of the model.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(string url, string modelName);
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific image analysis model.
+        /// </summary>
+        /// <param name="stream">The image stream.</param>
+        /// <param name="modelName">Name of the model.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(Stream imageStream, string modelName);
+
+        /// <summary>
+        /// List domain-specific models currently supproted.
+        /// </summary>
+        /// <returns></returns>
+        Task<ModelResult> ListModelsAsync();
+
+        /// <summary>
+        /// List domain-specific models currently supproted.
+        /// </summary>
+        /// <returns></returns>
+        Task<AnalysisResult> DescribeAsync(string url, int maxCandidates = 1);
+
+        /// <summary>
+        /// List domain-specific models currently supproted.
+        /// </summary>
+        /// <returns></returns>
+        Task<AnalysisResult> DescribeAsync(Stream imageStream, int maxCandidates = 1);
 
         /// <summary>
         /// Gets the thumbnail.
@@ -81,7 +150,7 @@ namespace Microsoft.ProjectOxford.Vision
         Task<byte[]> GetThumbnailAsync(Stream stream, int width, int height, bool smartCropping = true);
 
         /// <summary>
-        /// Recognizes the text asynchronous.
+        /// Recognizes the text.
         /// </summary>
         /// <param name="imageUrl">The image URL.</param>
         /// <param name="languageCode">The language code.</param>
@@ -90,12 +159,26 @@ namespace Microsoft.ProjectOxford.Vision
         Task<OcrResults> RecognizeTextAsync(string imageUrl, string languageCode = LanguageCodes.AutoDetect, bool detectOrientation = true);
 
         /// <summary>
-        /// Recognizes the text asynchronous.
+        /// Recognizes the text.
         /// </summary>
         /// <param name="imageStream">The image stream.</param>
         /// <param name="languageCode">The language code.</param>
         /// <param name="detectOrientation">if set to <c>true</c> [detect orientation].</param>
         /// <returns>The OCR object.</returns>
         Task<OcrResults> RecognizeTextAsync(Stream imageStream, string languageCode = LanguageCodes.AutoDetect, bool detectOrientation = true);
+
+        /// <summary>
+        /// Gets the tags associated with an image.
+        /// </summary>
+        /// <param name="imageUrl">The image URL.</param>
+        /// <returns>Analysis result with tags.</returns>
+        Task<AnalysisResult> GetTagsAsync(string imageUrl);
+
+        /// <summary>
+        /// Gets the tags associated with an image.
+        /// </summary>
+        /// <param name="imageStream">The image stream.</param>
+        /// <returns>Analysis result with tags.</returns>
+        Task<AnalysisResult> GetTagsAsync(Stream imageStream);
     }
 }

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8EE0C19-C449-4489-869B-6B81F4873B24}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.ProjectOxford.SpeakerRecognition</RootNamespace>
+    <AssemblyName>Microsoft.ProjectOxford.SpeakerRecognition</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contract\EnrollmentBase.cs" />
+    <Compile Include="Contract\DeleteProfileException.cs" />
+    <Compile Include="Contract\Identification\CreateProfileResponse.cs" />
+    <Compile Include="Contract\Identification\OperationLocation.cs" />
+    <Compile Include="Contract\ErrorMessage.cs" />
+    <Compile Include="Contract\ErrorResponse.cs" />
+    <Compile Include="Contract\Verification\CreateProfileResponse.cs" />
+    <Compile Include="Contract\EnrollmentException.cs" />
+    <Compile Include="Contract\EnrollmentStatus.cs" />
+    <Compile Include="Contract\GetProfileException.cs" />
+    <Compile Include="Contract\Confidence.cs" />
+    <Compile Include="Contract\Identification\EnrollmentOperation.cs" />
+    <Compile Include="Contract\Identification\Enrollment.cs" />
+    <Compile Include="Contract\Identification\IdentificationException.cs" />
+    <Compile Include="Contract\Identification\IdentificationOperation.cs" />
+    <Compile Include="Contract\Identification\Identification.cs" />
+    <Compile Include="Contract\Identification\Operation.cs" />
+    <Compile Include="Contract\Identification\Profile.cs" />
+    <Compile Include="Contract\Identification\Status.cs" />
+    <Compile Include="Contract\Verification\PhrasesException.cs" />
+    <Compile Include="Contract\ProfileBase.cs" />
+    <Compile Include="Contract\CreateProfileException.cs" />
+    <Compile Include="Contract\ProfileException.cs" />
+    <Compile Include="Contract\ResetEnrollmentsException.cs" />
+    <Compile Include="Contract\Verification\VerificationException.cs" />
+    <Compile Include="SpeakerIdentificationServiceClient.cs" />
+    <Compile Include="SpeakerVerificationServiceClient.cs" />
+    <Compile Include="Contract\Verification\Enrollment.cs" />
+    <Compile Include="Contract\Verification\Profile.cs" />
+    <Compile Include="Contract\Verification\Result.cs" />
+    <Compile Include="Contract\Verification\Verification.cs" />
+    <Compile Include="Contract\Verification\VerificationPhrase.cs" />
+    <Compile Include="ISpeakerIdentificationServiceClient.cs" />
+    <Compile Include="ISpeakerVerificationServiceClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

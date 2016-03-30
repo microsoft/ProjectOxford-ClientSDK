@@ -1,0 +1,15 @@
+{
+  "name": "ProjectOxfordFace",
+  "version": "1.0",
+  "summary": "Project Oxford Face iOS SDK",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "ProjectOxfordFace": [
+      "Pod/Assets/*.png"
+    ]
+  }
+}

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>MicrophoneRecognitionClient Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">SpeechSDK-1_0-for-iOS </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Microsoft</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/isInitialized">isInitialized</option>
+		
+	</optgroup>
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/endMicAndRecognition">- endMicAndRecognition</option>
+		
+		<option value="//api/name/initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:">- initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:</option>
+		
+		<option value="//api/name/startMicAndRecognition">- startMicAndRecognition</option>
+		
+		<option value="//api/name/waitForFinalResponse:">- waitForFinalResponse:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">MicrophoneRecognitionClient Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td><a href="../Classes/Conversation.html">Conversation</a> : NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>MicrophoneRecognitionClient.mm<br />SpeechRecognitionService.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The Azure Intelligent Services speech recognition client for microphone input.</p>
+
+
+
+
+<p>Voice input data is collected from the microphone and sent to the speech recognition service. A built-in Silence Detector
+
+is applied to microphone data before it is sent to the recognition service.</p>
+
+
+
+
+<p>Returns only speech recognition results on the input data; does not perform intent detection.</p>
+
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						<h2 class="task-title">Other Methods</h2>
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:" title="initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:">&ndash;&nbsp;initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Initializes a speech recognition client that uses the microphone as the input source.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id)initWithSpeechRecoParams:(SpeechRecognitionMode)<em>speechRecognitionMode</em> withPrefs:(AdmRecoOnlyPreferences *)<em>prefs</em> withIntent:(bool)<em>wantIntent</em> withProtocol:(id&lt;SpeechRecognitionProtocol&gt;)<em>delegate</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>speechRecognitionMode</code></th>
+						<td><p>The speech recognition mode. <p>In Short Phrase mode, the client receives one final multiple N-best choice result. In Long-form Dictation mode, the client receives multiple final results, based on where the server thinks sentence pauses are.</p></p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>prefs</code></th>
+						<td><p>A set of preferences used to configure the speech service.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>wantIntent</code></th>
+						<td><p>Set this parameter to false</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>delegate</code></th>
+						<td><p>The speech recognition protocol callback</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The microphone recognition client</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Initializes a speech recognition client that uses the microphone as the input source.</p>
+
+<p>To initiate speech recognition, call the [startMicAndRecognition](#//api/name/startMicAndRecognition) method of this client. Once the microphone is
+
+turned on, data from the microphone is sent to the speech recognition service.
+
+A built-in Silence Detector is applied to the microphone data before it is sent to the recognition service.
+
+The recognition service returns only speech recognition results and does not perform intent detection.
+
+To terminate speech recognition and stop sending data to the service, call [endMicAndRecognition](#//api/name/endMicAndRecognition).</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">MicrophoneRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/startMicAndRecognition" title="startMicAndRecognition"></a>
+	<h3 class="method-title"><code><a href="#//api/name/startMicAndRecognition">&ndash;&nbsp;startMicAndRecognition</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Turns the microphone on and begins streaming data from the microphone to the speech recognition service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (OSStatus)startMicAndRecognition</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Turns the microphone on and begins streaming data from the microphone to the speech recognition service.</p>
+
+<p>A built in Silence Detector is applied to the microphone data before it is sent to the service.</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">MicrophoneRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/endMicAndRecognition" title="endMicAndRecognition"></a>
+	<h3 class="method-title"><code><a href="#//api/name/endMicAndRecognition">&ndash;&nbsp;endMicAndRecognition</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Turns the microphone off and breaks the connection to the speech recognition service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)endMicAndRecognition</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Turns the microphone off and breaks the connection to the speech recognition service.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">MicrophoneRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/waitForFinalResponse:" title="waitForFinalResponse:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/waitForFinalResponse:">&ndash;&nbsp;waitForFinalResponse:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Waits the given number of seconds for a speech recognition response. <em>Calling this method blocks the current thread until the response is received or the wait time is exceeded</em>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (bool)waitForFinalResponse:(int)<em>timeoutInSeconds</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeoutInSeconds</code></th>
+						<td><p>The response wait timeout, in seconds</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true if the final speech recognition result is sent from the speech recognition service or false if the timeout was reached.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Waits the given number of seconds for a speech recognition response. <em>Calling this method blocks the current thread until the response is received or the wait time is exceeded</em>.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">MicrophoneRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+
+						<a title="Extension Methods" name="task_Extension Methods"></a>
+						<h2 class="task-title">Extension Methods</h2>
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/isInitialized" title="isInitialized"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isInitialized">&nbsp;&nbsp;isInitialized</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gets or sets a flag that indicates whether the microphone client is initialized</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readwrite, assign) Boolean isInitialized</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Gets or sets a flag that indicates whether the microphone client is initialized</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">MicrophoneRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2016 Microsoft. All rights reserved. Updated: 2016-03-21</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

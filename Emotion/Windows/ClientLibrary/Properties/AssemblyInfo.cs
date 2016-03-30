@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -32,7 +32,6 @@
 // 
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -43,9 +42,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft ProjectOxford")]
-[assembly: AssemblyCopyright("Copyright (c) 2015")]
+[assembly: AssemblyCopyright("Copyright (c) 2016")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -62,5 +60,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1.1")]
-[assembly: AssemblyFileVersion("1.0.1.1")]
+[assembly: AssemblyVersion("1.0.1.5")]
+[assembly: AssemblyFileVersion("1.0.1.5")]

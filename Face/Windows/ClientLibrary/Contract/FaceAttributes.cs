@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -30,6 +30,9 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Microsoft.ProjectOxford.Face.Contract
 {
@@ -91,6 +94,18 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// The facial hair.
         /// </value>
         public FacialHair FacialHair
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the glasses type.
+        /// </summary>
+        /// <value>
+        /// The glasses type.
+        /// </value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Glasses Glasses
         {
             get; set;
         }

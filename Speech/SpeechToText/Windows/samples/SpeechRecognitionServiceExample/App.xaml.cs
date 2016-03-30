@@ -1,10 +1,10 @@
-﻿//
+﻿// <copyright file="App.xaml.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -29,8 +29,7 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-
+// </copyright>
 using System;
 using System.Windows;
 

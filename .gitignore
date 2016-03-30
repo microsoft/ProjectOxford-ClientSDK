@@ -26,7 +26,7 @@ bld/
 # Visual Studio 2015 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
-#wwwroot/
+#wwwroot/*
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -51,7 +51,6 @@ artifacts/
 *.ilk
 *.meta
 *.obj
-*.pch
 *.pdb
 *.pgc
 *.pgd
@@ -236,3 +235,41 @@ _Pvt_Extensions
 
 .idea/
 local.properties
+
+###########################
+# iOS
+###########################
+
+# OS X
+.DS_Store
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+profile
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+
+# Bundler
+.bundle
+
+Carthage
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
+# 
+# Note: if you ignore the Pods directory, make sure to uncomment
+# `pod install` in .travis.yml
+#
+# Pods/

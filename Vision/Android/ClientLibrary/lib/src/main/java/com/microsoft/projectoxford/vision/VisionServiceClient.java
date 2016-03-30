@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -32,7 +32,10 @@
 //
 package com.microsoft.projectoxford.vision;
 
-import com.microsoft.projectoxford.vision.contract.AnalyzeResult;
+import com.microsoft.projectoxford.vision.contract.AnalysisInDomainResult;
+import com.microsoft.projectoxford.vision.contract.AnalysisResult;
+import com.microsoft.projectoxford.vision.contract.Model;
+import com.microsoft.projectoxford.vision.contract.ModelResult;
 import com.microsoft.projectoxford.vision.contract.OCR;
 import com.microsoft.projectoxford.vision.rest.VisionServiceException;
 
@@ -40,9 +43,23 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public interface VisionServiceClient {
-    public AnalyzeResult analyzeImage(String url, String[] visualFeatures) throws VisionServiceException;
+    public AnalysisResult analyzeImage(String url, String[] visualFeatures, String[] details) throws VisionServiceException;
 
-    public AnalyzeResult analyzeImage(InputStream stream, String[] visualFeatures) throws VisionServiceException, IOException;
+    public AnalysisResult analyzeImage(InputStream stream, String[] visualFeatures, String[] details) throws VisionServiceException, IOException;
+
+    public AnalysisInDomainResult analyzeImageInDomain(String url, Model model) throws VisionServiceException;
+
+    public AnalysisInDomainResult analyzeImageInDomain(String url, String model) throws VisionServiceException;
+
+    public AnalysisInDomainResult analyzeImageInDomain(InputStream stream, Model model) throws VisionServiceException, IOException;
+
+    public AnalysisInDomainResult analyzeImageInDomain(InputStream stream, String model) throws VisionServiceException, IOException;
+
+    public AnalysisResult describe(String url, int maxCandidates) throws VisionServiceException;
+
+    public AnalysisResult describe(InputStream stream, int maxCandidates) throws VisionServiceException, IOException;
+
+    public ModelResult listModels() throws VisionServiceException;
 
     public OCR recognizeText(String url, String languageCode, boolean detectOrientation) throws VisionServiceException;
 

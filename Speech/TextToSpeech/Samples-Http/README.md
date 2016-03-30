@@ -1,7 +1,7 @@
 HTTP Samples for Text To Speech
 ===============================
 
-This folder contains samples of using HTTP REST Call for Project Oxford
+This folder contains samples of using HTTP REST Call for Microsoft Cognitive Services (formerly Project Oxford)
 Text To Speech REST APIs.
 
 The samples
@@ -12,9 +12,7 @@ Many languages are demonstrated, including Android, C#, Java, Node.js, PHP, Pyth
 Build the samples
 ----------------
 
-1. You must obtain an [Speech API subscription
-    key](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>) and
-    will need a [Microsoft Azure Account](<http://www.azure.com>).
+1. First, you must obtain a Speech API subscription key by following instructions in [Microsoft Cognitive Services subscription](<https://www.microsoft.com/cognitive-services/en-us/sign-up>).
 
 2. You need to find the line with the string "Your Client Secret goes here" in the source files of
 a particular language, and replace it with your subscription key for Speech.
@@ -38,18 +36,14 @@ We welcome contributions and are always looking for new SDKs, input, and
 suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
 Rules & Guidelines](</CONTRIBUTING.md>).
 
-For questions, feedback, or suggestions about Project Oxford services, feel free to reach out to us directly.
+For questions, feedback, or suggestions about Microsoft Cognitive Services, feel free to reach out to us directly.
 
--   [Project Oxford support](<mailto:oxfordSup@microsoft.com?subject=Project%20Oxford%20Support>)
-
--   [Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>)
-
--   [Blog](<https://blogs.technet.com/b/machinelearning/archive/tags/project+oxford/default.aspx>)
+-   [Cognitive Services UserVoice Forum](<https://cognitive.uservoice.com>)
 
 License
 =======
 
-All Project Oxford SDKs and samples are licensed with the MIT License. For more details, see
+All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
 [LICENSE](</LICENSE.md>).
 
 Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).

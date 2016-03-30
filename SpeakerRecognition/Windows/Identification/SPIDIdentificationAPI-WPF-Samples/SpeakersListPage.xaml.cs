@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,13 +31,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
+using Microsoft.ProjectOxford.SpeakerRecognition;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract.Identification;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using Microsoft.ProjectOxford.Speech.SpeakerIdentification;
 
 namespace SPIDIdentificationAPI_WPF_Samples
 {
@@ -47,13 +47,13 @@ namespace SPIDIdentificationAPI_WPF_Samples
     public partial class SpeakersListPage : Page
     {
         private bool _speakersLoaded = false;
-
-        private SpeechIdServiceClient _serviceClient;
+        
+        private SpeakerIdentificationServiceClient _serviceClient;
 
         private static SpeakersListPage s_speakersList = new SpeakersListPage();
 
         /// <summary>
-        /// Represents the only inastance of the Speakers List Page
+        /// Represents the only instance of the Speakers List Page
         /// </summary>
         public static SpeakersListPage SpeakersList
         {
@@ -72,13 +72,13 @@ namespace SPIDIdentificationAPI_WPF_Samples
         /// Adds a speaker profile to the speakers list
         /// </summary>
         /// <param name="speaker">The speaker profile to add</param>
-        public void AddSpeaker(IdentificationProfile speaker)
+        public void AddSpeaker(Profile speaker)
         {
             _speakersListView.Items.Add(speaker);
         }
 
         /// <summary>
-        /// Retreivs all the speakers asynchronously and adds them to the list
+        /// Retrieves all the speakers asynchronously and adds them to the list
         /// </summary>
         /// <returns>Task to track the status of the asynchronous task.</returns>
         public async Task UpdateAllSpeakersAsync()
@@ -86,17 +86,17 @@ namespace SPIDIdentificationAPI_WPF_Samples
             MainWindow window = (MainWindow)Application.Current.MainWindow;
             try
             {
-                window.Log("Retreiving All Profiles...");
-                List<IdentificationProfile> allProfiles = await _serviceClient.GetAllProfilesAsync();
-                window.Log("All Profiles Retreived.");
+                window.Log("Retrieving All Profiles...");
+                Profile[] allProfiles = await _serviceClient.GetProfilesAsync();
+                window.Log("All Profiles Retrieved.");
                 _speakersListView.Items.Clear();
-                foreach (IdentificationProfile profile in allProfiles)
+                foreach (Profile profile in allProfiles)
                     AddSpeaker(profile);
                 _speakersLoaded = true;
             }
             catch (GetProfileException ex)
             {
-                window.Log("Error Retreiving Profiles: " + ex.Message);
+                window.Log("Error Retrieving Profiles: " + ex.Message);
             }
             catch (Exception ex)
             {
@@ -129,13 +129,13 @@ namespace SPIDIdentificationAPI_WPF_Samples
         /// Gets the selected profiles from the speakers list
         /// </summary>
         /// <returns>An array of the selected identification profiles</returns>
-        public IdentificationProfile[] GetSelectedProfiles()
+        public Profile[] GetSelectedProfiles()
         {
             if (_speakersListView.SelectedItems.Count == 0)
                 throw new Exception("No Speakers Selected.");
-            IdentificationProfile[] result = new IdentificationProfile[_speakersListView.SelectedItems.Count];
+            Profile[] result = new Profile[_speakersListView.SelectedItems.Count];
             for (int i = 0; i < result.Length; i++)
-                result[i] = _speakersListView.SelectedItems[i] as IdentificationProfile;
+                result[i] = _speakersListView.SelectedItems[i] as Profile;
             return result;
         }
 
@@ -144,7 +144,7 @@ namespace SPIDIdentificationAPI_WPF_Samples
             if (_speakersLoaded == false)
             {
                 MainWindow window = (MainWindow)Application.Current.MainWindow;
-                _serviceClient = new SpeechIdServiceClient(window.ScenarioControl.SubscriptionKey);
+                _serviceClient = new SpeakerIdentificationServiceClient(window.ScenarioControl.SubscriptionKey);
                 await UpdateAllSpeakersAsync();
             }
         }

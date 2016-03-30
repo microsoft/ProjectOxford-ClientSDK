@@ -1,7 +1,7 @@
 The client library
 ==================
 
-The Face API client library is a thin Java client wrapper for Project Oxford
+The Face API client library is a thin Java client wrapper for Microsoft Cognitive Services (formerly Project Oxford)
 Face REST APIs.  
 
 The easiest way to consume the client library is to add com.microsoft.projectoxford.face package from Maven Central Repository.
@@ -16,7 +16,7 @@ dependencies {
     // Use the following line to include client library from Maven Central Repository
     // Change the version number from the search.maven.org result
     //
-    compile 'com.microsoft.projectoxford:face:1.0.0'
+    compile 'com.microsoft.projectoxford:face:1.1.0'
 
     // Your other Dependencies...
 }
@@ -35,7 +35,7 @@ To do add the client library dependency from Android Studio:
 The sample
 ==========
 
-This sample is an Android application to demonstrate the use of Project Oxford
+This sample is an Android application to demonstrate the use of Microsoft Cognitive Services (formerly Project Oxford)
 Face API.
 
 It demonstrates face detection, face verification, face grouping, finding
@@ -49,11 +49,7 @@ Android OS must be Android 4.1 or higher (API Level 16 or higher)
 Build the sample
 ----------------
 
-You will
-need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
-
-1. You must obtain a subscription key for Face API by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
+1. First, you must obtain a Face API subscription key by following instructions in [Microsoft Cognitive Services subscription](<https://www.microsoft.com/cognitive-services/en-us/sign-up>).
 
 2.  Start Android Studio and open project from Face \> Android \> Sample folder.
 
@@ -88,18 +84,14 @@ We welcome contributions and are always looking for new SDKs, input, and
 suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
 Rules & Guidelines](</CONTRIBUTING.md>).
 
-For questions, feedback, or suggestions about Project Oxford services, feel free to reach out to us directly.
+For questions, feedback, or suggestions about Microsoft Cognitive Services, feel free to reach out to us directly.
 
--   [Project Oxford support](<mailto:oxfordSup@microsoft.com?subject=Project%20Oxford%20Support>)
-
--   [Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>)
-
--   [Blog](<https://blogs.technet.com/b/machinelearning/archive/tags/project+oxford/default.aspx>)
+-   [Cognitive Services UserVoice Forum](<https://cognitive.uservoice.com>)
 
 License
 =======
 
-All Project Oxford SDKs and samples are licensed with the MIT License. For more details, see
+All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
 [LICENSE](</LICENSE.md>).
 
 Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).

@@ -1,0 +1,6 @@
+framework module ProjectOxfordFace {
+  umbrella header "ProjectOxfordFace-umbrella.h"
+
+  export *
+  module * { export * }
+}

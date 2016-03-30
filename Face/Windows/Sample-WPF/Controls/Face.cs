@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -87,6 +87,11 @@ namespace Microsoft.ProjectOxford.Face.Controls
         /// Indicates whether the face is smile or not
         /// </summary>
         private string _isSmiling;
+
+        /// <summary>
+        /// Indicates the glasses type
+        /// </summary>
+        private string _glasses;
 
         #endregion Fields
 
@@ -280,6 +285,23 @@ namespace Microsoft.ProjectOxford.Face.Controls
             {
                 _isSmiling = value;
                 OnPropertyChanged<bool>();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the glasses type 
+        /// </summary>
+        public string Glasses
+        {
+            get
+            {
+                return _glasses;
+            }
+
+            set
+            {
+                _glasses = value;
+                OnPropertyChanged<string>();
             }
         }
 

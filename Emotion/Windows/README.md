@@ -1,7 +1,7 @@
 The client library
 ==================
 
-The Emotion API client library is a thin C\# client wrapper for Project Oxford Emotion
+The Emotion API client library is a thin C\# client wrapper for Microsoft Cognitive Services (formerly Project Oxford) Emotion
 REST APIs.  
 
 The easiest way to use this client library is to get microsoft.projectoxford.emotion package from [nuget](<http://nuget.org>).
@@ -11,8 +11,7 @@ Please go to [Emotion API Package in nuget](https://www.nuget.org/packages/Micro
 The sample
 ==========
 
-This sample is a Windows WPF application to demonstrate the use of Project
-Oxford Emotion API.
+This sample is a Windows WPF application to demonstrate the use of Microsoft Cognitive Services Emotion API.
 
 It demonstrates emotion API by specifying a URL or using a stream.
 
@@ -35,11 +34,7 @@ Run the sample
 
 After the build is complete, press F5 to run the sample.
 
-First, you will
-need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
-
-You must obtain a subscription key for Emotion API by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
+First, you must obtain a Emotion API subscription key by following instructions in [Microsoft Cognitive Services subscription](<https://www.microsoft.com/cognitive-services/en-us/sign-up>).
 
 Locate the text edit box saying "Paste your subscription key here to start" on
 the top right corner. Paste your subscription key. You can choose to persist
@@ -64,18 +59,14 @@ We welcome contributions and are always looking for new SDKs, input, and
 suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
 Rules & Guidelines](</CONTRIBUTING.md>).
 
-For questions, feedback, or suggestions about Project Oxford services, feel free to reach out to us directly.
+For questions, feedback, or suggestions about Microsoft Cognitive Services, feel free to reach out to us directly.
 
--   [Project Oxford support](<mailto:oxfordSup@microsoft.com?subject=Project%20Oxford%20Support>)
-
--   [Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>)
-
--   [Blog](<https://blogs.technet.com/b/machinelearning/archive/tags/project+oxford/default.aspx>)
+-   [Cognitive Services UserVoice Forum](<https://cognitive.uservoice.com>)
 
 License
 =======
 
-All Project Oxford SDKs and samples are licensed with the MIT License. For more details, see
+All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
 [LICENSE](</LICENSE.md>).
 
 Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).

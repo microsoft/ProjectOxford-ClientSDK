@@ -50,11 +50,16 @@
     <Compile Include="Contract\FaceDetectionResult.cs" />
     <Compile Include="Contract\FaceTracking.cs" />
     <Compile Include="Contract\Fragment.cs" />
+    <Compile Include="Contract\FaceDetectionOperationSettings.cs" />
+    <Compile Include="Contract\MotionDetectionOperationSettings.cs" />
     <Compile Include="Contract\MotionEvent.cs" />
     <Compile Include="Contract\MotionRegion.cs" />
     <Compile Include="Contract\MotionDetectionResult.cs" />
     <Compile Include="Contract\OperationType.cs" />
     <Compile Include="Contract\Operation.cs" />
+    <Compile Include="Contract\VideoOperationSettings.cs" />
+    <Compile Include="Contract\VideoThumbnailOperationSettings.cs" />
+    <Compile Include="Contract\VideoStabilizationOperationSettings.cs" />
     <Compile Include="Contract\VideoUrlRequest.cs" />
     <Compile Include="Contract\ResultBase.cs" />
     <Compile Include="IVideoServiceClient.cs" />

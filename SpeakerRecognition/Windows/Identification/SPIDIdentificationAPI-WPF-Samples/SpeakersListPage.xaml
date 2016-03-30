@@ -15,9 +15,9 @@
         <ListView x:Name="_speakersListView" Grid.Row="0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Speaker ID" DisplayMemberBinding="{Binding IdentificationProfileId}"/>
+                    <GridViewColumn Header="Speaker ID" DisplayMemberBinding="{Binding ProfileId}"/>
                     <GridViewColumn Header="Enrollment Status" DisplayMemberBinding="{Binding EnrollmentStatus}"/>
-                    <GridViewColumn Header="Remaining Enrollment Time" DisplayMemberBinding="{Binding RemainingEnrollmentSpeechTime}"/>
+                    <GridViewColumn Header="Remaining Enrollment Time" DisplayMemberBinding="{Binding RemainingEnrollmentSpeechSeconds}"/>
                 </GridView>
             </ListView.View>
         </ListView>

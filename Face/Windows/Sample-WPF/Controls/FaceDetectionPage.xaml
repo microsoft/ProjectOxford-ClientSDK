@@ -3,9 +3,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -128,7 +128,7 @@
                             <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Gender}" />
                             <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Age}" />
                             <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding IsSmiling}" />
-                            <TextBlock Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding FacialHair}" TextWrapping="Wrap" />
+                            <TextBlock Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Glasses}" TextWrapping="Wrap" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

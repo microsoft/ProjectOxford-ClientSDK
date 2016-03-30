@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,6 +31,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
+using Microsoft.ProjectOxford.SpeakerRecognition;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract.Verification;
 using NAudio.Utils;
 using NAudio.Wave;
 using System;
@@ -40,7 +42,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.ProjectOxford.Speech.SpeakerVerification;
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -50,11 +51,11 @@ namespace SPIDVerificationAPI_WPF_Sample
     public partial class VerifySpeakerPage : Page
     {
         private string _subscriptionKey;
-        private string _speakerId = null;
+        private Guid _speakerId = Guid.Empty;
         private WaveIn _waveIn;
         private WaveFileWriter _fileWriter;
         private Stream _stream;
-        private SpeechVerificationServiceClient _serviceClient;
+        private SpeakerVerificationServiceClient _serviceClient;
         /// <summary>
         /// Initialization constructor for the verify speaker page
         /// </summary>
@@ -63,8 +64,13 @@ namespace SPIDVerificationAPI_WPF_Sample
             InitializeComponent();
             _subscriptionKey = ((MainWindow)Application.Current.MainWindow).SubscriptionKey;
             IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
-            _speakerId = _storageHelper.readValue(MainWindow.SPEAKER_FILENAME);
-            if (_speakerId == null)
+            string _savedSpeakerId = _storageHelper.readValue(MainWindow.SPEAKER_FILENAME);
+            if (_savedSpeakerId != null)
+            {
+                _speakerId = new Guid(_savedSpeakerId);
+            }
+
+            if (_speakerId == Guid.Empty)
             {
                 ((MainWindow)Application.Current.MainWindow).Log("You need to create a profile and complete enrollments first before verification");
                 recordBtn.IsEnabled = false;
@@ -73,7 +79,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             else
             {
                 initializeRecorder();
-                _serviceClient = new SpeechVerificationServiceClient(_subscriptionKey);
+                _serviceClient = new SpeakerVerificationServiceClient(_subscriptionKey);
                 string userPhrase = _storageHelper.readValue(MainWindow.SPEAKER_PHRASE_FILENAME);
                 userPhraseTxt.Text = userPhrase;
                 stopRecordBtn.IsEnabled = false;
@@ -136,11 +142,12 @@ namespace SPIDVerificationAPI_WPF_Sample
             {
                 setStatus("Verifying..");
                 Stopwatch sw = Stopwatch.StartNew();
-                VerificationResult response = await _serviceClient.VerifyAsync(audioStream, _speakerId);
+                Verification response = await _serviceClient.VerifyAsync(audioStream, _speakerId);
                 sw.Stop();
                 setStatus("Verification Done, Elapsed Time: " + sw.Elapsed);
-                statusResTxt.Text = GetResponseValue(response.Result);
-                if (response.Result == VerificationResult.SpeakerVerificationResult.Accept)
+                statusResTxt.Text = response.Result.ToString();
+                confTxt.Text = response.Confidence.ToString();
+                if (response.Result == Result.Accept)
                 {
                     statusResTxt.Background = Brushes.Green;
                     statusResTxt.Foreground = Brushes.White;
@@ -150,7 +157,6 @@ namespace SPIDVerificationAPI_WPF_Sample
                     statusResTxt.Background = Brushes.Red;
                     statusResTxt.Foreground = Brushes.White;
                 }
-                confTxt.Text = GetConfidenceValue(response.Confidence);
             }
             catch (VerificationException exception)
             {
@@ -194,44 +200,6 @@ namespace SPIDVerificationAPI_WPF_Sample
             stopRecordBtn.IsEnabled = true;
             _waveIn.StartRecording();
             setStatus("Recording...");
-        }
-
-        /// <summary>
-        /// Get a string representation of confidence level enum
-        /// </summary>
-        /// <param name="level">The value of the confidence level</param>
-        /// <returns></returns>
-        private String GetConfidenceValue(VerificationResult.ConfidenceLevel level)
-        {
-            switch (level)
-            {
-                case VerificationResult.ConfidenceLevel.High:
-                    return "High";
-                case VerificationResult.ConfidenceLevel.Normal:
-                    return "Normal";
-                case VerificationResult.ConfidenceLevel.Low:
-                    return "Low";
-                default:
-                    return "Unknown value";
-            }
-        }
-
-        /// <summary>
-        /// Get a string representation of the enum encoding the verification value
-        /// </summary>
-        /// <param name="result">Enum value encoding the verification result</param>
-        /// <returns></returns>
-        private String GetResponseValue(VerificationResult.SpeakerVerificationResult result)
-        {
-            switch (result)
-            {
-                case VerificationResult.SpeakerVerificationResult.Accept:
-                    return "Accept";
-                case VerificationResult.SpeakerVerificationResult.Reject:
-                    return "Reject";
-                default:
-                    return "Unknown value";
-            }
         }
     }
 }

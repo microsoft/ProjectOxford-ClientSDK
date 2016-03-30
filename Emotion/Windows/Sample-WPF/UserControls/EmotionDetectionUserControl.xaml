@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="EmotionAPI_WPF_Samples.EmotionDetectionUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EmotionAPI_WPF_Samples"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="_image" Source="{Binding Image}" HorizontalAlignment="Left" Margin="5" Stretch="UniformToFill"/>
+        <local:EmotionListUserControl x:Name="_emotionList" Grid.Column="1" Margin="5, 5, 0, 5" />
+    </Grid>
+</UserControl>

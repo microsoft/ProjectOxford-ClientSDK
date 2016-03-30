@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MPOActivityIndicatorViewController">
+            <connections>
+                <outlet property="activityBackgroundView" destination="tsy-bg-Z9U" id="svx-GF-aP3"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsy-bg-Z9U">
+                    <rect key="frame" x="40" y="194" width="240" height="180"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Q-nC-3Td">
+                            <rect key="frame" x="80" y="150" width="80" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Q0Q-nC-3Td" firstAttribute="centerX" secondItem="tsy-bg-Z9U" secondAttribute="centerX" id="DET-QC-NL2"/>
+                        <constraint firstAttribute="height" constant="180" id="RMQ-h3-2nl"/>
+                        <constraint firstAttribute="bottom" secondItem="Q0Q-nC-3Td" secondAttribute="bottom" constant="8" id="dYY-kq-iOJ"/>
+                    </constraints>
+                </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2Pe-2G-scc">
+                    <rect key="frame" x="142" y="265" width="37" height="37"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="2Pe-2G-scc" firstAttribute="centerX" secondItem="tsy-bg-Z9U" secondAttribute="centerX" id="3jS-ij-HTj"/>
+                <constraint firstItem="2Pe-2G-scc" firstAttribute="centerY" secondItem="tsy-bg-Z9U" secondAttribute="centerY" id="Hwo-zw-GqR"/>
+                <constraint firstItem="tsy-bg-Z9U" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="KjE-f7-m5R"/>
+                <constraint firstAttribute="trailing" secondItem="tsy-bg-Z9U" secondAttribute="trailing" constant="40" id="WLi-NX-980"/>
+                <constraint firstItem="tsy-bg-Z9U" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="e91-9B-F0s"/>
+                <constraint firstItem="tsy-bg-Z9U" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="k3s-Uw-ytX"/>
+            </constraints>
+            <point key="canvasLocation" x="-129" y="47"/>
+        </view>
+    </objects>
+</document>

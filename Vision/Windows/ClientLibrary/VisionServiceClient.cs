@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -34,19 +34,19 @@
 using System;
 using System.Dynamic;
 using System.IO;
+using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.ProjectOxford.Vision.Contract;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Microsoft.ProjectOxford.Vision
 {
-
-
     /// <summary>
     /// The vision service client.
     /// </summary>
@@ -55,18 +55,43 @@ namespace Microsoft.ProjectOxford.Vision
         /// <summary>
         /// The service host
         /// </summary>
-        private const string ServiceHost = "https://api.projectoxford.ai/vision/v1";
+        private const string SERVICE_HOST = "https://api.projectoxford.ai/vision/v1.0";
+
+        /// <summary>
+        /// Host root, overridable by subclasses, intended for testing.
+        /// </summary>
+        protected virtual string ServiceHost => SERVICE_HOST;
 
         /// <summary>
         /// The analyze query
         /// </summary>
-        private const string AnalyzeQuery = "analyses";
+        private const string AnalyzeQuery = "analyze";
+
+        /// <summary>
+        /// The describe query
+        /// </summary>
+        private const string DescribeQuery = "describe";
+
+        /// <summary>
+        /// The models-based query path part
+        /// </summary>
+        private const string ModelsPart = "models";
+
+        /// <summary>
+        /// The generate thumbnails query
+        /// </summary>
+        private const string ThumbnailsQuery = "generateThumbnail";
+
+        /// <summary>
+        /// Query parameter for maximum description candidates.
+        /// </summary>
+        private const string _maxCandidatesName = "maxCandidates";
 
         /// <summary>
         /// The subscription key name
         /// </summary>
         private const string _subscriptionKeyName = "subscription-key";
-      
+
         /// <summary>
         /// The default resolver
         /// </summary>
@@ -92,9 +117,156 @@ namespace Microsoft.ProjectOxford.Vision
         /// <param name="url">The URL.</param>
         /// <param name="visualFeatures">The visual features.</param>
         /// <returns>The AnalysisResult object.</returns>
+        [Obsolete("Please use the overloaded method which takes IEnumerable<VisualFeature>")]
         public async Task<AnalysisResult> AnalyzeImageAsync(string url, string[] visualFeatures = null)
         {
-            string requestUrl = string.Format("{0}/{1}?visualFeatures={2}&{3}={4}", ServiceHost, AnalyzeQuery, VisualFeaturesToString(visualFeatures), _subscriptionKeyName, _subscriptionKey);
+            var visualFeatureEnums = visualFeatures?.Select(feature => (VisualFeature)Enum.Parse(typeof(VisualFeature), feature, true));
+
+            return await AnalyzeImageAsync(url, visualFeatureEnums);
+        }
+
+        /// <summary>
+        /// Analyzes the image.
+        /// </summary>
+        /// <param name="imageStream">The image stream.</param>
+        /// <param name="visualFeatures">The visual features.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        [Obsolete("Please use the overloaded method which takes IEnumerable<VisualFeature>")]
+        public async Task<AnalysisResult> AnalyzeImageAsync(Stream imageStream, string[] visualFeatures = null)
+        {
+            var visualFeatureEnums = visualFeatures?.Select(feature => (VisualFeature)Enum.Parse(typeof(VisualFeature), feature, true));
+
+            return await AnalyzeImageAsync(imageStream, visualFeatureEnums);
+        }
+
+        /// <summary>
+        /// Analyzes the image.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="visualFeatures">The visual features.</param>
+        /// <param name="details">Optional domain-specific models to invoke when appropriate.  To obtain names of models supported, invoke the <see cref="ListModelsAsync">ListModelsAsync</see> method.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        public async Task<AnalysisResult> AnalyzeImageAsync(string url, IEnumerable<VisualFeature> visualFeatures = null, IEnumerable<string> details = null)
+        {
+            dynamic request = new ExpandoObject();
+            request.url = url;
+
+            return await AnalyzeImageAsync<ExpandoObject>(request, visualFeatures, details);
+        }
+
+        /// <summary>
+        /// Analyzes the image.
+        /// </summary>
+        /// <param name="imageStream">The image stream.</param>
+        /// <param name="visualFeatures">The visual features.</param>
+        /// <param name="details">Optional domain-specific models to invoke when appropriate.  To obtain names of models supported, invoke the <see cref="ListModelsAsync">ListModelsAsync</see> method.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        public async Task<AnalysisResult> AnalyzeImageAsync(Stream imageStream, IEnumerable<VisualFeature> visualFeatures = null, IEnumerable<string> details = null)
+        {
+            return await AnalyzeImageAsync<Stream>(imageStream, visualFeatures, details);
+        }
+
+        /// <summary>
+        /// Analyzes the image.
+        /// </summary>
+        /// <param name="body">Body </param>
+        /// <param name="visualFeatures">The visual features.</param>
+        /// <param name="details">Optional domain-specific models to invoke when appropriate.  To obtain names of models supported, invoke the <see cref="ListModelsAsync">ListModelsAsync</see> method.</param>
+        /// <returns>The AnalysisResult object.</returns>
+        private async Task<AnalysisResult> AnalyzeImageAsync<T>(T body, IEnumerable<VisualFeature> visualFeatures, IEnumerable<string> details)
+        {
+            var requestUrl = new StringBuilder(ServiceHost).Append('/').Append(AnalyzeQuery).Append("?");
+            requestUrl.Append(string.Join("&", new List<string>
+            {
+                VisualFeaturesToString(visualFeatures),
+                DetailsToString(details),
+                _subscriptionKeyName + "=" + _subscriptionKey
+            }
+            .Where(s => !string.IsNullOrEmpty(s))));
+
+            var request = WebRequest.Create(requestUrl.ToString());
+
+            return await this.SendAsync<T, AnalysisResult>("POST", body, request);
+        }
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific model.
+        /// </summary>
+        /// <param name="url">The image URL.</param>
+        /// <param name="model">Domain-specific model.</param>
+        /// <remarks>The list of currently aailable models can be listed via the <see cref="ListModelsAsync"/> method.</remarks>
+        /// <returns>The AnalysisInDomainResult object.</returns>
+        public async Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(string url, Model model)
+        {
+            return await AnalyzeImageInDomainAsync(url, model.Name);
+        }
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific model.
+        /// </summary>
+        /// <param name="imageStream">The image stream.</param>
+        /// <param name="model">Domain-specific model.</param>
+        /// <remarks>The list of currently aailable models can be listed via the <see cref="ListModelsAsync"/> method.</remarks>
+        /// <returns>The AnalysisInDomainResult object.</returns>
+        public async Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(Stream imageStream, Model model)
+        {
+            return await AnalyzeImageInDomainAsync(imageStream, model.Name);
+        }
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific model.
+        /// </summary>
+        /// <param name="url">The image URL.</param>
+        /// <param name="modelName">Name of the domain-specific model.</param>
+        /// <remarks>The list of currently aailable models can be listed via the <see cref="ListModelsAsync"/> method.</remarks>
+        /// <returns>The AnalysisInDomainResult object.</returns>
+        public async Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(string url, string modelName)
+        {
+            string requestUrl = string.Format("{0}/{1}/{2}/{3}?{4}={5}", ServiceHost, ModelsPart, modelName, AnalyzeQuery, _subscriptionKeyName, _subscriptionKey);
+            var request = WebRequest.Create(requestUrl);
+
+            dynamic requestObject = new ExpandoObject();
+            requestObject.url = url;
+
+            return await this.SendAsync<ExpandoObject, AnalysisInDomainResult>("POST", requestObject, request);
+        }
+
+        /// <summary>
+        /// Analyzes the image using a domain-specific model.
+        /// </summary>
+        /// <param name="imageStream">The image stream.</param>
+        /// <param name="modelName">Name of the domain-specific model.</param>
+        /// <remarks>The list of currently aailable models can be listed via the <see cref="ListModelsAsync"/> method.</remarks>
+        /// <returns>The AnalysisInDomainResult object.</returns>
+        public async Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(Stream imageStream, string modelName)
+        {
+            string requestUrl = string.Format("{0}/{1}/{2}/{3}?{4}={5}", ServiceHost, ModelsPart, modelName, AnalyzeQuery, _subscriptionKeyName, _subscriptionKey);
+            var request = WebRequest.Create(requestUrl);
+
+            return await this.SendAsync<Stream, AnalysisInDomainResult>("POST", imageStream, request);
+        }
+
+        /// <summary>
+        /// Lists the domain-specific image-analysis models.
+        /// </summary>
+        /// <returns>An ModelResult, containing an array of Model objects.</returns>
+        public async Task<ModelResult> ListModelsAsync()
+        {
+            string requestUrl = string.Format("{0}/{1}?{2}={3}", ServiceHost, ModelsPart, _subscriptionKeyName, _subscriptionKey);
+            var request = WebRequest.Create(requestUrl);
+
+            return await this.GetAsync<ModelResult>("GET", request);
+        }
+        /// <summary>
+        /// 
+        /// Gets the description of an image.
+        /// </summary>
+        /// <param name="url">The image URL.</param>
+        /// <param name="maxCandidates">Maximum number of candidates to return.  Defaults to 1.</param>
+        /// <returns>A DescribeResult object.</returns>
+        public async Task<AnalysisResult> DescribeAsync(string url, int maxCandidates = 1)
+        {
+            string requestUrl = string.Format("{0}/{1}?{2}={3}&{4}={5}", ServiceHost, DescribeQuery, _maxCandidatesName, maxCandidates, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
             dynamic requestObject = new ExpandoObject();
@@ -104,14 +276,14 @@ namespace Microsoft.ProjectOxford.Vision
         }
 
         /// <summary>
-        /// Analyzes the image.
+        /// Gets the description of an image.
         /// </summary>
         /// <param name="imageStream">The image stream.</param>
-        /// <param name="visualFeatures">The visual features.</param>
-        /// <returns>The AnalysisResult object.</returns>
-        public async Task<AnalysisResult> AnalyzeImageAsync(Stream imageStream, string[] visualFeatures = null)
+        /// <param name="maxCandidates">Maximum number of candidates to return.  Defaults to 1.</param>
+        /// <returns>A DescribeResult object.</returns>
+        public async Task<AnalysisResult> DescribeAsync(Stream imageStream, int maxCandidates = 1)
         {
-            string requestUrl = string.Format("{0}/{1}?visualFeatures={2}&{3}={4}", ServiceHost, AnalyzeQuery, VisualFeaturesToString(visualFeatures), _subscriptionKeyName, _subscriptionKey);
+            string requestUrl = string.Format("{0}/{1}?{2}={3}&{4}={5}", ServiceHost, DescribeQuery, _maxCandidatesName, maxCandidates, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
             return await this.SendAsync<Stream, AnalysisResult>("POST", imageStream, request);
@@ -127,7 +299,7 @@ namespace Microsoft.ProjectOxford.Vision
         /// <returns>Image bytes</returns>
         public async Task<byte[]> GetThumbnailAsync(string url, int width, int height, bool smartCropping = true)
         {
-            string requestUrl = string.Format("{0}/thumbnails?width={1}&height={2}&smartCropping={3}&{4}={5}", ServiceHost, width, height, smartCropping, _subscriptionKeyName, _subscriptionKey);
+            string requestUrl = string.Format("{0}/{1}?width={2}&height={3}&smartCropping={4}&{5}={6}", ServiceHost, ThumbnailsQuery, width, height, smartCropping, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
             dynamic requestObject = new ExpandoObject();
@@ -146,7 +318,7 @@ namespace Microsoft.ProjectOxford.Vision
         /// <returns>Image bytes</returns>
         public async Task<byte[]> GetThumbnailAsync(Stream stream, int width, int height, bool smartCropping = true)
         {
-            string requestUrl = string.Format("{0}/thumbnails?width={1}&height={2}&smartCropping={3}&{4}={5}", ServiceHost, width, height, smartCropping, _subscriptionKeyName, _subscriptionKey);
+            string requestUrl = string.Format("{0}/{1}?width={2}&height={3}&smartCropping={4}&{5}={6}", ServiceHost, ThumbnailsQuery, width, height, smartCropping, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
             return await this.SendAsync<Stream, byte[]>("POST", stream, request);
@@ -186,25 +358,66 @@ namespace Microsoft.ProjectOxford.Vision
         }
 
         /// <summary>
+        /// Gets the tags associated with an image.
+        /// </summary>
+        /// <param name="imageStream">The image stream.</param>
+        /// <returns>Analysis result with tags.</returns>
+        public async Task<AnalysisResult> GetTagsAsync(Stream imageStream)
+        {
+            string requestUrl = string.Format("{0}/tag?{1}={2}", ServiceHost, _subscriptionKeyName, _subscriptionKey);
+            var request = WebRequest.Create(requestUrl);
+
+            return await this.SendAsync<Stream, AnalysisResult>("POST", imageStream, request);
+        }
+
+        /// <summary>
+        /// Gets the tags associated with an image.
+        /// </summary>
+        /// <param name="imageUrl">The image URL.</param>
+        /// <returns>Analysis result with tags.</returns>
+        public async Task<AnalysisResult> GetTagsAsync(string imageUrl)
+        {
+            string requestUrl = string.Format("{0}/tag?{1}={2}", ServiceHost, _subscriptionKeyName, _subscriptionKey);
+            var request = WebRequest.Create(requestUrl);
+
+            dynamic requestObject = new ExpandoObject();
+            requestObject.url = imageUrl;
+
+            return await this.SendAsync<ExpandoObject, AnalysisResult>("POST", requestObject, request);
+        }
+
+        /// <summary>
         /// Strings the array to string.
         /// </summary>
-        /// <param name="string">The @string.</param>
-        /// <returns>The visual features string.</returns>
-        private string VisualFeaturesToString(string[] @string)
+        /// <param name="features">String array of feature names.</param>
+        /// <returns>The visual features query parameter string.</returns>
+        private string VisualFeaturesToString(string[] features)
         {
-            if (null == @string)
-            {
-                return "All";
-            }
+            return (features == null || features.Length == 0)
+                ? ""
+                : "visualFeatures=" + string.Join(",", features);
+        }
 
-            var sb = new StringBuilder();
+        /// <summary>
+        /// Variable-length VisualFeatures arguments to a string.
+        /// </summary>
+        /// <param name="features">Variable-length VisualFeatures.</param>
+        /// <returns>The visual features query parameter string.</returns>
+        private string VisualFeaturesToString(IEnumerable<VisualFeature> features)
+        {
+            return VisualFeaturesToString(features?.Select(feature => feature.ToString()).ToArray());
+        }
 
-            foreach (var s in @string)
-            {
-                sb.Append(s).Append(',');
-            }
-
-            return sb.ToString().TrimEnd(',');
+        /// <summary>
+        /// Strings the array to string.
+        /// </summary>
+        /// <param name="features">String array of feature names.</param>
+        /// <returns>The visual features query parameter string.</returns>
+        private string DetailsToString(IEnumerable<string> details)
+        {
+            return (details == null || details.Count() == 0)
+                ? ""
+                : "details=" + string.Join(",", details);
         }
 
         #region the json client

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>SpeechClientStatus Constants Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">SpeechSDK-1_0-for-iOS </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Microsoft</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+
+	
+
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">SpeechClientStatus Constants Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Declared in</th>
+	<td>SpeechRecognitionService.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+
+					
+
+                    
+                    <h3 class="subsubtitle method-title">SpeechClientStatus</h3>
+                    
+					
+					<div class="section section-overview">
+                        <p>Error codes that can be returned from the speech client that aren&rsquo;t recognition based errors.</p>
+					</div>
+					
+					
+                    <div class="section">
+                        <!-- display enum values -->
+                        
+                        <h4 class="method-subtitle">Definition</h4>
+                        <code>typedef NS_ENUM(OSStatus, SpeechClientStatus ) {<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_SecurityFailed</a> = ( OSStatus ) 0 x8E200001,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_LoginFailed</a> = ( OSStatus ) 0 x8E200002,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_Timeout</a> = ( OSStatus ) 0 x8E200003,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_ConnectionFailed</a> = ( OSStatus ) 0 x8E200004,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_NameNotFound</a> = ( OSStatus ) 0 x8E200005,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_InvalidService</a> = ( OSStatus ) 0 x8E200006,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_InvalidProxy</a> = ( OSStatus ) 0 x8E200007,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_BadResponse</a> = ( OSStatus ) 0 x8E200008,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_InternalError</a> = ( OSStatus ) 0 x8E200009,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_AuthenticationError</a> = ( OSStatus ) 0 x8E20000A,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_AuthenticationExpired</a> = ( OSStatus ) 0 x8E20000B,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_LimitsExceeded</a> = ( OSStatus ) 0 x8E20000C,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_AudioOutputFailed</a> = ( OSStatus ) 0 x8E210001,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_MicrophoneInUse</a> = ( OSStatus ) 0 x8E210003,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_MicrophoneUnavailable</a> = ( OSStatus ) 0 x8E210002,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_MicrophoneStatusUnknown</a> = ( OSStatus ) 0 x8E210004,<br>
+                            
+                            &nbsp;&nbsp; <a href="">SpeechClientStatus_InvalidArgument</a> = ( OSStatus ) 0 x80070057,<br>
+                            
+                            };</code>
+                    
+                    </div>
+                    
+                    <div class="section section-methods">
+                        <h4 class="method-subtitle">Constants</h4>
+                        <dl class="termdef">
+                            
+                            <dt><a name="" title="SpeechClientStatus_SecurityFailed"></a><code>SpeechClientStatus_SecurityFailed</code></dt>
+<dd>
+
+
+<pre><code>Raised when you are not authorized.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_LoginFailed"></a><code>SpeechClientStatus_LoginFailed</code></dt>
+<dd>
+
+
+<pre><code>Raised when login credentials are not accepted.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_Timeout"></a><code>SpeechClientStatus_Timeout</code></dt>
+<dd>
+
+
+<pre><code>Raised when the connection has timed out.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_ConnectionFailed"></a><code>SpeechClientStatus_ConnectionFailed</code></dt>
+<dd>
+
+
+<pre><code>Raised when the connection has failed.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_NameNotFound"></a><code>SpeechClientStatus_NameNotFound</code></dt>
+<dd>
+
+
+<pre><code>Raised when the service can't be resolved.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_InvalidService"></a><code>SpeechClientStatus_InvalidService</code></dt>
+<dd>
+
+
+<pre><code>Raised when the url is invalid.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_InvalidProxy"></a><code>SpeechClientStatus_InvalidProxy</code></dt>
+<dd>
+
+
+<pre><code>Raised when you have configured a bad proxy server.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_BadResponse"></a><code>SpeechClientStatus_BadResponse</code></dt>
+<dd>
+
+
+<pre><code>Raised when the service has returned an invalid response.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_InternalError"></a><code>SpeechClientStatus_InternalError</code></dt>
+<dd>
+
+
+<pre><code>Raised when an internal error has been detected.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_AuthenticationError"></a><code>SpeechClientStatus_AuthenticationError</code></dt>
+<dd>
+
+
+<pre><code>Raised when credentials are invalid.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_AuthenticationExpired"></a><code>SpeechClientStatus_AuthenticationExpired</code></dt>
+<dd>
+
+
+<pre><code>Raised when credentials have expired.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_LimitsExceeded"></a><code>SpeechClientStatus_LimitsExceeded</code></dt>
+<dd>
+
+
+<pre><code>Raised when you have exceeded your limits.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_AudioOutputFailed"></a><code>SpeechClientStatus_AudioOutputFailed</code></dt>
+<dd>
+
+
+<pre><code>Raised when the audio output device failed.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_MicrophoneInUse"></a><code>SpeechClientStatus_MicrophoneInUse</code></dt>
+<dd>
+
+
+<pre><code>Raised when the microphone is in use.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_MicrophoneUnavailable"></a><code>SpeechClientStatus_MicrophoneUnavailable</code></dt>
+<dd>
+
+
+<pre><code>Raised when the microphone is in use.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_MicrophoneStatusUnknown"></a><code>SpeechClientStatus_MicrophoneStatusUnknown</code></dt>
+<dd>
+
+
+<pre><code>Raised when the microphone status is not currently known.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                            <dt><a name="" title="SpeechClientStatus_InvalidArgument"></a><code>SpeechClientStatus_InvalidArgument</code></dt>
+<dd>
+
+
+<pre><code>Raised when an invalid argument was specified.
+</code></pre>
+
+
+
+
+
+    
+	<p>
+		Declared In <code class="declared-in-ref">SpeechRecognitionService.h</code>.
+	</p>
+	
+</dd>
+                            
+                        </dl>
+                    </div>
+                    
+
+                    
+                    
+
+                    
+
+                    
+                    <div class="method-subsection declared-in-section">
+                        <h4 class="method-subtitle">Declared In</h4>
+                        <p><code class="declared-in-ref">SpeechRecognitionService.h</code></p>
+                    </div>
+                    
+                    
+                    
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2016 Microsoft. All rights reserved. Updated: 2016-03-21</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

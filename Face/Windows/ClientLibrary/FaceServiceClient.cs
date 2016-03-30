@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -55,9 +55,9 @@ namespace Microsoft.ProjectOxford.Face
         #region Fields
 
         /// <summary>
-        /// The service host.
+        /// The default service host.
         /// </summary>
-        private const string ServiceHost = "https://api.projectoxford.ai/face/v1.0";
+        private const string SERVICE_HOST = "https://api.projectoxford.ai/face/v1.0";
 
         /// <summary>
         /// The JSON content type header.
@@ -180,6 +180,11 @@ namespace Microsoft.ProjectOxford.Face
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets service endpoint address, overridable by subclasses, default to free subscription's endpoint.
+        /// </summary>
+        protected virtual string ServiceHost => SERVICE_HOST;
 
         /// <summary>
         /// Gets default request headers for all following http request

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VideoAPI_WPF_Samples"
       xmlns:videoApiWpfSamples="clr-namespace:VideoAPI_WPF_Samples"
+      xmlns:sampleControls="clr-namespace:SampleUserControlLibrary;assembly=SampleUserControlLibrary"
       VerticalAlignment="Stretch"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="300"
@@ -26,6 +27,6 @@
         <TextBlock Grid.Row="2" TextWrapping="Wrap" Margin="5">Results will be shown in right panel. For processing progress, please see the status.</TextBlock>
 
 
-        <local:VideoResultControl DataContext="{DynamicResource _internalDataContext}" Grid.Row="4" SourceUri="{Binding Path=SourceUri}" ResultText="{Binding Path=ResultText}" IsWorking="{Binding Path=IsWorking}" FrameHighlights="{Binding Path=FrameHighlights}"  IsVideoResult="False"></local:VideoResultControl>
+        <sampleControls:VideoResultControl DataContext="{DynamicResource _internalDataContext}" Grid.Row="4" SourceUri="{Binding Path=SourceUri}" ResultText="{Binding Path=ResultText}" IsWorking="{Binding Path=IsWorking}" FrameHighlights="{Binding Path=FrameHighlights}"  IsVideoResult="False"></sampleControls:VideoResultControl>
     </Grid>
 </Page>

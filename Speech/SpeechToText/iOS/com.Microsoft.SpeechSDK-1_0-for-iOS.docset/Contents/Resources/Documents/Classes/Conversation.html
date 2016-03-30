@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Conversation Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">SpeechSDK-1_0-for-iOS </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Microsoft</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/isFinalResponseSent">isFinalResponseSent</option>
+		
+		<option value="//api/name/isIntent">isIntent</option>
+		
+		<option value="//api/name/proxyDelegate">proxyDelegate</option>
+		
+		<option value="//api/name/recoMode">recoMode</option>
+		
+		<option value="//api/name/waitResponseCondVar">waitResponseCondVar</option>
+		
+	</optgroup>
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/audioStart">- audioStart</option>
+		
+		<option value="//api/name/audioStop">- audioStop</option>
+		
+		<option value="//api/name/createConversation">- createConversation</option>
+		
+		<option value="//api/name/createStream">- createStream</option>
+		
+		<option value="//api/name/finalize">- finalize</option>
+		
+		<option value="//api/name/initWithPrefs:withProtocol:">- initWithPrefs:withProtocol:</option>
+		
+		<option value="//api/name/onError:withErrorCode:">- onError:withErrorCode:</option>
+		
+		<option value="//api/name/onFinalResponseReceived:">- onFinalResponseReceived:</option>
+		
+		<option value="//api/name/onIntentReceived:">- onIntentReceived:</option>
+		
+		<option value="//api/name/onMicrophoneStatus:">- onMicrophoneStatus:</option>
+		
+		<option value="//api/name/onPartialResponseReceived:">- onPartialResponseReceived:</option>
+		
+		<option value="//api/name/sendText:">- sendText:</option>
+		
+		<option value="//api/name/setLocationLatitude:withLongitude:">- setLocationLatitude:withLongitude:</option>
+		
+		<option value="//api/name/synthesizeText:">- synthesizeText:</option>
+		
+		<option value="//api/name/synthesizeText:withMimeType:">- synthesizeText:withMimeType:</option>
+		
+		<option value="//api/name/waitForFinalResponse:">- waitForFinalResponse:</option>
+		
+		<option value="//api/name/writeAudioFormat:withEncoding:withBytesPerSec:withBitsPerSample:withBlockAlign:withChannelCount:withSamplesPerSec:withFormatData:">- writeAudioFormat:withEncoding:withBytesPerSec:withBitsPerSample:withBlockAlign:withChannelCount:withSamplesPerSec:withFormatData:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">Conversation Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Conforms to</th>
+	<td><a href="../Protocols/SpeechRecognitionProtocol.html">SpeechRecognitionProtocol</a></td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>ConversationBase.mm<br />SpeechRecognitionService.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>Base class for speech recognition sessions.</p>
+
+<p>Client applications initiate a session with the speech recognition service using one of the derived classes that best fit the client application needs.
+
+</p>
+
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						<h2 class="task-title">Other Methods</h2>
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/initWithPrefs:withProtocol:" title="initWithPrefs:withProtocol:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithPrefs:withProtocol:">&ndash;&nbsp;initWithPrefs:withProtocol:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Initializes a conversation with the specified preferences.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)initWithPrefs:(Preferences *)<em>prefs</em> withProtocol:(id&lt;SpeechRecognitionProtocol&gt;)<em>delegate</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>prefs</code></th>
+						<td><p>A set of preferences used to configure the speech service.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>delegate</code></th>
+						<td><p>The speech recognition protocol callback</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The conversation session object</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Initializes a conversation with the specified preferences.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/createConversation" title="createConversation"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createConversation">&ndash;&nbsp;createConversation</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Refreshes the conversation context using the existing preferences.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)createConversation</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Refreshes the conversation context using the existing preferences.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/createStream" title="createStream"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createStream">&ndash;&nbsp;createStream</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Creates a data stream indpendent of the microphose so that audio buffers can be sent to the service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (IStream *)createStream</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The created stream</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Creates a data stream indpendent of the microphose so that audio buffers can be sent to the service.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/writeAudioFormat:withEncoding:withBytesPerSec:withBitsPerSample:withBlockAlign:withChannelCount:withSamplesPerSec:withFormatData:" title="writeAudioFormat:withEncoding:withBytesPerSec:withBitsPerSample:withBlockAlign:withChannelCount:withSamplesPerSec:withFormatData:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/writeAudioFormat:withEncoding:withBytesPerSec:withBitsPerSample:withBlockAlign:withChannelCount:withSamplesPerSec:withFormatData:">&ndash;&nbsp;writeAudioFormat:withEncoding:withBytesPerSec:withBitsPerSample:withBlockAlign:withChannelCount:withSamplesPerSec:withFormatData:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sends an audio format description to the service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (int)writeAudioFormat:(IStream *)<em>pStream</em> withEncoding:(short)<em>encodingFormat</em> withBytesPerSec:(int)<em>averageBytesPerSecond</em> withBitsPerSample:(short)<em>bitsPerSample</em> withBlockAlign:(short)<em>blockAlign</em> withChannelCount:(short)<em>channelCount</em> withSamplesPerSec:(int)<em>samplesPerSecond</em> withFormatData:(NSData *)<em>formatSpecificData</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>pStream</code></th>
+						<td><p>The audio stream</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>encodingFormat</code></th>
+						<td><p>The audio encoding format</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>averageBytesPerSecond</code></th>
+						<td><p>The average bytes per second in the audio stream</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>bitsPerSample</code></th>
+						<td><p>The bits per sample of the audio stream</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>blockAlign</code></th>
+						<td><p>The block alignment of the audio stream</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>channelCount</code></th>
+						<td><p>The channel count of the audio stream</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>samplesPerSecond</code></th>
+						<td><p>The samples per second in the audio stream</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>formatSpecificData</code></th>
+						<td><p>Format-specific data for the audio stream</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The number of bytes written to the audio stream</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sends an audio format description to the service.</p>
+
+<p>If you are not sending up a audio file in wave format, but instead you have just raw data, then before sending up any audio data, you must first
+
+send up an [SpeechAudioFormat](../Classes/SpeechAudioFormat.html) descriptor to describe the layout and format of your raw audio data. The audio must be PCM, mono, 16-bit sample, with sample rate of 16000 Hz.
+
+</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/audioStart" title="audioStart"></a>
+	<h3 class="method-title"><code><a href="#//api/name/audioStart">&ndash;&nbsp;audioStart</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Turns the microphone on and begins streaming data from the microphone to the speech recognition service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (OSStatus)audioStart</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Turns the microphone on and begins streaming data from the microphone to the speech recognition service.</p>
+
+<p>A built in Silence Detector is applied to the microphone data before it is sent to the service.</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/audioStop" title="audioStop"></a>
+	<h3 class="method-title"><code><a href="#//api/name/audioStop">&ndash;&nbsp;audioStop</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Turns the microphone off and breaks the connection to the speech recognition service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)audioStop</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Turns the microphone off and breaks the connection to the speech recognition service.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/waitForFinalResponse:" title="waitForFinalResponse:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/waitForFinalResponse:">&ndash;&nbsp;waitForFinalResponse:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Waits the given number of seconds for a speech recognition response. <em>Calling this method blocks the current thread until the response is received or the wait time is exceeded</em>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (bool)waitForFinalResponse:(int)<em>timeoutInSeconds</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeoutInSeconds</code></th>
+						<td><p>The response wait timeout, in seconds</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true if the final speech recognition result is sent from the speech recognition service or false if the timeout was reached.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Waits the given number of seconds for a speech recognition response. <em>Calling this method blocks the current thread until the response is received or the wait time is exceeded</em>.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/onFinalResponseReceived:" title="onFinalResponseReceived:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onFinalResponseReceived:">&ndash;&nbsp;onFinalResponseReceived:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Callback invoked when a final recognition response is received from the service</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)onFinalResponseReceived:(RecognitionResult *)<em>response</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>response</code></th>
+						<td><p>The recognition response</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Callback invoked when a final recognition response is received from the service</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/onIntentReceived:" title="onIntentReceived:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onIntentReceived:">&ndash;&nbsp;onIntentReceived:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Callback invoked when an intent response is received from the service</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)onIntentReceived:(IntentResult *)<em>intent</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>intent</code></th>
+						<td><p>The intent payload</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Callback invoked when an intent response is received from the service</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/onPartialResponseReceived:" title="onPartialResponseReceived:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onPartialResponseReceived:">&ndash;&nbsp;onPartialResponseReceived:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Callback invoked when a partial recognition response is received from the service</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)onPartialResponseReceived:(NSString *)<em>partialResult</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>partialResult</code></th>
+						<td><p>The partial recognition response</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Callback invoked when a partial recognition response is received from the service</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/onError:withErrorCode:" title="onError:withErrorCode:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onError:withErrorCode:">&ndash;&nbsp;onError:withErrorCode:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when a non-speech error occurs.<p>Non-speech errors include connection and authorization errors.</p></p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)onError:(NSString *)<em>errorMessage</em> withErrorCode:(int)<em>errorCode</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>errorMessage</code></th>
+						<td><p>A optional error message describing the error.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>errorCode</code></th>
+						<td><p>The error code being signaled.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Called when a non-speech error occurs.<p>Non-speech errors include connection and authorization errors.</p></p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/onMicrophoneStatus:" title="onMicrophoneStatus:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/onMicrophoneStatus:">&ndash;&nbsp;onMicrophoneStatus:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Callback invoked when the microphone status changes</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)onMicrophoneStatus:(Boolean)<em>recording</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>recording</code></th>
+						<td><p>A flag indicating whether the microphone is recording</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Callback invoked when the microphone status changes</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/sendText:" title="sendText:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sendText:">&ndash;&nbsp;sendText:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sends a text query to the service if the service supports it.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)sendText:(NSString *)<em>textQuery</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>textQuery</code></th>
+						<td><p>The text query to send.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sends a text query to the service if the service supports it.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/synthesizeText:" title="synthesizeText:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/synthesizeText:">&ndash;&nbsp;synthesizeText:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Begins playing back synthesized text as audio</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)synthesizeText:(NSString *)<em>text</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>text</code></th>
+						<td><p>The text string to send.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Begins playing back synthesized text as audio</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/synthesizeText:withMimeType:" title="synthesizeText:withMimeType:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/synthesizeText:withMimeType:">&ndash;&nbsp;synthesizeText:withMimeType:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Begins playing back synthesized text as audio</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)synthesizeText:(NSString *)<em>input</em> withMimeType:(NSString *)<em>mimeType</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>input</code></th>
+						<td><p>The input string to send.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mimeType</code></th>
+						<td><p>The mime type of the input string.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Begins playing back synthesized text as audio</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setLocationLatitude:withLongitude:" title="setLocationLatitude:withLongitude:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setLocationLatitude:withLongitude:">&ndash;&nbsp;setLocationLatitude:withLongitude:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sets the current geographic location to improve results.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setLocationLatitude:(double)<em>latitude</em> withLongitude:(double)<em>longitude</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>latitude</code></th>
+						<td><p>The geographic latitude coordinate.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>longitude</code></th>
+						<td><p>The geographic longitude coordinate.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sets the current geographic location to improve results.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/finalize" title="finalize"></a>
+	<h3 class="method-title"><code><a href="#//api/name/finalize">&ndash;&nbsp;finalize</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Terminates the connection with the speech recognition service and finalizes the conversation.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)finalize</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Terminates the connection with the speech recognition service and finalizes the conversation.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+
+						<a title="Extension Methods" name="task_Extension Methods"></a>
+						<h2 class="task-title">Extension Methods</h2>
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/isFinalResponseSent" title="isFinalResponseSent"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isFinalResponseSent">&nbsp;&nbsp;isFinalResponseSent</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gets or sets a flag that indicates whether the final response has been sent</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property bool isFinalResponseSent</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Gets or sets a flag that indicates whether the final response has been sent</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase_Protected.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/waitResponseCondVar" title="waitResponseCondVar"></a>
+	<h3 class="method-title"><code><a href="#//api/name/waitResponseCondVar">&nbsp;&nbsp;waitResponseCondVar</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gets or sets the response wait condition variable</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (strong, nonatomic) NSCondition *waitResponseCondVar</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Gets or sets the response wait condition variable</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase_Protected.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/recoMode" title="recoMode"></a>
+	<h3 class="method-title"><code><a href="#//api/name/recoMode">&nbsp;&nbsp;recoMode</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gets or sets the speech recognition mode</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property SpeechRecognitionMode recoMode</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Gets or sets the speech recognition mode</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase_Protected.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/isIntent" title="isIntent"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isIntent">&nbsp;&nbsp;isIntent</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gets or sets a flag that indicates whether intent should be returned</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property bool isIntent</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Gets or sets a flag that indicates whether intent should be returned</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase_Protected.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/proxyDelegate" title="proxyDelegate"></a>
+	<h3 class="method-title"><code><a href="#//api/name/proxyDelegate">&nbsp;&nbsp;proxyDelegate</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Gets or sets the speech recognition protocol proxy delegate</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property id&lt;SpeechRecognitionProtocol&gt; proxyDelegate</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Gets or sets the speech recognition protocol proxy delegate</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">ConversationBase_Protected.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2016 Microsoft. All rights reserved. Updated: 2016-03-21</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

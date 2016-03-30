@@ -1,12 +1,12 @@
 The client library
 ==================
 
-The Speech To Text client library is a client library for Project Oxford
-Speech To Text REST APIs.  
+The Speech To Text client library is a client library for Microsoft Cognitive Services (formerly Project Oxford)
+Speech To Text APIs.  
 
-The easiest way to consume the client library is to add com.microsoft.projectoxford.face package from Maven Central Repository.
+The easiest way to consume the client library is to add the com.microsoft.projectoxford:speechrecognition package from Maven Central Repository.
 
-To find the latest version of client library, go to http://search.maven.org, and search for "com.microsoft.projectoxford".
+To find the latest version of client library, go to http://search.maven.org, and search for "g:com.microsoft.projectoxford".
 
 To add the client library dependency from build.gradle file, add the following line in dependencies.
 
@@ -16,13 +16,13 @@ dependencies {
     // Use the following line to include client library from Maven Central Repository
     // Change the version number from the search.maven.org result
     //
-    compile 'com.microsoft.projectoxford:speechrecognition:0.5.0'
+    compile 'com.microsoft.projectoxford:speechrecognition:0.6.0'
 
     // Your other Dependencies...
 }
 ```
 
-To do add the client library dependency from Android Studio:
+To add the client library dependency from Android Studio:
 1. From Menu, Choose File \> Project Structure
 2. Click on your app module
 3. Click on Dependencies tab
@@ -32,10 +32,10 @@ To do add the client library dependency from Android Studio:
 7. Pick the Project Oxford client library that you intend to use.
 8. Click "OK" to add the new dependency
 
-The sample
+The Speech Recognition Sample
 ==========
 
-This sample is an Android application to demonstrate the use of Project Oxford
+This sample is an Android application to demonstrate the use of Microsoft Cognitive Services (formerly Project Oxford)
 Speech To Text API.
 
 It demonstrates the following features using a wav file or external microphone input:
@@ -53,16 +53,14 @@ Requirements
 Build the sample
 ----------------
 
-You will
-need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
+1. First, you must obtain a Speech API subscription key by following instructions in [Microsoft Cognitive Services subscription](<https://www.microsoft.com/cognitive-services/en-us/sign-up>).
 
-1. You must obtain a subscription key for Face API by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
+2.  Start Android Studio and choose "Import project (Eclipse ADT, Gradle, etc.)" from the "Quick Start" options from Speech \> SpeechToText \> Android folder.
 
-2.  Start Android Studio and open project from Speech \> TextToSpeech \> Android folder.
+3.  A "Gradle Sync" dialog will pop-up, choose OK to continue downloading the latest tools.
 
-3.  In Android Studio -\> "Project" panel -\> "Android" view, open file
-    "app/res/values/strings.xml", and find the line
+4. In Android Studio -\> "Project" panel -\> "Android" view, open file
+    "SpeechRecoExample/res/values/strings.xml", and find the line
     "Please\_add\_the\_subscription\_key\_here;". Replace the
     "Please\_add\_the\_subscription\_key\_here" value with your subscription key
     string from the first step. If you cannot find the file "strings.xml", it is
@@ -71,47 +69,35 @@ key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>)
 4.  In Android Studio, select menu "Build \> Make Project" to build the sample,
     and "Run" to launch this sample app.
 
-5.  Change the flag values in OnCreate() method in MainActivity.java to try different
-    scenarios.  
 
-    To try recognize from microphone, set m_isMicrophoneReco to be true.
-    To try recognize from data file, set m_isMicrophoneReco to be false.
-
-    To try recognize short phrase, set m_recoMode to SpeechRecognitionMode.ShortPhrase.
-    To try recognize long dictation, set m_recoMode to SpeechRecognitionMode.LongDictation.    
-
-    To try recognize intent, set m_recoMode to SpeechRecognitionMode.ShortPhrase
-    and set m_isIntent to be true.
-
-    For intent recognition to work, you need to sign up [Language Understanding Intelligent Service (LUIS)](<https://www.projectoxford.ai/luis>) and set the key values in
-    luisAppID and luisSubscriptionID from "Samples\_SpeechRecoExample\_res\_values\_strings.xml".
-
-<img src="SampleScreenshots/SampleRunning1.png" width="50%"/>
-
-Run the sample
+Running the sample
 --------------
 
 In Android Studio, select menu "Run", and "Run app" to launch this sample app.
 
+1.  In the application, press the button "Select Mode" to select what type of Speech would like to use.
+
+2.  For modes where you would like both Speech recognition and Intent to work, you need to sign up [Language Understanding Intelligent Service (LUIS)](<https://www.microsoft.com/cognitive-services/en-us/sign-up>) and set the key values in
+    luisAppID and luisSubscriptionID from "Samples\_SpeechRecoExample\_res\_values\_strings.xml".
+
+3. To Start recognition, press the Start button.
+
+<img src="SampleScreenshots/SampleRunning1.png" width="50%"/>
+
 Contributing
 ============
-
 We welcome contributions and are always looking for new SDKs, input, and
-suggestions. Learn more about how you can help by reading the [Contribution
+suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
 Rules & Guidelines](</CONTRIBUTING.md>).
 
-Additionally, feel free to reach out to us directly with questions, feedback, or
-suggestions.
+For questions, feedback, or suggestions about Microsoft Cognitive Services, feel free to reach out to us directly.
 
--   [Project Oxford
-    support](<mailto:oxfordSignup@microsoft.com?subject=Project%20Oxford%20Sign%20Up>)
-
--   [Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>)
-
--   [Blog](<https://blogs.technet.com/b/machinelearning/archive/tags/project+oxford/default.aspx>)
+-   [Cognitive Services UserVoice Forum](<https://cognitive.uservoice.com>)
 
 License
 =======
 
-All Project Oxford SDKs are licensed with the MIT License. For more details, see
-[License](</LICENSE.md>).
+All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
+[LICENSE](</LICENSE.md>).
+
+Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).

@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -38,6 +38,7 @@ import com.microsoft.projectoxford.face.contract.Face;
 import com.microsoft.projectoxford.face.contract.FaceList;
 import com.microsoft.projectoxford.face.contract.FaceListMetadata;
 import com.microsoft.projectoxford.face.contract.FaceRectangle;
+import com.microsoft.projectoxford.face.contract.Glasses;
 import com.microsoft.projectoxford.face.contract.GroupResult;
 import com.microsoft.projectoxford.face.contract.IdentifyResult;
 import com.microsoft.projectoxford.face.contract.Person;
@@ -104,6 +105,13 @@ public interface FaceServiceClient {
             public String toString() {
                 return "headPose";
             }
+        },
+
+        /**
+         * Analyses glasses type
+         */
+        Glasses {
+            public String toString() { return "glasses"; }
         }
     }
 

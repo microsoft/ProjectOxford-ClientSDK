@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://github.com/Microsoft/ProjectOxford-ClientSDK/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/Microsoft/ProjectOxford-ClientSDK/tree/master/Common</projectUrl>
+    <iconUrl>https://www.projectoxford.ai/images/bright/emotion/EmotionAPI-Main.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <summary>Common types necessary for Microsoft Project Oxford client libraries.</summary>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright (c) 2015</copyright>
+    <tags>Microsoft Project Oxford Common</tags>
+  </metadata>
+</package>

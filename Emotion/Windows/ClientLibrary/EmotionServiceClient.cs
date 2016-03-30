@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -33,98 +33,28 @@
 
 using System;
 using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.ProjectOxford.Common;
+using Microsoft.ProjectOxford.Common.Contract;
+using Microsoft.ProjectOxford.Emotion.Contract;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.ProjectOxford.Emotion
 {
-    public class EmotionServiceClient : IEmotionServiceClient
+    public class EmotionServiceClient : ServiceClient, IEmotionServiceClient
     {
-        #region private members
-
-        /// <summary>
-        /// The json header
-        /// </summary>
-        private const string JsonHeader = "application/json";
-
-        /// <summary>
-        /// The subscription key name.
-        /// </summary>
-        private const string SubscriptionKeyName = "subscription-key";
-
-        /// <summary>
-        /// Path string for REST Emotion recognition method.
-        /// </summary>
-        private const string RecognizeQuery = "recognize";
-
-        /// <summary>
-        /// Optional query string for REST Emotion recognition method.
-        /// </summary>
-        private const string FaceRectangles = "faceRectangles";
-
-        /// <summary>
-        /// The subscription key.
-        /// </summary>
-        private readonly string _subscriptionKey;
-
-        /// <summary>
-        /// The default resolver.
-        /// </summary>
-        private static CamelCasePropertyNamesContractResolver s_defaultResolver = new CamelCasePropertyNamesContractResolver();
-
-        private static JsonSerializerSettings s_settings = new JsonSerializerSettings()
-        {
-            DateFormatHandling = DateFormatHandling.IsoDateFormat,
-            NullValueHandling = NullValueHandling.Ignore,
-            ContractResolver = s_defaultResolver
-        };
-
-        private static HttpClient s_httpClient = new HttpClient();
-        private readonly HttpClient _httpClient;
-
-        private static string s_apiRoot = "https://api.projectoxford.ai";
-        private readonly string _serviceUrl;
-        #endregion
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EmotionServiceClient"/> class.
         /// </summary>
         /// <param name="subscriptionKey">The subscription key.</param>
-        public EmotionServiceClient(string subscriptionKey) : this(s_httpClient, subscriptionKey, s_apiRoot) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmotionServiceClient"/> class.
-        /// </summary>
-        /// <param name="subscriptionKey">The subscription key.</param>
-        /// <param name="apiRoot">Host name of the service URL, without the trailing slash.</param>
-        public EmotionServiceClient(string subscriptionKey, string apiRoot) : this(s_httpClient, subscriptionKey, apiRoot) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmotionServiceClient"/> class, with a client-supplied
-        /// HttpClient object. Intended primarily for testing.
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="subscriptionKey"></param>
-        public EmotionServiceClient(HttpClient httpClient, string subscriptionKey) : this(httpClient, subscriptionKey, s_apiRoot) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmotionServiceClient"/> class, with a client-supplied
-        /// HttpClient object. Intended primarily for testing.
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="subscriptionKey"></param>
-        /// <param name="subscriptionKey"></param>
-        public EmotionServiceClient(HttpClient httpClient, string subscriptionKey, string apiRoot)
+        public EmotionServiceClient(string subscriptionKey) : base()
         {
-            _httpClient = httpClient;
-            _subscriptionKey = subscriptionKey;
-            _serviceUrl = apiRoot + "/emotion/v1.0";
+            ApiRoot = "https://api.projectoxford.ai/emotion/v1.0";
+            AuthKey = "Ocp-Apim-Subscription-Key";
+            AuthValue = subscriptionKey;
         }
 
         #region IEmotionServiceClient implementations
@@ -146,7 +76,7 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each recognized face.</returns>
         public async Task<Contract.Emotion[]> RecognizeAsync(String imageUrl, Rectangle[] faceRectangles)
         {
-            return await SendRequestAsync<object, Contract.Emotion[]>(faceRectangles, new { url = imageUrl });
+            return await PostAsync<UrlReqeust, Contract.Emotion[]>(GetRecognizeUrl(faceRectangles), new UrlReqeust { url = imageUrl });
         }
 
         /// <summary>
@@ -156,7 +86,7 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each recognized face.</returns>
         public async Task<Contract.Emotion[]> RecognizeAsync(Stream imageStream)
         {
-            return await RecognizeAsync(imageStream, null);
+            return await RecognizeAsync(imageStream, null);            
         }
 
         /// <summary>
@@ -166,92 +96,90 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each face.</returns>        
         public async Task<Contract.Emotion[]> RecognizeAsync(Stream imageStream, Rectangle[] faceRectangles)
         {
-            return await SendRequestAsync<Stream, Contract.Emotion[]>(faceRectangles, imageStream);
+            return await PostAsync<Stream, Contract.Emotion[]>(GetRecognizeUrl(faceRectangles), imageStream);
         }
-        #endregion
 
-        #region the JSON client
-        /// <summary>
-        /// Helper method executing the REST request.
-        /// </summary>
-        /// <typeparam name="TRequest">Type of request.</typeparam>
-        /// <typeparam name="TResponse">Type of response.</typeparam>
-        /// <param name="faceRectangles">Optional list of face rectangles.</param>
-        /// <param name="requestBody">Content of the HTTP request.</param>
-        /// <returns></returns>
-        private async Task<TResponse> SendRequestAsync<TRequest, TResponse>(Rectangle[] faceRectangles, TRequest requestBody)
+        private string GetRecognizeUrl(Rectangle[] faceRectangles)
         {
-            var httpMethod = HttpMethod.Post;
-            var requestUri = new StringBuilder();
-            requestUri.AppendFormat("{0}/{1}", _serviceUrl, RecognizeQuery);
-            requestUri.Append('?');
-            if (faceRectangles != null)
+            var builder = new StringBuilder("/recognize");
+            if (faceRectangles != null && faceRectangles.Length > 0)
             {
-                requestUri.Append(FaceRectangles);
-                requestUri.Append('=');
-                foreach (var rectangle in faceRectangles)
-                {
-                    requestUri.AppendFormat("{0},{1},{2},{3};",
-                        rectangle.Left,
-                        rectangle.Top,
-                        rectangle.Width,
-                        rectangle.Height);
-                }
-                requestUri.Remove(requestUri.Length - 1, 1); // drop last comma
-                requestUri.Append('&');
+                builder.Append("?faceRectangles=");
+                builder.Append(string.Join(";", faceRectangles.Select(r => String.Format("{0},{1},{2},{3}", r.Left, r.Top, r.Width, r.Height))));
             }
-            requestUri.AppendFormat("{0}={1}",
-                SubscriptionKeyName,
-                _subscriptionKey);
+            return builder.ToString();
+        }
 
-            var request = new HttpRequestMessage(httpMethod, _serviceUrl);
-            request.RequestUri = new Uri(requestUri.ToString());
+        /// <summary>
+        /// Recognize emotions on faces in a video.
+        /// </summary>
+        /// <param name="videoStream">Video stream</param>
+        /// <param name="outputStyle">Output data style</param>
+        /// <returns>Video operation created</returns>
+        public async Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(Stream videoStream)
+        {
+            var operation = await PostAsync<Stream, VideoEmotionRecognitionOperation>(@"/recognizeInVideo", videoStream);
+            return operation;
+        }
 
-            if (requestBody != null)
+        /// <summary>
+        /// Recognize emotions on faces in a video.
+        /// </summary>
+        /// <param name="videoBytes">Video stream byte array</param>
+        /// <param name="outputStyle">Output data style</param>
+        /// <returns>Video operation created</returns>
+        public async Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(byte[] videoBytes)
+        {
+            using (var videoStream = new MemoryStream(videoBytes))
             {
-                if (requestBody is Stream)
-                {
-                    request.Content = new StreamContent(requestBody as Stream);
-                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                }
-                else
-                {
-                    request.Content = new StringContent(JsonConvert.SerializeObject(requestBody, s_settings), Encoding.UTF8, JsonHeader);
-                }
+                var operation = await PostAsync<Stream, VideoEmotionRecognitionOperation>(@"/recognizeInVideo", videoStream);
+                return operation;
             }
+        }
 
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
-            if (response.IsSuccessStatusCode)
+        /// <summary>
+        /// Recognize emotions on faces in a video.
+        /// </summary>
+        /// <param name="videoUrl">Video URL</param>
+        /// <param name="outputStyle">Output data style</param>
+        /// <returns>Video operation created</returns>
+        public async Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(string videoUrl)
+        {
+            var operation = await PostAsync<string, VideoEmotionRecognitionOperation>(@"/recognizeInVideo", videoUrl);
+            return operation;
+        }
+
+        /// <summary>
+        /// Get emotion video operation result.
+        /// </summary>
+        /// <param name="operation">Opaque operation object, from RecognizeInVideoAsync response.</param>
+        /// <returns>
+        /// The output type will vary depending on the outputStyle requested.  For example, if you requested <code>VideoOutputStyle.Aggregate</code>
+        /// (default), you would get a VideoOperationInfoResult&lt;VideoAggregateRecognitionResult&gt; object.
+        /// <code>
+        /// var result = await GetOperationResultAsync(operation);
+        /// if (result.Status == VideoOperationStatus.Succeeded)
+        /// {
+        ///     var details = result as VideoOperationInfoResult&lt;VideoAggregateRecognitionResult&gt
+        ///     ...
+        /// }
+        /// </code>
+        /// <code>ProcessResult</code>
+        /// </returns>
+        public async Task<VideoOperationResult> GetOperationResultAsync(VideoEmotionRecognitionOperation operation)
+        {
+            var wireResult = await GetAsync<string, VideoOperationInfoResult<string>>(operation.Url, null);
+
+            // The wire-result holds the key result information in a string, deserialize it here so clients
+            // don't have to invoke JsonConvert.Deserialize() themselves.
+
+            if (wireResult.Status == VideoOperationStatus.Succeeded)
             {
-                string responseContent = null;
-                if (response.Content != null)
-                {
-                    responseContent = await response.Content.ReadAsStringAsync();
-                }
-
-                if (!string.IsNullOrWhiteSpace(responseContent))
-                {
-                    return JsonConvert.DeserializeObject<TResponse>(responseContent, s_settings);
-                }
-
-                return default(TResponse);
-            }
-            else
-            {
-                if (response.Content != null && response.Content.Headers.ContentType.MediaType.Contains(JsonHeader))
-                {
-                    var errorObjectString = await response.Content.ReadAsStringAsync();
-                    ClientError errorCollection = JsonConvert.DeserializeObject<ClientError>(errorObjectString);
-                    if (errorCollection != null)
-                    {
-                        throw new ClientException(errorCollection, response.StatusCode);
-                    }
-                }
-
-                response.EnsureSuccessStatusCode();
+                var aggregateResult = JsonConvert.DeserializeObject<VideoAggregateRecognitionResult>(wireResult.ProcessingResult);
+                return new VideoOperationInfoResult<VideoAggregateRecognitionResult>(wireResult, aggregateResult);
             }
 
-            return default(TResponse);
+            return wireResult;
         }
         #endregion
     }

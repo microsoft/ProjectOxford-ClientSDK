@@ -24,8 +24,7 @@ dependencies {
     //
     // Use the following line to include client library for Vision API from Maven Central Repository
     //
-    compile 'com.microsoft.projectoxford:vision:0.4.91'
+    compile 'com.microsoft.projectoxford:vision:1.0.101'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('libs/gson-2.3.1.jar')
-    compile 'com.microsoft.projectoxford:vision:0.4.91'
 }

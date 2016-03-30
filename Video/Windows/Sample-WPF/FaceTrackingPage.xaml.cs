@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -38,11 +38,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using SampleUserControlLibrary;
 
 // -----------------------------------------------------------------------
 // KEY SAMPLE CODE STARTS HERE
 // Use the following namespace for VideoServiceClient
 // -----------------------------------------------------------------------
+using Microsoft.ProjectOxford.Video;
 using Microsoft.ProjectOxford.Video.Contract;
 // -----------------------------------------------------------------------
 // KEY SAMPLE CODE ENDS HERE
@@ -71,8 +73,7 @@ namespace VideoAPI_WPF_Samples
             _dataContext.ResultText = null;
 
             Helpers.Log(LogIdentifier, "Start face tracking");
-            Microsoft.ProjectOxford.Video.VideoServiceClient client =
-                new Microsoft.ProjectOxford.Video.VideoServiceClient(subscriptionKey);
+            VideoServiceClient client = new VideoServiceClient(subscriptionKey);
 
             using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -81,7 +82,7 @@ namespace VideoAPI_WPF_Samples
 
                 // Creates a video operation of face tracking
                 Helpers.Log(LogIdentifier, "Start uploading video");
-                Operation operation = await client.CreateOperationAsync(bytes, OperationType.TrackFace);
+                Operation operation = await client.CreateOperationAsync(bytes, new FaceDetectionOperationSettings());
                 Helpers.Log(LogIdentifier, "Uploading video done");
 
                 // Starts querying service status

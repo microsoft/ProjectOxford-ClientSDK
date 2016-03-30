@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -95,5 +95,21 @@ namespace Microsoft.ProjectOxford.Vision.Contract
         /// The faces.
         /// </value>
         public Face[] Faces { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags for the image.
+        /// </summary>
+        /// <value>
+        /// The list of tags.
+        /// </value>
+        public Tag[] Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public Description Description { get; set; }
     }
 }

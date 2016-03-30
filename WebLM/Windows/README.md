@@ -1,15 +1,15 @@
-Microsoft Project Oxford Web Language Model API SDK and sample
+Microsoft Cognitive Services Web Language Model API SDK and sample
 ==============================================================
 
 This repo contains a client library and sample code to demonstrate Microsoft’s state-of-the-art language modeling APIs, which automate a variety of standard natural language processing tasks.
-Learn more about the Web Language Model API at [our documentation](<https://www.projectoxford.ai/weblm>).
+Learn more about the Web Language Model API at [our documentation](<https://www.microsoft.com/cognitive-services/en-us/web-language-model-api>).
 
 Getting started
 ===============
 
-To obtain a subscription key for WebLM, visit [our website] (<https://www.projectoxford.ai>) and sign up for free using your Microsoft account.
+To obtain a subscription key for WebLM, visit [Microsoft Cognitive Services subscription](<https://www.microsoft.com/cognitive-services/en-us/sign-up>) and sign up for free using your Microsoft account.
 Then open, modify, build, and run the accompanying Visual Studio solution.
-This sample is a C# Windows console application demonstrating the use of the Project Oxford Web Language Model API.
+This sample is a C# Windows console application demonstrating the use of the Microsoft Cognitive Services Web Language Model API.
 
 Build the sample
 ----------------
@@ -20,7 +20,7 @@ Build the sample
 
 3.  Double-click the Visual Studio 2015 Solution file WebLMSample.sln.
 
-4.  Paste your Oxford subscription key into the LMServiceClient constructor parameter value in Program.cs.
+4.  Paste your Microsoft Cognitive Services WebLM subscription key into the LMServiceClient constructor parameter value in Program.cs.
 
 5.  Press Ctrl+Shift+B, or select Build \> Build Solution.
 
@@ -39,18 +39,14 @@ We welcome contributions and are always looking for new SDKs, input, and
 suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
 Rules & Guidelines](</CONTRIBUTING.md>).
 
-For questions, feedback, or suggestions about Project Oxford services, feel free to reach out to us directly.
+For questions, feedback, or suggestions about Microsoft Cognitive Services, feel free to reach out to us directly.
 
--   [Project Oxford support](<mailto:oxfordSup@microsoft.com?subject=Project%20Oxford%20Support>)
-
--   [Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>)
-
--   [Blog](<https://blogs.technet.com/b/machinelearning/archive/tags/project+oxford/default.aspx>)
+-   [Cognitive Services UserVoice Forum](<https://cognitive.uservoice.com>)
 
 License
 =======
 
-All Project Oxford SDKs and samples are licensed with the MIT License. For more details, see
+All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
 [LICENSE](</LICENSE.md>).
 
 Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).

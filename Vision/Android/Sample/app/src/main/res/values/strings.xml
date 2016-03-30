@@ -5,10 +5,11 @@
     <!-- If you have one subscription key, you can add it here to use the service -->
     <string name="subscription_key">Please_add_the_subscription_key_here</string>
     <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
-    <string name="add_subscription_key_tip">Please put your subscription key to source file \"app/res/values/strings.xml\" to enable Face API calls.</string>
+    <string name="add_subscription_key_tip">Please put your subscription key to source file \"app/res/values/strings.xml\" to enable Vision API calls.</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_analyze">AnalyzeActivity</string>
+    <string name="title_activity_describe">DescribeActivity</string>
     <string name="title_activity_recognize">RecognizeActivity</string>
     <string name="title_activity_thumbnail">ThumbnailActivity</string>
 

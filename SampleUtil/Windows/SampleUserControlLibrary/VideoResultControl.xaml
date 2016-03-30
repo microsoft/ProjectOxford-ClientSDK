@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="SampleUserControlLibrary.VideoResultControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SampleUserControlLibrary"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></local:BoolToVisibilityConverter>
+        <local:InvertBoolToVisibilityConverter x:Key="InvertBoolToVisibilityConverter"></local:InvertBoolToVisibilityConverter>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0">Original:</TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="0">Result:</TextBlock>
+        <Grid Background="Black" Grid.Column="0" Grid.Row="1"  Margin="5" x:Name="originalVideoHolder">
+            <MediaElement HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual" UnloadedBehavior="Manual"  Source="{Binding Path=SourceUri}" x:Name="originalVideo" />
+            <Canvas x:Name="rectangleAreas" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" />
+        </Grid>
+
+        <Grid Background="Black"  Grid.Column="1" Grid.Row="1" Margin="5">
+            <MediaElement HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual" UnloadedBehavior="Manual" Source="{Binding Path=ResultUri}" x:Name="resultVideo" IsMuted="True"  Visibility="{Binding Path=IsVideoResult, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <TextBox IsReadOnly="True" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Visibility="{Binding Path=IsTextResult, Converter={StaticResource BoolToVisibilityConverter}}" Text="{Binding Path=ResultText}" ></TextBox>
+            <ContentControl Content="{Binding ResultControl}" Visibility="{Binding Path=IsCustomResult, Converter={StaticResource BoolToVisibilityConverter}}" />
+        </Grid>
+
+        <StackPanel  Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Width="30" Height="20" Margin="5" Click="ButtonPlay_OnClick"><Path Width="10" Height="10" Data="M 2,0 L 2,10 L 9,5 Z" Stroke="Black" /></Button>
+            <Button Width="30" Height="20" Margin="5" Click="ButtonStop_OnClick"><Path Width="10" Height="10" Data="M 2,2 L 2,8 L 8,8 L 8,2 Z" Stroke="Black" /></Button>
+        </StackPanel>
+        
+        
+    </Grid>
+        <Grid Background="White" Opacity="0.9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Visibility="{Binding Path=IsWorking, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ProgressBar Margin="100" Height="10" MaxWidth="300" IsIndeterminate="True"></ProgressBar>
+        </Grid>
+    </Grid>
+</UserControl>

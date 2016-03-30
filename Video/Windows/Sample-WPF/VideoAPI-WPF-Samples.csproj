@@ -36,8 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -67,8 +67,8 @@
       <DependentUpon>MotionDetectionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers.cs" />
-    <Compile Include="VideoResultControl.xaml.cs">
-      <DependentUpon>VideoResultControl.xaml</DependentUpon>
+    <Compile Include="VideoThumbnailPage.xaml.cs">
+      <DependentUpon>VideoThumbnailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="VideoResultDataContext.cs" />
     <Page Include="FaceTrackingPage.xaml">
@@ -76,6 +76,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MotionDetectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VideoThumbnailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -98,20 +102,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="VideoResultControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SampleUtil\Windows\SampleUserControlLibrary\SampleUserControlLibrary.csproj">

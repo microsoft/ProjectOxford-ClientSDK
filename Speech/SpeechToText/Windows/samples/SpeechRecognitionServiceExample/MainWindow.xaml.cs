@@ -1,10 +1,10 @@
-﻿//
+﻿// <copyright file="MainWindow.xaml.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -29,19 +29,16 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-
+// </copyright>
 using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Windows;
-
-using Microsoft.ProjectOxford.SpeechRecognition;
 using System.IO.IsolatedStorage;
 using System.Runtime.CompilerServices;
-using System.ComponentModel;
-using System.Threading;
+using System.Windows;
+using Microsoft.ProjectOxford.SpeechRecognition;
 
 namespace MicrosoftProjectOxfordExample
 {
@@ -50,52 +47,40 @@ namespace MicrosoftProjectOxfordExample
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        // You can also put the primary key in app.config, instead of using UI.
-        // string _subscriptionKey = ConfigurationManager.AppSettings["primaryKey"];
-        string _subscriptionKey;
-
-        string _luisAppID = ConfigurationManager.AppSettings["luisAppID"];
-        string _luisSubscriptionID = ConfigurationManager.AppSettings["luisSubscriptionID"];
-
-        string _recoLanguage = "en-us";
-
-        private const string ShortWaveFile = @"whatstheweatherlike.wav";
-        private const string LongWaveFile = @"batman.wav";
-
-        private DataRecognitionClient _dataClient;
-        private MicrophoneRecognitionClient _micClient;
-
-        public bool IsMicrophoneClientShortPhrase { get; set; }
-        public bool IsMicrophoneClientDictation { get; set; }
-        public bool IsMicrophoneClientWithIntent { get; set; }
-        public bool IsDataClientShortPhrase { get; set; }
-        public bool IsDataClientWithIntent { get; set;  }
-        public bool IsDataClientDictation { get; set; }
+        /// <summary>
+        /// The isolated storage subscription key file name.
+        /// </summary>
+        private const string IsolatedStorageSubscriptionKeyFileName = "Subscription.txt";
 
         /// <summary>
-        /// The MAIS reco response event
+        /// The default subscription key prompt message
         /// </summary>
-        private AutoResetEvent _FinalResponseEvent;
+        private const string DefaultSubscriptionKeyPromptMessage = "Paste your subscription key here to start";
 
         /// <summary>
-        /// Gets or sets subscription key
+        /// You can also put the primary key in app.config, instead of using UI.
+        /// string subscriptionKey = ConfigurationManager.AppSettings["primaryKey"];
         /// </summary>
-        public string SubscriptionKey
+        private string subscriptionKey;
+
+        /// <summary>
+        /// The data recognition client
+        /// </summary>
+        private DataRecognitionClient dataClient;
+
+        /// <summary>
+        /// The microphone client
+        /// </summary>
+        private MicrophoneRecognitionClient micClient;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
+        public MainWindow()
         {
-            get
-            {
-                return _subscriptionKey;
-            }
-
-            set
-            {
-                _subscriptionKey = value;
-                OnPropertyChanged<string>();
-            }
+            this.InitializeComponent();
+            this.Initialize();
         }
-
-        private readonly string IsolatedStorageSubscriptionKeyFileName = "Subscription.txt";
-        private readonly string DefaultSubscriptionKeyPromptMessage = "Paste your subscription key here to start";
 
         #region Events
 
@@ -107,49 +92,236 @@ namespace MicrosoftProjectOxfordExample
         #endregion Events
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// Gets or sets a value indicating whether this instance is microphone client short phrase.
         /// </summary>
-        public MainWindow()
+        /// <value>
+        /// <c>true</c> if this instance is microphone client short phrase; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMicrophoneClientShortPhrase { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is microphone client dictation.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is microphone client dictation; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMicrophoneClientDictation { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is microphone client with intent.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is microphone client with intent; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMicrophoneClientWithIntent { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is data client short phrase.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is data client short phrase; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDataClientShortPhrase { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is data client with intent.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is data client with intent; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDataClientWithIntent { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is data client dictation.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is data client dictation; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDataClientDictation { get; set; }
+
+        /// <summary>
+        /// Gets or sets subscription key
+        /// </summary>
+        public string SubscriptionKey
         {
-            InitializeComponent();
-            Intialize();
-            _FinalResponseEvent = new AutoResetEvent(false);
+            get
+            {
+                return this.subscriptionKey;
+            }
+
+            set
+            {
+                this.subscriptionKey = value;
+                this.OnPropertyChanged<string>();
+            }
         }
 
         /// <summary>
-        //  Raises the System.Windows.Window.Closed event.
+        /// Gets the LUIS application identifier.
+        /// </summary>
+        /// <value>
+        /// The LUIS application identifier.
+        /// </value>
+        private string LuisAppId
+        {
+            get { return ConfigurationManager.AppSettings["luisAppID"]; }
+        }
+
+        /// <summary>
+        /// Gets the LUIS subscription identifier.
+        /// </summary>
+        /// <value>
+        /// The LUIS subscription identifier.
+        /// </value>
+        private string LuisSubscriptionID
+        {
+            get { return ConfigurationManager.AppSettings["luisSubscriptionID"]; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether or not to use the microphone.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [use microphone]; otherwise, <c>false</c>.
+        /// </value>
+        private bool UseMicrophone
+        {
+            get
+            {
+                return this.IsMicrophoneClientWithIntent ||
+                    this.IsMicrophoneClientDictation ||
+                    this.IsMicrophoneClientShortPhrase;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether LUIS results are desired.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if LUIS results are to be returned otherwise, <c>false</c>.
+        /// </value>
+        private bool WantIntent
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(this.LuisAppId) &&
+                    !string.IsNullOrEmpty(this.LuisSubscriptionID) &&
+                    (this.IsMicrophoneClientWithIntent || this.IsDataClientWithIntent);
+            }
+        }
+
+        /// <summary>
+        /// Gets the current speech recognition mode.
+        /// </summary>
+        /// <value>
+        /// The speech recognition mode.
+        /// </value>
+        private SpeechRecognitionMode Mode
+        {
+            get
+            {
+                if (this.IsMicrophoneClientDictation ||
+                    this.IsDataClientDictation)
+                {
+                    return SpeechRecognitionMode.LongDictation;
+                }
+
+                return SpeechRecognitionMode.ShortPhrase;
+            }
+        }
+
+        /// <summary>
+        /// Gets the default locale.
+        /// </summary>
+        /// <value>
+        /// The default locale.
+        /// </value>
+        private string DefaultLocale
+        {
+            get { return "en-US"; }
+        }
+
+        /// <summary>
+        /// Gets the short wave file path.
+        /// </summary>
+        /// <value>
+        /// The short wave file.
+        /// </value>
+        private string ShortWaveFile
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ShortWaveFile"];
+            }
+        }
+
+        /// <summary>
+        /// Gets the long wave file path.
+        /// </summary>
+        /// <value>
+        /// The long wave file.
+        /// </value>
+        private string LongWaveFile
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["LongWaveFile"];
+            }
+        }
+
+        /// <summary>
+        /// Raises the System.Windows.Window.Closed event.
         /// </summary>
         /// <param name="e">An System.EventArgs that contains the event data.</param>
         protected override void OnClosed(EventArgs e)
         {
-            if (null != _dataClient)
+            if (null != this.dataClient)
             {
-                _dataClient.Dispose();
+                this.dataClient.Dispose();
             }
 
-            if (null != _micClient)
+            if (null != this.micClient)
             {
-                _micClient.Dispose();
+                this.micClient.Dispose();
             }
-
-            _FinalResponseEvent.Dispose();
 
             base.OnClosed(e);
         }
 
-        private void Intialize()
+        /// <summary>
+        /// Saves the subscription key to isolated storage.
+        /// </summary>
+        /// <param name="subscriptionKey">The subscription key.</param>
+        private static void SaveSubscriptionKeyToIsolatedStorage(string subscriptionKey)
         {
-            IsMicrophoneClientShortPhrase = true;
-            IsMicrophoneClientWithIntent = false;
-            IsMicrophoneClientDictation = false;
-            IsDataClientShortPhrase = false;
-            IsDataClientWithIntent = false;
-            IsDataClientDictation = false;
+            using (IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
+            {
+                using (var oStream = new IsolatedStorageFileStream(IsolatedStorageSubscriptionKeyFileName, FileMode.Create, isoStore))
+                {
+                    using (var writer = new StreamWriter(oStream))
+                    {
+                        writer.WriteLine(subscriptionKey);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initializes a fresh audio session.
+        /// </summary>
+        private void Initialize()
+        {
+            this.IsMicrophoneClientShortPhrase = true;
+            this.IsMicrophoneClientWithIntent = false;
+            this.IsMicrophoneClientDictation = false;
+            this.IsDataClientShortPhrase = false;
+            this.IsDataClientWithIntent = false;
+            this.IsDataClientDictation = false;
 
             // Set the default choice for the group of checkbox.
-            _micRadioButton.IsChecked = true;
+            this._micRadioButton.IsChecked = true;
 
-            SubscriptionKey = GetSubscriptionKeyFromIsolatedStorage();
+            this.SubscriptionKey = this.GetSubscriptionKeyFromIsolatedStorage();
         }
 
         /// <summary>
@@ -159,173 +331,185 @@ namespace MicrosoftProjectOxfordExample
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            //_logText.Text = String.Empty;
-            _startButton.IsEnabled = false;
-            _radioGroup.IsEnabled = false;
+            this._startButton.IsEnabled = false;
+            this._radioGroup.IsEnabled = false;
 
-            if (IsMicrophoneClientShortPhrase)
-            {
-                // Short phrase recongition using microphone
-                LogRecognitionStart("microphone", _recoLanguage, SpeechRecognitionMode.ShortPhrase);
+            this.LogRecognitionStart();
 
-                if (_micClient == null)
-                {
-                    _micClient = CreateMicrophoneRecoClient(SpeechRecognitionMode.ShortPhrase, _recoLanguage, SubscriptionKey);
-                } 
-                _micClient.StartMicAndRecognition();
-            }
-            else if (IsMicrophoneClientDictation)
+            if (this.UseMicrophone)
             {
-                // Long dictation recongition using microphone
-                LogRecognitionStart("microphone", _recoLanguage, SpeechRecognitionMode.LongDictation);
+                if (this.micClient == null)
+                {
+                    if (this.WantIntent)
+                    {
+                        this.CreateMicrophoneRecoClientWithIntent();
+                    }
+                    else
+                    {
+                        this.CreateMicrophoneRecoClient();
+                    }
+                }
 
-                if (_micClient == null)
-                {
-                    _micClient = CreateMicrophoneRecoClient(SpeechRecognitionMode.LongDictation, _recoLanguage, SubscriptionKey);
-                }
-                _micClient.StartMicAndRecognition();
+                this.micClient.StartMicAndRecognition();
             }
-            else if (IsMicrophoneClientWithIntent)
+            else
             {
-                if (_micClient == null)
+                if (null == this.dataClient)
                 {
-                    _micClient = CreateMicrophoneRecoClientWithIntent(_recoLanguage);
+                    if (this.WantIntent)
+                    {
+                        this.CreateDataRecoClientWithIntent();
+                    }
+                    else
+                    {
+                        this.CreateDataRecoClient();
+                    }
                 }
-                _micClient.StartMicAndRecognition();
-            }
-            else if (IsDataClientShortPhrase)
-            {
-                LogRecognitionStart("short wav file", _recoLanguage, SpeechRecognitionMode.ShortPhrase);
 
-                if (_dataClient == null)
-                {
-                    _dataClient = CreateDataRecoClient(SpeechRecognitionMode.ShortPhrase, _recoLanguage);
-                }
-                SendAudioHelper(_dataClient, ShortWaveFile);
-            }
-            else if (IsDataClientDictation)
-            {
-                LogRecognitionStart("long wav file", _recoLanguage, SpeechRecognitionMode.LongDictation);
-
-                if (_dataClient == null)
-                {
-                    _dataClient = CreateDataRecoClient(SpeechRecognitionMode.LongDictation, _recoLanguage);
-                }
-                SendAudioHelper(_dataClient, LongWaveFile);
-            }
-            else if (IsDataClientWithIntent)
-            {
-                if (_dataClient == null)
-                {
-                    _dataClient = CreateDataRecoClientWithIntent(_recoLanguage, ShortWaveFile);
-                }
-                SendAudioHelper(_dataClient, ShortWaveFile);
+                this.SendAudioHelper((this.Mode == SpeechRecognitionMode.ShortPhrase) ? this.ShortWaveFile : this.LongWaveFile);
             }
         }
 
-        private void LogRecognitionStart(string recoSource, string recoLanguage, SpeechRecognitionMode recoMode)
+        /// <summary>
+        /// Logs the recognition start.
+        /// </summary>
+        private void LogRecognitionStart()
         {
-            WriteLine("\n--- Start speech recognition using " + recoSource + " with " + recoMode + " mode in " + recoLanguage + " language ----\n\n");
+            string recoSource;
+            if (this.UseMicrophone)
+            {
+                recoSource = "microphone";
+            }
+            else if (this.Mode == SpeechRecognitionMode.ShortPhrase)
+            {
+                recoSource = "short wav file";
+            }
+            else
+            {
+                recoSource = "long wav file";
+            }
+
+            this.WriteLine("\n--- Start speech recognition using " + recoSource + " with " + this.Mode + " mode in " + this.DefaultLocale + " language ----\n\n");
         }
 
-        MicrophoneRecognitionClient CreateMicrophoneRecoClient(SpeechRecognitionMode recoMode, string language, string subscriptionKey)
+        /// <summary>
+        /// Creates a new microphone reco client without LUIS intent support.
+        /// </summary>
+        private void CreateMicrophoneRecoClient()
         {
-            MicrophoneRecognitionClient micClient = SpeechRecognitionServiceFactory.CreateMicrophoneClient(
-                recoMode,
-                language,                                                                 
-                subscriptionKey);
+            this.micClient = SpeechRecognitionServiceFactory.CreateMicrophoneClient(
+                this.Mode,
+                this.DefaultLocale,
+                this.SubscriptionKey,
+                this.SubscriptionKey);
 
             // Event handlers for speech recognition results
-            micClient.OnMicrophoneStatus += OnMicrophoneStatus;
-            micClient.OnPartialResponseReceived += OnPartialResponseReceivedHandler;
-            if (recoMode == SpeechRecognitionMode.ShortPhrase)
+            this.micClient.OnMicrophoneStatus += this.OnMicrophoneStatus;
+            this.micClient.OnPartialResponseReceived += this.OnPartialResponseReceivedHandler;
+            if (this.Mode == SpeechRecognitionMode.ShortPhrase)
             {
-                micClient.OnResponseReceived += OnMicShortPhraseResponseReceivedHandler;
+                this.micClient.OnResponseReceived += this.OnMicShortPhraseResponseReceivedHandler;
             }
-            else if (recoMode == SpeechRecognitionMode.LongDictation)
+            else if (this.Mode == SpeechRecognitionMode.LongDictation)
             {
-                micClient.OnResponseReceived += OnMicDictationResponseReceivedHandler;
+                this.micClient.OnResponseReceived += this.OnMicDictationResponseReceivedHandler;
             }
-            micClient.OnConversationError += OnConversationErrorHandler;            
 
-            return micClient;
+            this.micClient.OnConversationError += this.OnConversationErrorHandler;
         }
 
-        MicrophoneRecognitionClient CreateMicrophoneRecoClientWithIntent(string recoLanguage)
+        /// <summary>
+        /// Creates a new microphone reco client with LUIS intent support.
+        /// </summary>
+        private void CreateMicrophoneRecoClientWithIntent()
         {
-            WriteLine("--- Start microphone dictation with Intent detection ----");
+            this.WriteLine("--- Start microphone dictation with Intent detection ----");
 
-            MicrophoneRecognitionClientWithIntent intentMicClient =
-                SpeechRecognitionServiceFactory.CreateMicrophoneClientWithIntent(recoLanguage,
-                                                                                 SubscriptionKey,
-                                                                                 _luisAppID,
-                                                                                 _luisSubscriptionID);
-            intentMicClient.OnIntent += OnIntentHandler;
+            this.micClient =
+                SpeechRecognitionServiceFactory.CreateMicrophoneClientWithIntent(
+                this.DefaultLocale,
+                this.SubscriptionKey,
+                this.SubscriptionKey,
+                this.LuisAppId,
+                this.LuisSubscriptionID);
+            this.micClient.OnIntent += this.OnIntentHandler;
 
             // Event handlers for speech recognition results
-            intentMicClient.OnMicrophoneStatus += OnMicrophoneStatus;
-            intentMicClient.OnPartialResponseReceived += OnPartialResponseReceivedHandler;
-            intentMicClient.OnResponseReceived += OnMicShortPhraseResponseReceivedHandler;
-            intentMicClient.OnConversationError += OnConversationErrorHandler;
-
-            intentMicClient.StartMicAndRecognition();
-
-            return intentMicClient;
-
+            this.micClient.OnMicrophoneStatus += this.OnMicrophoneStatus;
+            this.micClient.OnPartialResponseReceived += this.OnPartialResponseReceivedHandler;
+            this.micClient.OnResponseReceived += this.OnMicShortPhraseResponseReceivedHandler;
+            this.micClient.OnConversationError += this.OnConversationErrorHandler;
         }
 
+        /// <summary>
+        /// Handles the Click event of the HelpButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://www.projectoxford.ai/doc/general/subscription-key-mgmt");
         }
 
         /// <summary>
-        ///     Speech recognition with data (for example from a file or audio source).  
-        ///     The data is broken up into buffers and each buffer is sent to the Speech Recognition Service.
-        ///     No modification is done to the buffers, so the user can apply their
-        ///     own Silence Detection if desired.
+        /// Creates a data client without LUIS intent support.
+        /// Speech recognition with data (for example from a file or audio source).  
+        /// The data is broken up into buffers and each buffer is sent to the Speech Recognition Service.
+        /// No modification is done to the buffers, so the user can apply their
+        /// own Silence Detection if desired.
         /// </summary>
-        DataRecognitionClient CreateDataRecoClient(SpeechRecognitionMode recoMode, string recoLanguage)
+        private void CreateDataRecoClient()
         {
-            DataRecognitionClient dataClient = SpeechRecognitionServiceFactory.CreateDataClient(
-                recoMode,
-                recoLanguage,
-                SubscriptionKey);
+            this.dataClient = SpeechRecognitionServiceFactory.CreateDataClient(
+                this.Mode,
+                this.DefaultLocale,
+                this.SubscriptionKey,
+                this.SubscriptionKey);
 
             // Event handlers for speech recognition results
-            if (recoMode == SpeechRecognitionMode.ShortPhrase)
+            if (this.Mode == SpeechRecognitionMode.ShortPhrase)
             {
-                dataClient.OnResponseReceived += OnDataShortPhraseResponseReceivedHandler;
+                this.dataClient.OnResponseReceived += this.OnDataShortPhraseResponseReceivedHandler;
             }
             else
             {
-                dataClient.OnResponseReceived += OnDataDictationResponseReceivedHandler;
+                this.dataClient.OnResponseReceived += this.OnDataDictationResponseReceivedHandler;
             }
-            dataClient.OnPartialResponseReceived += OnPartialResponseReceivedHandler;
-            dataClient.OnConversationError += OnConversationErrorHandler;
 
-            return dataClient;
+            this.dataClient.OnPartialResponseReceived += this.OnPartialResponseReceivedHandler;
+            this.dataClient.OnConversationError += this.OnConversationErrorHandler;
         }
 
-        DataRecognitionClientWithIntent CreateDataRecoClientWithIntent(string recoLanguage, string wavFileName)
+        /// <summary>
+        /// Creates a data client with LUIS intent support.
+        /// Speech recognition with data (for example from a file or audio source).  
+        /// The data is broken up into buffers and each buffer is sent to the Speech Recognition Service.
+        /// No modification is done to the buffers, so the user can apply their
+        /// own Silence Detection if desired.
+        /// </summary>
+        private void CreateDataRecoClientWithIntent()
         {
-            DataRecognitionClientWithIntent intentDataClient =
-                SpeechRecognitionServiceFactory.CreateDataClientWithIntent(recoLanguage,
-                                                                           SubscriptionKey,
-                                                                           _luisAppID,
-                                                                           _luisSubscriptionID);
+            this.dataClient = SpeechRecognitionServiceFactory.CreateDataClientWithIntent(
+                this.DefaultLocale,
+                this.SubscriptionKey,
+                this.SubscriptionKey,
+                this.LuisAppId,
+                this.LuisSubscriptionID);
+
             // Event handlers for speech recognition results
-            intentDataClient.OnResponseReceived += OnDataShortPhraseResponseReceivedHandler;
-            intentDataClient.OnPartialResponseReceived += OnPartialResponseReceivedHandler;
-            intentDataClient.OnConversationError += OnConversationErrorHandler;
+            this.dataClient.OnResponseReceived += this.OnDataShortPhraseResponseReceivedHandler;
+            this.dataClient.OnPartialResponseReceived += this.OnPartialResponseReceivedHandler;
+            this.dataClient.OnConversationError += this.OnConversationErrorHandler;
 
             // Event handler for intent result
-            intentDataClient.OnIntent += OnIntentHandler;
-
-            return intentDataClient;
+            this.dataClient.OnIntent += this.OnIntentHandler;
         }
 
-        private void SendAudioHelper(DataRecognitionClient dataClient, string wavFileName)
+        /// <summary>
+        /// Sends the audio helper.
+        /// </summary>
+        /// <param name="wavFileName">Name of the wav file.</param>
+        private void SendAudioHelper(string wavFileName)
         {
             using (FileStream fileStream = new FileStream(wavFileName, FileMode.Open, FileAccess.Read))
             {
@@ -334,7 +518,6 @@ namespace MicrosoftProjectOxfordExample
                 // raw data (for example audio coming over bluetooth), then before sending up any 
                 // audio data, you must first send up an SpeechAudioFormat descriptor to describe 
                 // the layout and format of your raw audio data via DataRecognitionClient's sendAudioFormat() method.
-
                 int bytesRead = 0;
                 byte[] buffer = new byte[1024];
 
@@ -346,38 +529,35 @@ namespace MicrosoftProjectOxfordExample
                         bytesRead = fileStream.Read(buffer, 0, buffer.Length);
 
                         // Send of audio data to service. 
-                        dataClient.SendAudio(buffer, bytesRead);
-                    } while (bytesRead > 0);
+                        this.dataClient.SendAudio(buffer, bytesRead);
+                    }
+                    while (bytesRead > 0);
                 }
                 finally
                 {
                     // We are done sending audio.  Final recognition results will arrive in OnResponseReceived event call.
-                    dataClient.EndAudio();
+                    this.dataClient.EndAudio();
                 }
             }
         }
 
         /// <summary>
-        ///     Called when a final response is received; 
+        /// Called when a final response is received;
         /// </summary>
-        void OnMicShortPhraseResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SpeechResponseEventArgs"/> instance containing the event data.</param>
+        private void OnMicShortPhraseResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
         {
             Dispatcher.Invoke((Action)(() =>
             {
-                WriteLine("--- OnMicShortPhraseResponseReceivedHandler ---");
-
-                _FinalResponseEvent.Set();
+                this.WriteLine("--- OnMicShortPhraseResponseReceivedHandler ---");
 
                 // we got the final result, so it we can end the mic reco.  No need to do this
                 // for dataReco, since we already called endAudio() on it as soon as we were done
                 // sending all the data.
-                _micClient.EndMicAndRecognition();
+                this.micClient.EndMicAndRecognition();
 
-                // BUGBUG: Work around for the issue when cached _micClient cannot be re-used for recognition.
-                _micClient.Dispose();
-                _micClient = null;
-
-                WriteResponseResult(e);
+                this.WriteResponseResult(e);
 
                 _startButton.IsEnabled = true;
                 _radioGroup.IsEnabled = true;
@@ -385,124 +565,135 @@ namespace MicrosoftProjectOxfordExample
         }
 
         /// <summary>
-        ///     Called when a final response is received; 
+        /// Called when a final response is received;
         /// </summary>
-        void OnDataShortPhraseResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SpeechResponseEventArgs"/> instance containing the event data.</param>
+        private void OnDataShortPhraseResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
         {
             Dispatcher.Invoke((Action)(() =>
             {
-                WriteLine("--- OnDataShortPhraseResponseReceivedHandler ---");
+                this.WriteLine("--- OnDataShortPhraseResponseReceivedHandler ---");
+
                 // we got the final result, so it we can end the mic reco.  No need to do this
                 // for dataReco, since we already called endAudio() on it as soon as we were done
                 // sending all the data.
-
-                _FinalResponseEvent.Set();
-
-                WriteResponseResult(e);
+                this.WriteResponseResult(e);
 
                 _startButton.IsEnabled = true;
                 _radioGroup.IsEnabled = true;
             }));
         }
 
+        /// <summary>
+        /// Writes the response result.
+        /// </summary>
+        /// <param name="e">The <see cref="SpeechResponseEventArgs"/> instance containing the event data.</param>
         private void WriteResponseResult(SpeechResponseEventArgs e)
         {
             if (e.PhraseResponse.Results.Length == 0)
             {
-                WriteLine("No phrase resonse is available.");
+                this.WriteLine("No phrase response is available.");
             }
             else
             {
-                WriteLine("********* Final n-BEST Results *********");
+                this.WriteLine("********* Final n-BEST Results *********");
                 for (int i = 0; i < e.PhraseResponse.Results.Length; i++)
                 {
-                    WriteLine("[{0}] Confidence={1}, Text=\"{2}\"",
-                                    i, e.PhraseResponse.Results[i].Confidence,
-                                    e.PhraseResponse.Results[i].DisplayText);
+                    this.WriteLine(
+                        "[{0}] Confidence={1}, Text=\"{2}\"", 
+                        i, 
+                        e.PhraseResponse.Results[i].Confidence,
+                        e.PhraseResponse.Results[i].DisplayText);
                 }
-                WriteLine();
+
+                this.WriteLine();
             }
         }
 
         /// <summary>
-        ///     Called when a final response is received; 
+        /// Called when a final response is received;
         /// </summary>
-        void OnMicDictationResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SpeechResponseEventArgs"/> instance containing the event data.</param>
+        private void OnMicDictationResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
         {
-            WriteLine("--- OnMicDictationResponseReceivedHandler ---");
+            this.WriteLine("--- OnMicDictationResponseReceivedHandler ---");
             if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.EndOfDictation ||
                 e.PhraseResponse.RecognitionStatus == RecognitionStatus.DictationEndSilenceTimeout)
             { 
-                Dispatcher.Invoke((Action)(() => 
-                {
-                    _FinalResponseEvent.Set();
+                Dispatcher.Invoke(
+                    (Action)(() => 
+                    {
+                        // we got the final result, so it we can end the mic reco.  No need to do this
+                        // for dataReco, since we already called endAudio() on it as soon as we were done
+                        // sending all the data.
+                        this.micClient.EndMicAndRecognition();
 
-                    // we got the final result, so it we can end the mic reco.  No need to do this
-                    // for dataReco, since we already called endAudio() on it as soon as we were done
-                    // sending all the data.
-                    _micClient.EndMicAndRecognition();
-
-                    // BUGBUG: Work around for the issue when cached _micClient cannot be re-used for recognition.
-                    _micClient.Dispose();
-                    _micClient = null;
-
-                    _startButton.IsEnabled = true;
-                    _radioGroup.IsEnabled = true;
-
-                }));                
+                        this._startButton.IsEnabled = true;
+                        this._radioGroup.IsEnabled = true;
+                    }));                
             }
-            WriteResponseResult(e);
+
+            this.WriteResponseResult(e);
         }
 
         /// <summary>
-        ///     Called when a final response is received; 
+        /// Called when a final response is received;
         /// </summary>
-        void OnDataDictationResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SpeechResponseEventArgs"/> instance containing the event data.</param>
+        private void OnDataDictationResponseReceivedHandler(object sender, SpeechResponseEventArgs e)
         {
-            WriteLine("--- OnDataDictationResponseReceivedHandler ---");
+            this.WriteLine("--- OnDataDictationResponseReceivedHandler ---");
             if (e.PhraseResponse.RecognitionStatus == RecognitionStatus.EndOfDictation ||
                 e.PhraseResponse.RecognitionStatus == RecognitionStatus.DictationEndSilenceTimeout)
             {
-                Dispatcher.Invoke((Action)(() =>
-                {
-                    _FinalResponseEvent.Set();
+                Dispatcher.Invoke(
+                    (Action)(() => 
+                    {
+                        _startButton.IsEnabled = true;
+                        _radioGroup.IsEnabled = true;
 
-                    _startButton.IsEnabled = true;
-                    _radioGroup.IsEnabled = true;
-
-                    // we got the final result, so it we can end the mic reco.  No need to do this
-                    // for dataReco, since we already called endAudio() on it as soon as we were done
-                    // sending all the data.
-                }));
+                        // we got the final result, so it we can end the mic reco.  No need to do this
+                        // for dataReco, since we already called endAudio() on it as soon as we were done
+                        // sending all the data.
+                    }));
             }
-            WriteResponseResult(e);
+
+            this.WriteResponseResult(e);
         }
 
-
         /// <summary>
-        ///     Called when a final response is received and its intent is parsed 
+        /// Called when a final response is received and its intent is parsed
         /// </summary>
-        void OnIntentHandler(object sender, SpeechIntentEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SpeechIntentEventArgs"/> instance containing the event data.</param>
+        private void OnIntentHandler(object sender, SpeechIntentEventArgs e)
         {
-            WriteLine("--- Intent received by OnIntentHandler() ---");
-            WriteLine("{0}", e.Payload);
-            WriteLine();
+            this.WriteLine("--- Intent received by OnIntentHandler() ---");
+            this.WriteLine("{0}", e.Payload);
+            this.WriteLine();
         }
 
         /// <summary>
-        ///     Called when a partial response is received.
+        /// Called when a partial response is received.
         /// </summary>
-        void OnPartialResponseReceivedHandler(object sender, PartialSpeechResponseEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PartialSpeechResponseEventArgs"/> instance containing the event data.</param>
+        private void OnPartialResponseReceivedHandler(object sender, PartialSpeechResponseEventArgs e)
         {
-            WriteLine("--- Partial result received by OnPartialResponseReceivedHandler() ---");
-            WriteLine("{0}", e.PartialResult);
-            WriteLine();
+            this.WriteLine("--- Partial result received by OnPartialResponseReceivedHandler() ---");
+            this.WriteLine("{0}", e.PartialResult);
+            this.WriteLine();
         }
 
         /// <summary>
-        ///     Called when an error is received.
+        /// Called when an error is received.
         /// </summary>
-        void OnConversationErrorHandler(object sender, SpeechErrorEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SpeechErrorEventArgs"/> instance containing the event data.</param>
+        private void OnConversationErrorHandler(object sender, SpeechErrorEventArgs e)
         {
            Dispatcher.Invoke(() =>
            {
@@ -510,16 +701,18 @@ namespace MicrosoftProjectOxfordExample
                _radioGroup.IsEnabled = true;
            });
 
-            WriteLine("--- Error received by OnConversationErrorHandler() ---");
-            WriteLine("Error code: {0}", e.SpeechErrorCode.ToString());
-            WriteLine("Error text: {0}", e.SpeechErrorText);
-            WriteLine();
+            this.WriteLine("--- Error received by OnConversationErrorHandler() ---");
+            this.WriteLine("Error code: {0}", e.SpeechErrorCode.ToString());
+            this.WriteLine("Error text: {0}", e.SpeechErrorText);
+            this.WriteLine();
         }
 
         /// <summary>
-        ///     Called when the microphone status has changed.
+        /// Called when the microphone status has changed.
         /// </summary>
-        void OnMicrophoneStatus(object sender, MicrophoneEventArgs e)
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="MicrophoneEventArgs"/> instance containing the event data.</param>
+        private void OnMicrophoneStatus(object sender, MicrophoneEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -529,17 +722,17 @@ namespace MicrosoftProjectOxfordExample
                 {
                     WriteLine("Please start speaking.");
                 }
+
                 WriteLine();
             });
         }
 
-
         /// <summary>
         /// Writes the line.
         /// </summary>
-        void WriteLine()
+        private void WriteLine()
         {
-            WriteLine(string.Empty);
+            this.WriteLine(string.Empty);
         }
 
         /// <summary>
@@ -547,7 +740,7 @@ namespace MicrosoftProjectOxfordExample
         /// </summary>
         /// <param name="format">The format.</param>
         /// <param name="args">The arguments.</param>
-        void WriteLine(string format, params object[] args)
+        private void WriteLine(string format, params object[] args)
         {
             var formattedStr = string.Format(format, args);
             Trace.WriteLine(formattedStr);
@@ -561,7 +754,7 @@ namespace MicrosoftProjectOxfordExample
         /// <summary>
         /// Gets the subscription key from isolated storage.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The subscription key.</returns>
         private string GetSubscriptionKeyFromIsolatedStorage()
         {
             string subscriptionKey = null;
@@ -583,29 +776,13 @@ namespace MicrosoftProjectOxfordExample
                     subscriptionKey = null;
                 }
             }
+
             if (string.IsNullOrEmpty(subscriptionKey))
             {
                 subscriptionKey = DefaultSubscriptionKeyPromptMessage;
             }
-            return subscriptionKey;
-        }
 
-        /// <summary>
-        /// Saves the subscription key to isolated storage.
-        /// </summary>
-        /// <param name="subscriptionKey">The subscription key.</param>
-        private void SaveSubscriptionKeyToIsolatedStorage(string subscriptionKey)
-        {
-            using (IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null))
-            {
-                using (var oStream = new IsolatedStorageFileStream(IsolatedStorageSubscriptionKeyFileName, FileMode.Create, isoStore))
-                {
-                    using (var writer = new StreamWriter(oStream))
-                    {
-                        writer.WriteLine(subscriptionKey);
-                    }
-                }
-            }
+            return subscriptionKey;
         }
 
         /// <summary>
@@ -617,28 +794,39 @@ namespace MicrosoftProjectOxfordExample
         {
             try
             {
-                SaveSubscriptionKeyToIsolatedStorage(SubscriptionKey);
+                SaveSubscriptionKeyToIsolatedStorage(this.SubscriptionKey);
                 MessageBox.Show("Subscription key is saved in your disk.\nYou do not need to paste the key next time.", "Subscription Key");
             }
-            catch (System.Exception exception)
+            catch (Exception exception)
             {
-                MessageBox.Show("Fail to save subscription key. Error message: " + exception.Message,
-                    "Subscription Key", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    "Fail to save subscription key. Error message: " + exception.Message,
+                    "Subscription Key", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error);
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the DeleteKey control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void DeleteKey_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                SubscriptionKey = DefaultSubscriptionKeyPromptMessage;
-                SaveSubscriptionKeyToIsolatedStorage("");
+                this.SubscriptionKey = DefaultSubscriptionKeyPromptMessage;
+                SaveSubscriptionKeyToIsolatedStorage(string.Empty);
                 MessageBox.Show("Subscription key is deleted from your disk.", "Subscription Key");
             }
-            catch (System.Exception exception)
+            catch (Exception exception)
             {
-                MessageBox.Show("Fail to delete subscription key. Error message: " + exception.Message,
-                    "Subscription Key", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    "Fail to delete subscription key. Error message: " + exception.Message,
+                    "Subscription Key", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error);
             }
         }
 
@@ -649,31 +837,37 @@ namespace MicrosoftProjectOxfordExample
         /// <param name="caller">Property name</param>
         private void OnPropertyChanged<T>([CallerMemberName]string caller = null)
         {
-            var handler = PropertyChanged;
+            var handler = this.PropertyChanged;
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(caller));
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the RadioButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void RadioButton_Click(object sender, RoutedEventArgs e)
         {
             // Reset everything
-            if (_micClient != null)
+            if (this.micClient != null)
             {
-                _micClient.EndMicAndRecognition();
-                _micClient.Dispose();
+                this.micClient.EndMicAndRecognition();
+                this.micClient.Dispose();
+                this.micClient = null;
             }
-            if (_dataClient != null)
-            {
-                _dataClient.Dispose();
-            }
-            _micClient = null;
-            _dataClient = null;
 
-            _logText.Text = "";
-            _startButton.IsEnabled = true;
-            _radioGroup.IsEnabled = true;
+            if (this.dataClient != null)
+            {
+                this.dataClient.Dispose();
+                this.dataClient = null;
+            }
+
+            this._logText.Text = string.Empty;
+            this._startButton.IsEnabled = true;
+            this._radioGroup.IsEnabled = true;
         }
     }
 }

@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -36,22 +36,12 @@ namespace Microsoft.ProjectOxford.Vision.Contract
     /// <summary>
     /// The class for category.
     /// </summary>
-    public class Category
+    public class Category : NameScorePair
     {
         /// <summary>
-        /// Gets or sets the name.
+        /// Detail for this category, when available.
+        /// The type will be dictated by the model invoked.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the score.
-        /// </summary>
-        /// <value>
-        /// The score.
-        /// </value>
-        public double Score { get; set; }
+        public object Detail { get; set; }
     }
 }

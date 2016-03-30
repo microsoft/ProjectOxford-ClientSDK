@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,21 +31,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SampleUserControlLibrary;
+using System.Windows;
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -67,7 +54,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         /// </summary>
         public static readonly string SPEAKER_ENROLLMENTS = "Enrollments";
         /// <summary>
-        /// Returns the subcription key of the Oxford API
+        /// Returns the subscription key of the Oxford API
         /// </summary>
         public string SubscriptionKey
         {

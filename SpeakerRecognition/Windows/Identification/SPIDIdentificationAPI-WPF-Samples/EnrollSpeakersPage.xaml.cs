@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,12 +31,15 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
+using Microsoft.ProjectOxford.SpeakerRecognition;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract.Identification;
+using Microsoft.Win32;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.IO;
-using Microsoft.Win32;
-using Microsoft.ProjectOxford.Speech.SpeakerIdentification;
 
 namespace SPIDIdentificationAPI_WPF_Samples
 {
@@ -47,7 +50,7 @@ namespace SPIDIdentificationAPI_WPF_Samples
     {
         private string _selectedFile = "";
 
-        private SpeechIdServiceClient _serviceClient;
+        private SpeakerIdentificationServiceClient _serviceClient;
 
         /// <summary>
         /// Constructor to initialize the Enroll Speakers page
@@ -59,7 +62,7 @@ namespace SPIDIdentificationAPI_WPF_Samples
             _speakersListFrame.Navigate(SpeakersListPage.SpeakersList);
 
             MainWindow window = (MainWindow)Application.Current.MainWindow;
-            _serviceClient = new SpeechIdServiceClient(window.ScenarioControl.SubscriptionKey);
+            _serviceClient = new SpeakerIdentificationServiceClient(window.ScenarioControl.SubscriptionKey);
         }
 
         private async void _addBtn_Click(object sender, RoutedEventArgs e)
@@ -70,18 +73,18 @@ namespace SPIDIdentificationAPI_WPF_Samples
                 window.Log("Creating Speaker Profile...");
                 CreateProfileResponse creationResponse = await _serviceClient.CreateProfileAsync(_localeCmb.Text);
                 window.Log("Speaker Profile Created.");
-                window.Log("Retreiving The Created Profile...");
-                IdentificationProfile profile = await _serviceClient.GetProfileAsync(creationResponse.IdentificationProfileId);
-                window.Log("Speaker Profile Retreived.");
+                window.Log("Retrieving The Created Profile...");
+                Profile profile = await _serviceClient.GetProfileAsync(creationResponse.ProfileId);
+                window.Log("Speaker Profile Retrieved.");
                 SpeakersListPage.SpeakersList.AddSpeaker(profile);
             }
-            catch (ProfileCreationException ex)
+            catch (CreateProfileException ex)
             {
                 window.Log("Profile Creation Error: " + ex.Message);
             }
             catch (GetProfileException ex)
             {
-                window.Log("Error Retreiving The Profile: " + ex.Message);
+                window.Log("Error Retrieving The Profile: " + ex.Message);
             }
             catch (Exception ex)
             {
@@ -115,11 +118,36 @@ namespace SPIDIdentificationAPI_WPF_Samples
                     throw new Exception("No File Selected.");
 
                 window.Log("Enrolling Speaker...");
-                IdentificationProfile[] selectedProfiles = SpeakersListPage.SpeakersList.GetSelectedProfiles();
+                Profile[] selectedProfiles = SpeakersListPage.SpeakersList.GetSelectedProfiles();
+
+                OperationLocation processPollingLocation;
                 using (Stream audioStream = File.OpenRead(_selectedFile))
                 {
                     _selectedFile = "";
-                    await _serviceClient.EnrollAsync(audioStream, selectedProfiles[0].IdentificationProfileId, TimeSpan.FromSeconds(5), 10);
+                    processPollingLocation = await _serviceClient.EnrollAsync(audioStream, selectedProfiles[0].ProfileId);
+                }
+
+                EnrollmentOperation enrollmentResult;
+                int numOfRetries = 10;
+                TimeSpan timeBetweenRetries = TimeSpan.FromSeconds(5.0);
+                while(numOfRetries > 0)
+                {
+                    await Task.Delay(timeBetweenRetries);
+                    enrollmentResult = await _serviceClient.CheckEnrollmentStatusAsync(processPollingLocation);
+
+                    if (enrollmentResult.Status == Status.Succeeded)
+                    {
+                        break;
+                    }
+                    else if (enrollmentResult.Status == Status.Failed)
+                    {
+                        throw new EnrollmentException(enrollmentResult.Message);
+                    }
+                    numOfRetries--;
+                }
+                if(numOfRetries <= 0)
+                {
+                    throw new EnrollmentException("Enrollment operation timeout.");
                 }
                 window.Log("Enrollment Done.");
                 await SpeakersListPage.SpeakersList.UpdateAllSpeakersAsync();
@@ -140,3 +168,4 @@ namespace SPIDIdentificationAPI_WPF_Samples
         }
     }
 }
+

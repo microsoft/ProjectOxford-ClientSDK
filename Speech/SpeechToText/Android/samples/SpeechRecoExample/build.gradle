@@ -7,7 +7,7 @@ repositories {
     }
 }
 dependencies {
-    compile 'com.microsoft.projectoxford:speechrecognition:0.5.0'
+    compile 'com.microsoft.projectoxford:speechrecognition:0.6.0'
 }
 
 android {

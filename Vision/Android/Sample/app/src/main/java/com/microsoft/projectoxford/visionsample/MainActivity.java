@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -65,6 +65,11 @@ public class MainActivity extends ActionBarActivity {
 
     public void activityAnalyze(View v) {
         Intent intent = new Intent(this, AnalyzeActivity.class);
+        startActivity(intent);
+    }
+
+    public void activityDescribe(View v) {
+        Intent intent = new Intent(this, DescribeActivity.class);
         startActivity(intent);
     }
 

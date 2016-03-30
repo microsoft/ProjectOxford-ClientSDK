@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'ProjectOxfordFace_Example', :exclusive => true do
+  pod 'ProjectOxfordFace', :path => '../'
+end
+
+target 'ProjectOxfordFace_Tests', :exclusive => true do
+  pod 'ProjectOxfordFace', :path => '../'
+
+  
+end

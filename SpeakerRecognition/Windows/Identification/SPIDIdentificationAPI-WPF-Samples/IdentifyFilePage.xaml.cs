@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,12 +31,14 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
+using Microsoft.ProjectOxford.SpeakerRecognition;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract.Identification;
+using Microsoft.Win32;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.IO;
-using Microsoft.Win32;
-using Microsoft.ProjectOxford.Speech.SpeakerIdentification;
 
 namespace SPIDIdentificationAPI_WPF_Samples
 {
@@ -47,7 +49,7 @@ namespace SPIDIdentificationAPI_WPF_Samples
     {
         private string _selectedFile = "";
 
-        private SpeechIdServiceClient _serviceClient;
+        private SpeakerIdentificationServiceClient _serviceClient;
 
         /// <summary>
         /// Constructor to initialize the Identify File page
@@ -59,7 +61,7 @@ namespace SPIDIdentificationAPI_WPF_Samples
             _speakersListFrame.Navigate(SpeakersListPage.SpeakersList);
 
             MainWindow window = (MainWindow)Application.Current.MainWindow;
-            _serviceClient = new SpeechIdServiceClient(window.ScenarioControl.SubscriptionKey);
+            _serviceClient = new SpeakerIdentificationServiceClient(window.ScenarioControl.SubscriptionKey);
         }
 
         private void _loadFileBtn_Click(object sender, RoutedEventArgs e)
@@ -88,37 +90,47 @@ namespace SPIDIdentificationAPI_WPF_Samples
                     throw new Exception("No File Selected.");
 
                 window.Log("Identifying File...");
-                IdentificationProfile[] selectedProfiles = SpeakersListPage.SpeakersList.GetSelectedProfiles();
-                string[] testProfileIds = new string[selectedProfiles.Length];
+                Profile[] selectedProfiles = SpeakersListPage.SpeakersList.GetSelectedProfiles();
+                Guid[] testProfileIds = new Guid[selectedProfiles.Length];
                 for (int i = 0; i < testProfileIds.Length; i++)
                 {
-                    testProfileIds[i] = selectedProfiles[i].IdentificationProfileId;
+                    testProfileIds[i] = selectedProfiles[i].ProfileId;
                 }
 
-                IdentificationResponse response;
+                OperationLocation processPollingLocation;
                 using (Stream audioStream = File.OpenRead(_selectedFile))
                 {
                     _selectedFile = "";
-                    response = await _serviceClient.IdentiftyAsync(audioStream, testProfileIds, TimeSpan.FromSeconds(5), 10);
+                    processPollingLocation = await _serviceClient.IdentifyAsync(audioStream, testProfileIds);
                 }
+
+                IdentificationOperation identificationResponse = null;
+                int numOfRetries = 10;
+                TimeSpan timeBetweenRetries = TimeSpan.FromSeconds(5.0);
+                while (numOfRetries > 0)
+                {
+                    await Task.Delay(timeBetweenRetries);
+                    identificationResponse = await _serviceClient.CheckIdentificationStatusAsync(processPollingLocation);
+
+                    if (identificationResponse.Status == Status.Succeeded)
+                    {
+                        break;
+                    }
+                    else if (identificationResponse.Status == Status.Failed)
+                    {
+                        throw new IdentificationException(identificationResponse.Message);
+                    }
+                    numOfRetries--;
+                }
+                if (numOfRetries <= 0)
+                {
+                    throw new IdentificationException("Identification operation timeout.");
+                }
+
                 window.Log("Identification Done.");
 
-                _identificationResultTxtBlk.Text = response.IdentifiedProfileId;
-                switch (response.Confidence)
-                {
-                    case IdentificationConfidence.High:
-                        _identificationConfidenceTxtBlk.Text = "High";
-                        break;
-                    case IdentificationConfidence.Low:
-                        _identificationConfidenceTxtBlk.Text = "Low";
-                        break;
-                    case IdentificationConfidence.None:
-                        _identificationConfidenceTxtBlk.Text = "Can't Identify Audio";
-                        break;
-                    case IdentificationConfidence.Normal:
-                        _identificationConfidenceTxtBlk.Text = "Normal";
-                        break;
-                }
+                _identificationResultTxtBlk.Text = identificationResponse.ProcessingResult.IdentifiedProfileId.ToString();
+                _identificationConfidenceTxtBlk.Text = identificationResponse.ProcessingResult.Confidence.ToString();
                 _identificationResultStckPnl.Visibility = Visibility.Visible;
             }
             catch (IdentificationException ex)

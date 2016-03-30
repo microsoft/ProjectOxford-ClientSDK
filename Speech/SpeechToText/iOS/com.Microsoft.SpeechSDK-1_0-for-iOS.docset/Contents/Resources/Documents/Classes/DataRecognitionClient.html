@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>DataRecognitionClient Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1333)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">SpeechSDK-1_0-for-iOS </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Microsoft</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/endAudio">- endAudio</option>
+		
+		<option value="//api/name/endAudioWorker">- endAudioWorker</option>
+		
+		<option value="//api/name/initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:">- initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:</option>
+		
+		<option value="//api/name/sendAudio:withLength:">- sendAudio:withLength:</option>
+		
+		<option value="//api/name/sendAudioFormat:">- sendAudioFormat:</option>
+		
+		<option value="//api/name/sendAudioFormatWorker:">- sendAudioFormatWorker:</option>
+		
+		<option value="//api/name/sleepAndSendAudioWorker:withLength:">- sleepAndSendAudioWorker:withLength:</option>
+		
+		<option value="//api/name/waitForFinalResponse:">- waitForFinalResponse:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">DataRecognitionClient Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td><a href="../Classes/Conversation.html">Conversation</a> : NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>DataRecognitionClient.mm<br />SpeechRecognitionService.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The Azure Intelligent Services API client to perform speech recognition from acquired data (for example from a file or acquired audio source).</p>
+
+<p>Data is broken up into buffers and each buffer is sent to the speech recognition service.
+
+No modification is done to the buffers; if silence detection is required, it must be performed in an external pre-processing pass over the data.</p>
+
+
+
+
+<p>Returns only speech recognition results; intent detection is not performed.</p>
+
+
+
+
+<p>Audio data must be PCM, mono, 16-bit sample, with sample rate of 16000 Hz.</p>
+
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:" title="initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:">&ndash;&nbsp;initWithSpeechRecoParams:withPrefs:withIntent:withProtocol:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Initializes a speech recognition client that uses the buffered data as the input source.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id)initWithSpeechRecoParams:(SpeechRecognitionMode)<em>speechRecognitionMode</em> withPrefs:(AdmRecoOnlyPreferences *)<em>prefs</em> withIntent:(bool)<em>wantIntent</em> withProtocol:(id&lt;SpeechRecognitionProtocol&gt;)<em>delegate</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>speechRecognitionMode</code></th>
+						<td><p>The speech recognition mode. <p>In ShortPhrase mode, the client receives one final multiple N-best choice result.</p>
+
+<p>In Long-form Dictation mode, the client receives multiple final results, based on where the service thinks sentence pauses are.</p></p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>prefs</code></th>
+						<td><p>A set of preferences used to configure the speech service.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>wantIntent</code></th>
+						<td><p>Set this parameter to false</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>delegate</code></th>
+						<td><p>The speech recognition protocol callback</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The speech recognition client</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Initializes a speech recognition client that uses the buffered data as the input source.</p>
+
+<p>Callers are responsible for acquiring the audio data and writing that data to input streams. The data is split into buffers;
+
+each buffer is sent to the speech recognition service.
+
+No modification is done to the buffers; silence detection must be performed by an external algorithm before calling any methods to write data to the service.
+
+The recognition service returns only speech recognition results and does not perform intent detection.
+
+The audio must be PCM, mono, 16-bit sample, with sample rate of 16000 Hz.
+
+</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/sendAudioFormat:" title="sendAudioFormat:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sendAudioFormat:">&ndash;&nbsp;sendAudioFormat:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sends an audio format description to the service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)sendAudioFormat:(SpeechAudioFormat *)<em>format</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>format</code></th>
+						<td><p>Audio features that describe the encoding and sampling rate of the audio.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sends an audio format description to the service.</p>
+
+<p>If you are not sending up a audio file in wave format, but instead you have just
+
+raw data, then before sending up any audio data you must first send up an
+
+[SpeechAudioFormat](../Classes/SpeechAudioFormat.html) descriptor to describe the layout and format of your raw audio data.
+
+The audio must be PCM, mono, 16-bit sample, with sample rate of 16000 Hz.
+
+</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/sendAudio:withLength:" title="sendAudio:withLength:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sendAudio:withLength:">&ndash;&nbsp;sendAudio:withLength:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sends audio data to the service at a controlled rate.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)sendAudio:(NSData *)<em>buffer</em> withLength:(int)<em>actualAudioBytesInBuffer</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>buffer</code></th>
+						<td><p>The data bytes of audio to send to the service.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>actualAudioBytesInBuffer</code></th>
+						<td><p>The actual number of audio bytes in the buffer.<p>The buffer size is allowed to be larger than the actual audio data in the buffer, so</p>
+
+<pre><code>   this parameter states the size of the actual data in the buffer.&lt;/p&gt;
+</code></pre></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sends audio data to the service at a controlled rate.</p>
+
+<p>Collects and sends buffered audio to the speech recognition service. The audio must be PCM, mono, 16-bit sample, with
+
+sample rate of 16000 Hz. For raw audio, i.e. audio data that is not in wave format (e.g. audio captured over Bluetooth), before
+
+sending up any audio data with this method, you must call the sendAudioFormatWorker method to send a [SpeechAudioFormat](../Classes/SpeechAudioFormat.html) descriptor
+
+that describes the layout and format of your raw audio data. This work is queued on a background worker thread.
+
+</p>
+
+
+
+
+<p>If you try to send audio data to the service too fast, this method will throttle the upload speech to match
+
+the audio data rate specified in the [SpeechAudioFormat](../Classes/SpeechAudioFormat.html) for this audio stream.
+
+</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/endAudio" title="endAudio"></a>
+	<h3 class="method-title"><code><a href="#//api/name/endAudio">&ndash;&nbsp;endAudio</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Notifies the service that the client is finished sending buffered audio.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)endAudio</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Notifies the service that the client is finished sending buffered audio.</p>
+
+<p>This work is queued onto a background worker.</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/waitForFinalResponse:" title="waitForFinalResponse:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/waitForFinalResponse:">&ndash;&nbsp;waitForFinalResponse:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Waits the given number of seconds for a speech recognition response. <em>Calling this method blocks the current thread until the response is received or the wait time is exceeded</em>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (bool)waitForFinalResponse:(int)<em>timeoutInSeconds</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeoutInSeconds</code></th>
+						<td><p>The time to wait for a response, in seconds.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>true if the final speech recognition result is sent from the speech recognition service or false if the timeout was reached.</p>
+			</div>
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Waits the given number of seconds for a speech recognition response. <em>Calling this method blocks the current thread until the response is received or the wait time is exceeded</em>.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/sendAudioFormatWorker:" title="sendAudioFormatWorker:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sendAudioFormatWorker:">&ndash;&nbsp;sendAudioFormatWorker:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sends an audio format description to the service.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)sendAudioFormatWorker:(SpeechAudioFormat *)<em>format</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>format</code></th>
+						<td><p>Audio features that describe the encoding and sampling rate of the audio.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sends an audio format description to the service.</p>
+
+<p>If you are not sending up a audio file in wave format, but instead you have just
+
+raw data, then before sending up any audio data, you must first send up an
+
+[SpeechAudioFormat](../Classes/SpeechAudioFormat.html) descriptor to describe the layout and format of your raw audio data.
+
+The audio must be PCM, mono, 16-bit sample, with sample rate of 16000 Hz.
+
+</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/sleepAndSendAudioWorker:withLength:" title="sleepAndSendAudioWorker:withLength:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sleepAndSendAudioWorker:withLength:">&ndash;&nbsp;sleepAndSendAudioWorker:withLength:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sends audio data to the service at a controlled rate.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)sleepAndSendAudioWorker:(Byte *)<em>buffer</em> withLength:(int)<em>actualAudioBytesInBuffer</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>buffer</code></th>
+						<td><p>The data bytes of audio to send to the Server.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>actualAudioBytesInBuffer</code></th>
+						<td><p>The actual number of audio bytes in the buffer.<p>The buffer size is allowed to be larger than the actual audio data in the buffer, so</p>
+
+<pre><code>   this parameter states the size of the actual data in the buffer.&lt;/p&gt;
+</code></pre></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Sends audio data to the service at a controlled rate.</p>
+
+<p>If you try to send audio data to the service too fast, this method will throttle the upload speech to match
+
+the audio data rate specified in the [SpeechAudioFormat](../Classes/SpeechAudioFormat.html) for this audio stream.
+
+</p>
+
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/endAudioWorker" title="endAudioWorker"></a>
+	<h3 class="method-title"><code><a href="#//api/name/endAudioWorker">&ndash;&nbsp;endAudioWorker</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Notify the server that client is done sending audio.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)endAudioWorker</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>Notify the server that client is done sending audio.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">DataRecognitionClient.mm</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2016 Microsoft. All rights reserved. Updated: 2016-03-21</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1333)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

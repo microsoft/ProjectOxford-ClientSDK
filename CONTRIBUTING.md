@@ -1,7 +1,7 @@
-Contributing to Project Oxford Client Libraries
+Contributing to Microsoft Cognitive Services Client Libraries
 ===============================================
 
-So, you want to contribute on a client SDK for one of the Project Oxford APIs.
+So, you want to contribute on a client SDK for one of the Microsoft Cognitive Services.
 Here's what you need to know.
 
 1.  Each SDK must include both a client library and a sample showing the API in

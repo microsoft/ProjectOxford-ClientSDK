@@ -71,8 +71,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="SpeechClient, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\..\packages\Microsoft.ProjectOxford.SpeechRecognition-x64.0.4.9.1\lib\SpeechClient.dll</HintPath>
+    <Reference Include="SpeechClient, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"  
+               Condition=" '$(Platform)' == 'x86' ">
+      <HintPath>..\..\packages\Microsoft.ProjectOxford.SpeechRecognition-x86.0.4.10.1\lib\SpeechClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SpeechClient, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
+               Condition=" '$(Platform)' == 'x64' ">
+      <HintPath>..\..\packages\Microsoft.ProjectOxford.SpeechRecognition-x64.0.4.10.1\lib\SpeechClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Configuration" />

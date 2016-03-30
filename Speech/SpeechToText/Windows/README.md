@@ -1,7 +1,7 @@
 The client library
 ==================
 
-The Speech To Text API client library is a thin C\# client wrapper for Project Oxford Speech To Text
+The Speech To Text API client library is a thin C\# client wrapper for Microsoft Cognitive Services (formerly Project Oxford) Speech To Text
 REST APIs.  
 
 The easiest way to use this client library is to get microsoft.projectoxford.vision package from [nuget](<http://nuget.org>).
@@ -16,8 +16,7 @@ For x64 package, please go to [Speech Recognition API x64 Package in nuget](http
 The sample
 ==========
 
-This sample is a Windows WPF application to demonstrate the use of Project
-Oxford Speech To Text API.
+This sample is a Windows WPF application to demonstrate the use of Microsoft Cognitive Services (formerly Project Oxford) Speech To Text API.
 
 It demonstrates the following features using a wav file or external microphone input:
 
@@ -40,7 +39,7 @@ Build the sample
 
 5.  Press Ctrl+Shift+B, or select Build \> Build Solution.
 
-For intent recognition to work, you need to sign up [Language Understanding Intelligent Service (LUIS)](<https://www.projectoxford.ai/luis>). Please put your LUIS App ID and Subscription ID in app.config file. app.config file can be located from Solution Explorer.
+For intent recognition to work, you need to sign up [Language Understanding Intelligent Service (LUIS)](<https://www.microsoft.com/cognitive-services/en-us/sign-up>). Please put your LUIS App ID and Subscription ID in app.config file. app.config file can be located from Solution Explorer.
 
 <img src="SampleScreenshots/SampleRunning1.png" width="100%"/>
 
@@ -49,11 +48,7 @@ Run the sample
 
 After the build is complete, press F5 to run the sample.
 
-First, you will
-need a [Microsoft Azure Account](<http://www.azure.com>) if you don't have one already.
-
-You must obtain a subscription key for Speech API by following instructions in [Subscription
-key management](<http://www.projectoxford.ai/doc/general/subscription-key-mgmt>).
+First, you must obtain a Speech API subscription key by following instructions in [Microsoft Cognitive Services subscription](<https://www.microsoft.com/cognitive-services/en-us/sign-up>).
 
 Locate the text edit box saying "Paste your subscription key here to start" on
 the top right corner. Paste your subscription key. You can choose to persist
@@ -67,25 +62,18 @@ from everyone in it.
 
 Contributing
 ============
-
 We welcome contributions and are always looking for new SDKs, input, and
-suggestions. Learn more about how you can help by reading the [Contribution
+suggestions. Feel free to file issues on the repo and we'll address them as we can. You can also learn more about how you can help on the [Contribution
 Rules & Guidelines](</CONTRIBUTING.md>).
 
-Additionally, feel free to reach out to us directly with questions, feedback, or
-suggestions.
+For questions, feedback, or suggestions about Microsoft Cognitive Services, feel free to reach out to us directly.
 
--   [Project Oxford
-    support](<mailto:oxfordSignup@microsoft.com?subject=Project%20Oxford%20Sign%20Up>)
-
--   [Forums](<https://social.msdn.microsoft.com/forums/azure/en-US/home?forum=mlapi>)
-
--   [Blog](<https://blogs.technet.com/b/machinelearning/archive/tags/project+oxford/default.aspx>)
+-   [Cognitive Services UserVoice Forum](<https://cognitive.uservoice.com>)
 
 License
 =======
 
-All Project Oxford SDKs are licensed with the MIT License. For more details, see
-[LICENSE](</LICENSE.md>), included in both the repo and specific SDK roots.
+All Microsoft Cognitive Services SDKs and samples are licensed with the MIT License. For more details, see
+[LICENSE](</LICENSE.md>).
 
-Sample images used in SDK are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).
+Sample images are licensed separately, please refer to [LICENSE-IMAGE](</LICENSE-IMAGE.md>).

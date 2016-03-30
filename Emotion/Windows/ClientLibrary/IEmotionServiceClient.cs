@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -35,11 +35,14 @@ using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.ProjectOxford.Common;
+using Microsoft.ProjectOxford.Common.Contract;
+using Microsoft.ProjectOxford.Emotion.Contract;
 
 namespace Microsoft.ProjectOxford.Emotion
 {
     internal interface IEmotionServiceClient
     {
+        #region Image operations
         /// <summary>
         /// Recognize emotions on faces in an image.
         /// </summary>
@@ -69,5 +72,39 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <param name="faceRectangles">Array of face rectangles</param>
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each face.</returns>
         Task<Contract.Emotion[]> RecognizeAsync(Stream imageStream, Rectangle[] faceRectangles);
+        #endregion
+
+        #region Video operations
+        /// <summary>
+        /// Recognize emotions on faces in a video.
+        /// </summary>
+        /// <param name="videoStream">Video stream</param>
+        /// <param name="outputStyle">Output data style</param>
+        /// <returns>Video operation created</returns>
+        Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(Stream videoStream);
+
+        /// <summary>
+        /// Recognize emotions on faces in a video.
+        /// </summary>
+        /// <param name="videoBytes">Video content as byte array</param>
+        /// <param name="outputStyle">Output data style</param>
+        /// <returns>Video operation created.</returns>
+        Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(byte[] videoBytes);
+
+        /// <summary>
+        /// Recognize emotions on faces in a video.
+        /// </summary>
+        /// <param name="videoUrl">Video URL</param>
+        /// <param name="outputStyle">Output data style</param>
+        /// <returns>Video operation created</returns>
+        Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(string videoUrl);
+
+        /// <summary>
+        /// Get video operation result.
+        /// </summary>
+        /// <param name="operation">The operation</param>
+        /// <returns>Operation result.</returns>
+        Task<VideoOperationResult> GetOperationResultAsync(VideoEmotionRecognitionOperation operation);
+        #endregion
     }
 }

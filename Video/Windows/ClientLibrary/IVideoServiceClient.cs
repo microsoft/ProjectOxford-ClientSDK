@@ -4,9 +4,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -32,6 +32,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+using System;
 using Microsoft.ProjectOxford.Video.Contract;
 using System.IO;
 using System.Threading.Tasks;
@@ -49,6 +50,7 @@ namespace Microsoft.ProjectOxford.Video
         /// <param name="video">Video stream.</param>
         /// <param name="operationType">Operation type.</param>
         /// <returns>Video operation created.</returns>
+        [Obsolete]
         Task<Operation> CreateOperationAsync(Stream video, OperationType operationType);
 
         /// <summary>
@@ -57,16 +59,41 @@ namespace Microsoft.ProjectOxford.Video
         /// <param name="video">Video content as byte array.</param>
         /// <param name="operationType">Operation type.</param>
         /// <returns>Video operation created.</returns>
+        [Obsolete]
         Task<Operation> CreateOperationAsync(byte[] video, OperationType operationType);
 
         /// <summary>
         /// Create video operation.
         /// </summary>
         /// <param name="videoUrl">Video url.</param>
-        /// <param name="operatioType">Operation type.</param>
+        /// <param name="operationType">Operation type.</param>
         /// <returns>Video operation created.</returns>
-        Task<Operation> CreateOperationAsync(string videoUrl, OperationType operatioType);
+        [Obsolete]
+        Task<Operation> CreateOperationAsync(string videoUrl, OperationType operationType);
 
+        /// <summary>
+        /// Create video operation.
+        /// </summary>
+        /// <param name="video">Video stream.</param>
+        /// <param name="operationSettings">Settings of operation.</param>
+        /// <returns>Video operation created.</returns>
+        Task<Operation> CreateOperationAsync(Stream video, VideoOperationSettings operationSettings);
+
+        /// <summary>
+        /// Create video operation.
+        /// </summary>
+        /// <param name="video">Video content as byte array.</param>
+        /// <param name="operationSettings">Settings of operation.</param>
+        /// <returns>Video operation created.</returns>
+        Task<Operation> CreateOperationAsync(byte[] video, VideoOperationSettings operationSettings);
+
+        /// <summary>
+        /// Create video operation.
+        /// </summary>
+        /// <param name="videoUrl">Video url.</param>
+        /// <param name="operationSettings">Settings of operation.</param>
+        /// <returns>Video operation created.</returns>
+        Task<Operation> CreateOperationAsync(string videoUrl, VideoOperationSettings operationSettings);
         /// <summary>
         /// Get video operation result.
         /// </summary>

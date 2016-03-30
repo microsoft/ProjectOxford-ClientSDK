@@ -35,8 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.ProjectOxford.SpeakerRecognition, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ProjectOxford.SpeakerRecognition.1.0.0.0\lib\net452\Microsoft.ProjectOxford.SpeakerRecognition.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -59,13 +63,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClientLibrary\IdentificationConfidence.cs" />
-    <Compile Include="ClientLibrary\EnrollmentException.cs" />
-    <Compile Include="ClientLibrary\EnrollmentStatus.cs" />
-    <Compile Include="ClientLibrary\GetProfileException.cs" />
-    <Compile Include="ClientLibrary\IdentificationException.cs" />
-    <Compile Include="ClientLibrary\OperationStatus.cs" />
-    <Compile Include="ClientLibrary\ProfileCreationException.cs" />
     <Compile Include="SpeakersListPage.xaml.cs">
       <DependentUpon>SpeakersListPage.xaml</DependentUpon>
     </Compile>
@@ -85,16 +82,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClientLibrary\CreateProfileResponse.cs" />
-    <Compile Include="ClientLibrary\EnrollmentOperationResponse.cs" />
-    <Compile Include="ClientLibrary\EnrollmentResponse.cs" />
     <Compile Include="EnrollSpeakersPage.xaml.cs">
       <DependentUpon>EnrollSpeakersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ClientLibrary\IdentificationOperationResponse.cs" />
-    <Compile Include="ClientLibrary\IdentificationProfile.cs" />
-    <Compile Include="ClientLibrary\IdentificationResponse.cs" />
-    <Compile Include="ClientLibrary\SpeechIdServiceClient.cs" />
     <Compile Include="IdentifyFilePage.xaml.cs">
       <DependentUpon>IdentifyFilePage.xaml</DependentUpon>
     </Compile>
@@ -139,7 +129,7 @@
     <Resource Include="Assets\Microsoft-logo_rgb_c-gray.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SampleUtil\Windows\SampleUserControlLibrary\SampleUserControlLibrary.csproj">
+    <ProjectReference Include="..\..\..\..\ProjectOxford-ClientSDK-Dev\SampleUtil\Windows\SampleUserControlLibrary\SampleUserControlLibrary.csproj">
       <Project>{735929f0-f8f1-4d93-b027-5d034fa7892b}</Project>
       <Name>SampleUserControlLibrary</Name>
     </ProjectReference>

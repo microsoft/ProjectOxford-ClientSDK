@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
 // Copyright (c) Microsoft Corporation
@@ -227,7 +227,7 @@ namespace Microsoft.ProjectOxford.Face.Controls
                         string subscriptionKey = mainWindow._scenariosControl.SubscriptionKey;
 
                         var faceServiceClient = new FaceServiceClient(subscriptionKey);
-                        Contract.Face[] faces = await faceServiceClient.DetectAsync(fileStream, false, true, new FaceAttributeType[] { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.FacialHair, FaceAttributeType.Smile });
+                        Contract.Face[] faces = await faceServiceClient.DetectAsync(fileStream, false, true, new FaceAttributeType[] { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.Smile, FaceAttributeType.Glasses });
                         MainWindow.Log("Response: Success. Detected {0} face(s) in {1}", faces.Length, SelectedFile);
 
                         DetectedResultsInText = string.Format("{0} face(s) has been detected", faces.Length);
@@ -244,12 +244,8 @@ namespace Microsoft.ProjectOxford.Face.Controls
                                 FaceId = face.FaceId.ToString(),
                                 Gender = face.FaceAttributes.Gender,
                                 Age = string.Format("{0:#} years old", face.FaceAttributes.Age),
-                                FacialHair = string.Format(
-                                    "Moustache: {0}, Beard: {1}, Sideburn: {2}",
-                                    face.FaceAttributes.FacialHair == null ? "None" : face.FaceAttributes.FacialHair.Moustache.ToString(),
-                                    face.FaceAttributes.FacialHair == null ? "None" : face.FaceAttributes.FacialHair.Beard.ToString(),
-                                    face.FaceAttributes.FacialHair == null ? "None" : face.FaceAttributes.FacialHair.Sideburns.ToString()),
                                 IsSmiling = face.FaceAttributes.Smile > 0.0 ? "Smile" : "Not Smile",
+                                Glasses = face.FaceAttributes.Glasses.ToString(),
                             });
                         }
 

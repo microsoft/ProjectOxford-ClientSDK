@@ -42,7 +42,7 @@
             </ListBox>
         </StackPanel>
         <Frame x:Name="_scenarioFrame" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" FontWeight="Bold" FontSize="18.667" Padding="0, 5, 0, 5"></Frame>
-        <TextBox x:Name="_logTextBox" Grid.Row="2" Grid.Column="1" Padding="5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap">
+        <TextBox x:Name="_logTextBox" Grid.Row="2" Grid.Column="1" Padding="5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" IsReadOnly="True">
             <TextBox.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
             </TextBox.Background>Status text goes here</TextBox>

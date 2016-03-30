@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 //
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 //
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // 
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 //
@@ -39,9 +39,9 @@ using System.Resources;
 [assembly: AssemblyDescription("Microsoft Project Oxford Vision API Client Library")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft ProjectOxford")]
-[assembly: AssemblyCopyright("Copyright © 2015 Microsoft")]
+[assembly: AssemblyCopyright("Copyright © 2016 Microsoft")]
 [assembly: AssemblyTrademark("Microsoft")]
 [assembly: NeutralResourcesLanguage("en")]
 
-[assembly: AssemblyVersion("0.5.0.1")]
-[assembly: AssemblyFileVersion("0.5.0.1")]
+[assembly: AssemblyVersion("1.0.11.0")]
+[assembly: AssemblyFileVersion("1.0.11.0")]

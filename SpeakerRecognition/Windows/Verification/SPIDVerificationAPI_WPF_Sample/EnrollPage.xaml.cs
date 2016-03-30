@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license.
 // 
-// Project Oxford: http://ProjectOxford.ai
+// Microsoft Cognitive Services (formerly Project Oxford): https://www.microsoft.com/cognitive-services
 // 
-// Project Oxford SDK GitHub:
+// Microsoft Cognitive Services (formerly Project Oxford) GitHub:
 // https://github.com/Microsoft/ProjectOxford-ClientSDK
 // 
 // Copyright (c) Microsoft Corporation
@@ -31,17 +31,18 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using Microsoft.ProjectOxford.SpeakerRecognition;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract;
+using Microsoft.ProjectOxford.SpeakerRecognition.Contract.Verification;
 using NAudio.Utils;
 using NAudio.Wave;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.ProjectOxford.Speech.SpeakerVerification;
 
 namespace SPIDVerificationAPI_WPF_Sample
 {
@@ -51,12 +52,12 @@ namespace SPIDVerificationAPI_WPF_Sample
     public partial class EnrollPage : Page
     {
         private string _subscriptionKey;
-        private string _speakerId = null;
+        private Guid _speakerId = Guid.Empty;
         private int _remainingEnrollments;
         private WaveIn _waveIn;
         private WaveFileWriter _fileWriter;
         private Stream _stream;
-        private SpeechVerificationServiceClient _serviceClient;
+        private SpeakerVerificationServiceClient _serviceClient;
 
         /// <summary>
         /// Creates a new EnrollPage 
@@ -66,7 +67,7 @@ namespace SPIDVerificationAPI_WPF_Sample
         {
             InitializeComponent();
             _subscriptionKey = ((MainWindow)Application.Current.MainWindow).SubscriptionKey;
-            _serviceClient = new SpeechVerificationServiceClient(_subscriptionKey);
+            _serviceClient = new SpeakerVerificationServiceClient(_subscriptionKey);
             initializeRecorder();
             initializeSpeaker();
         }
@@ -77,9 +78,13 @@ namespace SPIDVerificationAPI_WPF_Sample
         private async void initializeSpeaker()
         {
             IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
-            _speakerId = _storageHelper.readValue(MainWindow.SPEAKER_FILENAME);
+            string _savedSpeakerId = _storageHelper.readValue(MainWindow.SPEAKER_FILENAME);
+            if (_savedSpeakerId != null)
+            {
+                _speakerId = new Guid(_savedSpeakerId);
+            }
             record.IsEnabled = false;
-            if (_speakerId == null)
+            if (_speakerId == Guid.Empty)
             {
                 bool created = await createProfile();
                 if (created)
@@ -89,7 +94,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             }
             else
             {
-                setStatus("Using profile Id: " + _speakerId);
+                setStatus("Using profile Id: " + _speakerId.ToString());
                 refreshPhrases();
                 string enrollmentsStatus = _storageHelper.readValue(MainWindow.SPEAKER_ENROLLMENTS);
                 if ((enrollmentsStatus != null) && (enrollmentsStatus.Equals("Done")))
@@ -155,7 +160,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             try
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                EnrollmentResponse response = await _serviceClient.EnrollStreamAsync(audioStream, _speakerId);
+                Enrollment response = await _serviceClient.EnrollAsync(audioStream, _speakerId);
                 sw.Stop();
                 _remainingEnrollments = response.RemainingEnrollments;
                 setStatus("Enrollment Done, Elapsed Time: " + sw.Elapsed);
@@ -236,15 +241,15 @@ namespace SPIDVerificationAPI_WPF_Sample
             try
             {
                 Stopwatch sw = Stopwatch.StartNew();
-                SpeakerProfile response = await _serviceClient.CreateProfileAsync("en-us");
+                CreateProfileResponse response = await _serviceClient.CreateProfileAsync("en-us");
                 sw.Stop();
                 setStatus("Profile Created, Elapsed Time: " + sw.Elapsed);
                 IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
-                _storageHelper.writeValue(MainWindow.SPEAKER_FILENAME, response.VerificationProfileId);
-                _speakerId = response.VerificationProfileId;
+                _storageHelper.writeValue(MainWindow.SPEAKER_FILENAME, response.ProfileId.ToString());
+                _speakerId = response.ProfileId;
                 return true;
             }
-            catch (ProfileCreationException exception)
+            catch (CreateProfileException exception)
             {
                 setStatus("Cannot create profile: " + exception.Message);
                 return false;
@@ -265,8 +270,8 @@ namespace SPIDVerificationAPI_WPF_Sample
             record.IsEnabled = false;
             try
             {
-                List<PhraseResponse> phrases = await _serviceClient.GetAllAvailablePhrases("en-us");
-                foreach (PhraseResponse phrase in phrases)
+                VerificationPhrase[] phrases = await _serviceClient.GetPhrasesAsync("en-us");
+                foreach (VerificationPhrase phrase in phrases)
                 {
                     ListBoxItem item = new ListBoxItem();
                     item.Content = phrase.Phrase;
@@ -295,7 +300,7 @@ namespace SPIDVerificationAPI_WPF_Sample
             try
             {
                 setStatus("Resetting profile: " + _speakerId);
-                await _serviceClient.ResetProfileAsync(_speakerId);
+                await _serviceClient.ResetEnrollmentsAsync(_speakerId);
                 setStatus("Profile reset");
                 IsolatedStorageHelper _storageHelper = IsolatedStorageHelper.getInstance();
                 _storageHelper.writeValue(MainWindow.SPEAKER_ENROLLMENTS, "Empty");
@@ -303,7 +308,7 @@ namespace SPIDVerificationAPI_WPF_Sample
                 remEnrollText.Text = "";
                 verPhraseText.Text = "";
             }
-            catch (ResetProfileException exp)
+            catch (ResetEnrollmentsException exp)
             {
                 setStatus("Cannot reset Profile: " + exp.Message);
             }
