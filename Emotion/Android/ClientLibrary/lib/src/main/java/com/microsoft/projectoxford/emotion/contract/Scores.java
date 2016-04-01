@@ -41,4 +41,27 @@ public class Scores {
     public double neutral;
     public double sadness;
     public double surprise;
+    
+    public String getExpressionName()
+	{
+		// Hashtable for store the key and the value
+		Map<Double, String> a = new Hashtable<Double, String>();
+		
+		// We made a trick changing the positions, in this case the key is the double number and the value the expression name
+		a.put(anger,"ANGER");
+        a.put(contempt,"CONTEMPT");
+        a.put(disgust,"DISGUST");
+        a.put(fear,"FEAR");
+        a.put(happiness,"HAPPINESS");
+        a.put(neutral,"NEUTRAL");
+        a.put(sadness,"SADNESS");
+        a.put(surprise,"SURPRISE");
+		
+        // We get the max value of the collection
+		double maxValue = Collections.max(a.keySet());
+		
+		// It will return the name of the expression that corresponds with the maxValue
+		return a.get(maxValue);
+		
+	}
 }
