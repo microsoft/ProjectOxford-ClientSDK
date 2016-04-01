@@ -75,6 +75,26 @@ namespace Microsoft.ProjectOxford.Emotion.Contract
         /// 
         /// </summary>
         public float Surprise { get; set; }
+        
+        // returns the name of the expression with max value
+        public string GetExpressionName()
+        {
+            // In this dictionary the key is the float number and the value the name of the expression
+            Dictionary<float,string> list = new Dictionary<float, string>() {
+                { Anger, "Anger" },
+                { Contempt, "Contempt" },
+                { Disgust, "Disgust" },
+                { Fear, "Fear" },
+                { Happiness, "Happiness" },
+                { Neutral, "Neutral" },
+                { Sadness, "Sadness" },
+                { Surprise, "Surprise" }
+            };
+
+            // we search the max key and after it we get the value
+            return list.FirstOrDefault(e => e.Key == list.Keys.Max()).Value;
+
+        }
 
         #region overrides
         public override bool Equals(object o)
