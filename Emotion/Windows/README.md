@@ -53,6 +53,8 @@ There are sample images to be used with this sample application. You can find th
 
 <img src="SampleScreenshots/SampleRunning.png" width="80%"/>
 
+If you want to know what is the name of the expression with more value then you might call GetExpressionName() from the Score class
+
 Contributing
 ============
 We welcome contributions and are always looking for new SDKs, input, and
