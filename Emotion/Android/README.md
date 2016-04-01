@@ -86,6 +86,8 @@ Microsoft will receive the images you upload and may use them to improve Emotion
 API and related services. By submitting an image, you confirm you have consent
 from everyone in it.
 
+If you want to know what is the name of the expression with more value then you might call getExpressionName() from the Score class
+
 Contributing
 ============
 We welcome contributions and are always looking for new SDKs, input, and
