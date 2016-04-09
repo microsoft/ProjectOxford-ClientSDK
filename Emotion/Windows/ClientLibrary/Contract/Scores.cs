@@ -76,24 +76,26 @@ namespace Microsoft.ProjectOxford.Emotion.Contract
         /// </summary>
         public float Surprise { get; set; }
         
-        // returns the name of the expression with max value
-        public string GetExpressionName()
+        /// <summary>
+        /// Create a sorted key-value pair of emotions and the corresponding scores, sorted from highest score on down.
+        /// To make the ordering stable, the score is the primary key, and the name is the secondary key.
+        /// </summary>
+        public IEnumerable<KeyValuePair<string, float>> ToRankedList()
         {
-            // In this dictionary the key is the float number and the value the name of the expression
-            Dictionary<float,string> list = new Dictionary<float, string>() {
-                { Anger, "Anger" },
-                { Contempt, "Contempt" },
-                { Disgust, "Disgust" },
-                { Fear, "Fear" },
-                { Happiness, "Happiness" },
-                { Neutral, "Neutral" },
-                { Sadness, "Sadness" },
-                { Surprise, "Surprise" }
-            };
-
-            // we search the max key and after it we get the value
-            return list.FirstOrDefault(e => e.Key == list.Keys.Max()).Value;
-
+            return new Dictionary<string, float>()
+            {
+                { "Anger", Anger },
+                { "Contempt", Contempt },
+                { "Disgust", Disgust },
+                { "Fear", Fear },
+                { "Happiness", Happiness },
+                { "Neutral", Neutral },
+                { "Sadness", Sadness },
+                { "Surprise", Surprise }
+            }
+            .OrderByDescending(kv => kv.Value)
+            .ThenBy(kv => kv.Key)
+            .ToList();
         }
 
         #region overrides
