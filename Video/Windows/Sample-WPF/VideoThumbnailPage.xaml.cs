@@ -72,11 +72,10 @@ namespace VideoAPI_WPF_Samples
             Microsoft.ProjectOxford.Video.VideoServiceClient client =
                 new Microsoft.ProjectOxford.Video.VideoServiceClient(subscriptionKey);
 
+            client.Timeout = TimeSpan.FromMinutes(10);
+
             using (FileStream originalStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
             {
-                byte[] bytes = new byte[originalStream.Length];
-                await originalStream.ReadAsync(bytes, 0, (int) originalStream.Length);
-
                 VideoThumbnailOperationSettings vtOperationSettings = new VideoThumbnailOperationSettings
                 {
                     OutputType = VideoThumbnailOperationSettings.OutputTypes.Video,
@@ -86,7 +85,7 @@ namespace VideoAPI_WPF_Samples
                 };
                 // Creates a video operation of video thumbnail
                 Helpers.Log(LogIdentifier, "Start uploading video");
-                Operation operation = await client.CreateOperationAsync(bytes, vtOperationSettings);
+                Operation operation = await client.CreateOperationAsync(originalStream, vtOperationSettings);
                 Helpers.Log(LogIdentifier, "Uploading video done");
 
                 // Starts querying service status

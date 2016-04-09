@@ -72,14 +72,13 @@ namespace VideoAPI_WPF_Samples
             Microsoft.ProjectOxford.Video.VideoServiceClient client =
                 new Microsoft.ProjectOxford.Video.VideoServiceClient(subscriptionKey);
 
+            client.Timeout = TimeSpan.FromMinutes(10);
+
             using (FileStream originalStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
             {
-                byte[] bytes = new byte[originalStream.Length];
-                await originalStream.ReadAsync(bytes, 0, (int) originalStream.Length);
-
                 // Creates a video operation of video stabilization
                 Helpers.Log(LogIdentifier, "Start uploading video");
-                Operation operation = await client.CreateOperationAsync(bytes, new VideoStabilizationOperationSettings());
+                Operation operation = await client.CreateOperationAsync(originalStream, new VideoStabilizationOperationSettings());
                 Helpers.Log(LogIdentifier, "Uploading video done");
 
                 // Starts querying service status

@@ -75,14 +75,13 @@ namespace VideoAPI_WPF_Samples
             Helpers.Log(LogIdentifier, "Start motion detection");
             VideoServiceClient client = new VideoServiceClient(subscriptionKey);
 
+            client.Timeout = TimeSpan.FromMinutes(10);
+
             using (FileStream originalStream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
             {
-                byte[] bytes = new byte[originalStream.Length];
-                await originalStream.ReadAsync(bytes, 0, (int)originalStream.Length);
-
                 // Creates a video operation of motion detection
                 Helpers.Log(LogIdentifier, "Start uploading video");
-                Operation operation = await client.CreateOperationAsync(bytes, new MotionDetectionOperationSettings());
+                Operation operation = await client.CreateOperationAsync(originalStream, new MotionDetectionOperationSettings());
                 Helpers.Log(LogIdentifier, "Uploading video done");
 
                 // Starts querying service status

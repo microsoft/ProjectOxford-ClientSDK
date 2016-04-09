@@ -61,14 +61,7 @@ requires two different subscriptions.
     string from the first step. If you cannot find the file "strings.xml", it is
     in folder "Sample\app\src\main\res\values\string.xml".
 
-4.  In Android Studio -\> "Project" panel -\> "Android" view, open file
-    "app/res/values/strings.xml", and find the line
-    "Please\_add\_the\_face\_subscription\_key\_here;". Replace the
-    "Please\_add\_the\_face\_subscription\_key\_here" value with your Face subscription key
-    string from the first step. If you cannot find the file "strings.xml", it is
-    in folder "Sample\app\src\main\res\values\string.xml".
-
-5.  In Android Studio, select menu "Build \> Make Project" to build the sample,
+4.  In Android Studio, select menu "Build \> Make Project" to build the sample,
     and "Run" to launch this sample app.
 
 <img src="SampleScreenshots/SampleRunning1.png" width="30%"/>

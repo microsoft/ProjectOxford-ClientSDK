@@ -236,6 +236,15 @@ namespace Microsoft.ProjectOxford.Video
             var response = await SendRequestAsync(HttpMethod.Get, url, null);
             return await response.Content.ReadAsStreamAsync();
         }
+
+        /// <summary>
+        /// Get or set the timespan to wait before the request times out.
+        /// </summary>
+        public TimeSpan Timeout
+        {
+            get { return _httpClient.Timeout; }
+            set { _httpClient.Timeout = value; }
+        }
         #endregion
 
         #region the json client
@@ -269,7 +278,7 @@ namespace Microsoft.ProjectOxford.Video
                 }
             }
 
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
+            HttpResponseMessage response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
             if (!response.IsSuccessStatusCode)
             {
                 if (response.Content != null && response.Content.Headers.ContentType.MediaType.Contains(JsonContentTypeHeader))

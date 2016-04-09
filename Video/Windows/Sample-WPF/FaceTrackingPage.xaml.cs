@@ -75,14 +75,13 @@ namespace VideoAPI_WPF_Samples
             Helpers.Log(LogIdentifier, "Start face tracking");
             VideoServiceClient client = new VideoServiceClient(subscriptionKey);
 
+            client.Timeout = TimeSpan.FromMinutes(10);
+
             using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                byte[] bytes = new byte[originalStream.Length];
-                await originalStream.ReadAsync(bytes, 0, (int)originalStream.Length);
-
                 // Creates a video operation of face tracking
                 Helpers.Log(LogIdentifier, "Start uploading video");
-                Operation operation = await client.CreateOperationAsync(bytes, new FaceDetectionOperationSettings());
+                Operation operation = await client.CreateOperationAsync(originalStream, new FaceDetectionOperationSettings());
                 Helpers.Log(LogIdentifier, "Uploading video done");
 
                 // Starts querying service status
