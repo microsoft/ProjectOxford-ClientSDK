@@ -13,7 +13,9 @@ Order expressions
 
 You can call the function ToRankedList from the Scores class, for example:
 
+```
 IEnumerable<KeyValuePair<string, float>> collection = myScores.ToRankedList();
+```
 
 The sample
 ==========
