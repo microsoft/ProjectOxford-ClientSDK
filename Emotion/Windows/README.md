@@ -53,7 +53,14 @@ There are sample images to be used with this sample application. You can find th
 
 <img src="SampleScreenshots/SampleRunning.png" width="80%"/>
 
-If you want to know what is the name of the expression with more value then you might call GetExpressionName() from the Score class
+Order expressions
+--------------
+
+You can call the function ToRankedList from the Scores class, for example:
+
+....
+IEnumerable<KeyValuePair<string, float>> collection = myScores.ToRankedList();
+...
 
 Contributing
 ============
