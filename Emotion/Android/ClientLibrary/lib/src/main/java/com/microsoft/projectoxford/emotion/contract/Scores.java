@@ -42,25 +42,22 @@ public class Scores {
     public double sadness;
     public double surprise;
     
-    public String getExpressionName()
+    public SortedMap<Double, String> ToRankedList(Order order)
     {
-	// Hashtable for store the key and the value
-	Map<Double, String> a = new Hashtable<Double, String>();
+	// create an instance ordered (ascending or descending)
+	SortedMap<Double, String> collection = order == order.ASCENDING ? new TreeMap<Double, String>() : new TreeMap<Double, String>(Collections.reverseOrder());
+	
+	// add the elements, the key is the double value and the key the name	
+	collection.put(anger,"ANGER");
+	collection.put(contempt,"CONTEMPT");
+	collection.put(disgust,"DISGUST");
+	collection.put(fear,"FEAR");
+	collection.put(happiness,"HAPPINESS");
+	collection.put(neutral,"NEUTRAL");
+	collection.put(sadness,"SADNESS");
+	collection.put(surprise,"SURPRISE");
 		
-	// We made a trick changing the positions, in this case the key is the double number and the value the expression name		a.put(anger,"ANGER");
-        a.put(contempt,"CONTEMPT");
-        a.put(disgust,"DISGUST");
-        a.put(fear,"FEAR");
-        a.put(happiness,"HAPPINESS");
-        a.put(neutral,"NEUTRAL");
-        a.put(sadness,"SADNESS");
-        a.put(surprise,"SURPRISE");
-		
-        // We get the max value of the collection
-	double maxValue = Collections.max(a.keySet());
-		
-	// It will return the name of the expression, It receives the maxValue
-	return a.get(maxValue);
-		
+        return collection;
+        
     }
 }
