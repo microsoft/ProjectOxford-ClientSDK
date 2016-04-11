@@ -8,6 +8,13 @@ The easiest way to use this client library is to get microsoft.projectoxford.emo
 
 Please go to [Emotion API Package in nuget](https://www.nuget.org/packages/Microsoft.ProjectOxford.Emotion/) for more details.
 
+Order expressions
+============
+
+You can call the function ToRankedList from the Scores class, for example:
+
+IEnumerable<KeyValuePair<string, float>> collection = myScores.ToRankedList();
+
 The sample
 ==========
 
@@ -52,14 +59,6 @@ from everyone in it.
 There are sample images to be used with this sample application. You can find these images under Face \> Windows \> Data folder. Please note the use of these images is licensed under [LICENSE-IMAGE](</LICENSE-IMAGE.md>).
 
 <img src="SampleScreenshots/SampleRunning.png" width="80%"/>
-
-Order expressions
---------------
-
-You can call the function ToRankedList from the Scores class, for example:
-
-IEnumerable<KeyValuePair<string, float>> collection = myScores.ToRankedList();
-
 
 Contributing
 ============
