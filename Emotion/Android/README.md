@@ -31,8 +31,16 @@ To do add the client library dependency from Android Studio:
 6. Type "com.microsoft.projectoxford" and hit the search icon from "Choose Library Dependency" dialog
 7. Pick the Project Oxford client library that you intend to use.
 8. Click "OK" to add the new dependency
+ 
+Order expressions
+============
 
+You can call the function ToRankedList from the Scores class, for example:
 
+```
+SortedMap<Double,String> collection = scores.ToRankedList(Order.DESCENDING);
+
+```
 
 The sample
 ==========
