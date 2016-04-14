@@ -143,15 +143,15 @@ namespace Microsoft.ProjectOxford.Common
         /// <typeparam name="TRequest">Type of request.</typeparam>
         /// <typeparam name="TResponse">Type of response.</typeparam>
         /// <param name="method">HTTP method</param>
-        /// <param name="apiUrl">API URL relative to the apiRoot</param>
+        /// <param name="apiUrl">API URL, generally relative to the ApiRoot</param>
         /// <param name="requestBody">Content of the HTTP request</param>
         /// <returns>TResponse</returns>
         /// <exception cref="ClientException">Service exception</exception>
         protected async Task<TResponse> SendAsync<TRequest, TResponse>(HttpMethod method, string apiUrl, TRequest requestBody)
         {
-            bool urlIsAbsolute = System.Uri.IsWellFormedUriString(apiUrl, System.UriKind.Absolute);
+            bool urlIsRelative = System.Uri.IsWellFormedUriString(apiUrl, System.UriKind.Relative);
 
-            string requestUri = urlIsAbsolute ? apiUrl : ApiRoot + apiUrl;
+            string requestUri = urlIsRelative ? ApiRoot + apiUrl : apiUrl;
             var request = new HttpRequestMessage(method, requestUri);
             request.Headers.Add(AuthKey, AuthValue);
 
