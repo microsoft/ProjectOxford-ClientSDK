@@ -37,9 +37,15 @@ Order expressions
 
 You can call the function ToRankedList from the Scores class, for example:
 
+ASCENDING
 ```
-SortedMap<Double,String> collection = scores.ToRankedList(Order.DESCENDING);
+List<Map.Entry<String, Double>> collection = scores.ToRankedList(Order.ASCENDING);
+```
 
+DESCENDING
+```
+List<Map.Entry<String, Double>> collection = scores.ToRankedList(Order.DESCENDING);
+		
 ```
 
 The sample
