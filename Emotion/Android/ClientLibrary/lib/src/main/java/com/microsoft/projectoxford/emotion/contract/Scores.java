@@ -32,6 +32,14 @@
 //
 package com.microsoft.projectoxford.emotion.contract;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class Scores {
     public double anger;
     public double contempt;
@@ -42,22 +50,53 @@ public class Scores {
     public double sadness;
     public double surprise;
     
-    public SortedMap<Double, String> ToRankedList(Order order)
+    public List<Map.Entry<String, Double>> ToRankedList(Order order)
     {
-	// create an instance ordered (ascending or descending)
-	SortedMap<Double, String> collection = order == order.ASCENDING ? new TreeMap<Double, String>() : new TreeMap<Double, String>(Collections.reverseOrder());
-	
-	// add the elements, the key is the double value and the key the name	
-	collection.put(anger,"ANGER");
-	collection.put(contempt,"CONTEMPT");
-	collection.put(disgust,"DISGUST");
-	collection.put(fear,"FEAR");
-	collection.put(happiness,"HAPPINESS");
-	collection.put(neutral,"NEUTRAL");
-	collection.put(sadness,"SADNESS");
-	collection.put(surprise,"SURPRISE");
 		
-        return collection;
+	// create a Map to store each entry
+	Map<String, Double> collection = new HashMap<String, Double>() ;
+		
+	// add each entry with its own key and value
+	collection.put("ANGER",anger);
+	collection.put("CONTEMPT",contempt);
+	collection.put("DISGUST",disgust);
+	collection.put("FEAR",fear);
+	collection.put("HAPPINESS",happiness);
+	collection.put("NEUTRAL",neutral);
+	collection.put("SADNESS",sadness);
+	collection.put("SURPRISE",surprise);
+
+	// create a list with the entries
+	List<Map.Entry<String, Double>> list = new ArrayList<Map.Entry<String, Double>>(collection.entrySet());
+		
+	// we are going to create a comparator according to the value of the enum order
+	switch (order) 
+	{
+		case ASCENDING:
+			Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+				@Override
+			        public int compare(Entry<String, Double> first, Entry<String, Double> second) {
+			        	// we should compare the value of the first entry and the value of the second entry
+			            return first.getValue().compareTo(second.getValue());
+			        }
+			});
+			break;
+			
+		case DESCENDING:
+			// for ordering descending we should create a reverse order comparator 
+			Collections.sort(list, Collections.reverseOrder(new Comparator<Map.Entry<String, Double>>() {
+			        @Override
+			        public int compare(Entry<String, Double> first, Entry<String, Double> second) {
+			            return first.getValue().compareTo(second.getValue());
+			        }
+			})); 
+			break;
+				
+		default:
+			break;
+	}
+
+        return list;
         
     }
 }
