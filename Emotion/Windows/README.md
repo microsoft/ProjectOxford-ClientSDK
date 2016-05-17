@@ -8,6 +8,15 @@ The easiest way to use this client library is to get microsoft.projectoxford.emo
 
 Please go to [Emotion API Package in nuget](https://www.nuget.org/packages/Microsoft.ProjectOxford.Emotion/) for more details.
 
+Order expressions
+============
+
+You can call the function ToRankedList from the Scores class, for example:
+
+```
+IEnumerable<KeyValuePair<string, float>> collection = myScores.ToRankedList();
+```
+
 The sample
 ==========
 

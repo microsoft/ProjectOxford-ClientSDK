@@ -31,8 +31,22 @@ To do add the client library dependency from Android Studio:
 6. Type "com.microsoft.projectoxford" and hit the search icon from "Choose Library Dependency" dialog
 7. Pick the Project Oxford client library that you intend to use.
 8. Click "OK" to add the new dependency
+ 
+Order expressions
+============
 
+You can call the function ToRankedList from the Scores class, for example:
 
+ASCENDING
+```
+List<Map.Entry<String, Double>> collection = scores.ToRankedList(Order.ASCENDING);
+```
+
+DESCENDING
+```
+List<Map.Entry<String, Double>> collection = scores.ToRankedList(Order.DESCENDING);
+		
+```
 
 The sample
 ==========
@@ -78,6 +92,8 @@ scenarios, and follow the instructions on screen.
 Microsoft will receive the images you upload and may use them to improve Emotion
 API and related services. By submitting an image, you confirm you have consent
 from everyone in it.
+
+If you want to know what is the name of the expression with more value then you might call getExpressionName() from the Score class
 
 Contributing
 ============
