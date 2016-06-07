@@ -184,7 +184,7 @@ namespace Microsoft.ProjectOxford.Video
         /// <returns>Video operation created.</returns>
         public async Task<Operation> CreateOperationAsync(string videoUrl, VideoOperationSettings videoOperationSettings)
         {
-            return await CreateOperationAsyncInternal(videoUrl, videoOperationSettings);
+            return await CreateOperationAsyncInternal(new VideoUrlRequest() { Url = videoUrl }, videoOperationSettings);
         }
 
         private async Task<Operation> CreateOperationAsyncInternal(object video, VideoOperationSettings videoOperationSettings)

@@ -85,7 +85,8 @@ class IdentificationServiceHttpClientHelper:
                 return [IdentificationProfile.IdentificationProfile(profiles_raw[i])
                         for i in range(0, len(profiles_raw))]
             else:
-                raise Exception('Error getting all profiles: ' + res.reason)
+                reason = res.reason if not message else message
+                raise Exception('Error getting all profiles: ' + reason)
         except:
             logging.error('Error getting all profiles.')
             raise
@@ -112,8 +113,8 @@ class IdentificationServiceHttpClientHelper:
                 # Parse the response body
                 return ProfileCreationResponse.ProfileCreationResponse(json.loads(message))
             else:
-                message = res.read().decode('utf-8')
-                raise Exception('Error creating profile: ' + res.reason)
+                reason = res.reason if not message else message
+                raise Exception('Error creating profile: ' + reason)
         except:
             logging.error('Error creating profile.')
             raise
@@ -131,6 +132,7 @@ class IdentificationServiceHttpClientHelper:
             request_url = '{0}/{1}/enroll'.format(
                 self._IDENTIFICATION_PROFILES_URI,
                 urllib.parse.quote(profile_id))
+            print(request_url);
 
             # Prepare the body of the message
             with open(file_path, 'rb') as body:
@@ -151,7 +153,8 @@ class IdentificationServiceHttpClientHelper:
                 return EnrollmentResponse.EnrollmentResponse(
                     self._poll_operation(operation_url))
             else:
-                raise Exception('Error enrolling profile: ' + res.reason)
+                reason = res.reason if not message else message
+                raise Exception('Error enrolling profile: ' + reason)
         except:
             logging.error('Error enrolling profile.')
             raise
@@ -192,7 +195,8 @@ class IdentificationServiceHttpClientHelper:
                 return IdentificationResponse.IdentificationResponse(
                     self._poll_operation(operation_url))
             else:
-                raise Exception('Error identifying file: ' + res.reason)
+                reason = res.reason if not message else message
+                raise Exception('Error identifying file: ' + reason)
         except:
             logging.error('Error identifying file.')
             raise
@@ -216,7 +220,8 @@ class IdentificationServiceHttpClientHelper:
                     self._JSON_CONTENT_HEADER_VALUE)
 
                 if res.status != self._STATUS_OK:
-                    raise Exception('Operation Error: ' + res.reason)
+                    reason = res.reason if not message else message
+                    raise Exception('Operation Error: ' + reason)
 
                 # Parse the response body
                 operation_response = json.loads(message)

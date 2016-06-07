@@ -307,7 +307,9 @@ public class RecognizeActivity extends ActionBarActivity {
                     mEditText.append("No emotion detected :(");
                 } else {
                     Integer count = 0;
-                    Canvas faceCanvas = new Canvas(mBitmap);
+                    // Covert bitmap to a mutable bitmap by copying it
+                    Bitmap bitmapCopy = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                    Canvas faceCanvas = new Canvas(bitmapCopy);
                     faceCanvas.drawBitmap(mBitmap, 0, 0, null);
                     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
                     paint.setStyle(Paint.Style.STROKE);

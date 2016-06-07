@@ -45,7 +45,8 @@ class VerificationServiceHttpClientHelper:
                 return [VerificationProfile.VerificationProfile(profiles_raw[i])
                         for i in range(0, len(profiles_raw))]
             else:
-                raise Exception('Error getting all profiles: ' + res.reason)
+                reason = reason if not message else message
+                raise Exception('Error getting all profiles: ' + reason)
         except:
             logging.error('Error getting all profiles.')
             raise
@@ -72,8 +73,8 @@ class VerificationServiceHttpClientHelper:
                 # Parse the response body
                 return ProfileCreationResponse.ProfileCreationResponse(json.loads(message))
             else:
-                message = res.read().decode('utf-8')
-                raise Exception('Error creating profile: ' + res.reason)
+                reason = res.reason if not message else message
+                raise Exception('Error creating profile: ' + reason)
         except:
             logging.error('Error creating profile.')
             raise
@@ -106,7 +107,8 @@ class VerificationServiceHttpClientHelper:
                 # Parse the response body
                 return EnrollmentResponse.EnrollmentResponse(json.loads(message))
             else:
-                raise Exception('Error enrolling profile: ' + res.reason)
+                reason = res.reason if not message else message
+                raise Exception('Error enrolling profile: ' + reason)
         except:
             logging.error('Error enrolling profile.')
             raise
@@ -138,7 +140,8 @@ class VerificationServiceHttpClientHelper:
                 # Parse the response body
                 return VerificationResponse.VerificationResponse(json.loads(message))
             else:
-                raise Exception('Error verifying audio from file: ' + res.reason)
+                reason = res.reason if not message else message
+                raise Exception('Error verifying audio from file: ' + reason)
         except:
             logging.error('Error performing verification.')
             raise

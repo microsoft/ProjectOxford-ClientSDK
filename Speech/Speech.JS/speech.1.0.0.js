@@ -509,9 +509,9 @@ var Bing;
                     Bing._window.msSpeechButton.audioprocess(e);
                 }
             };
-            source.connect(destination);
             cu.connect(source);
             destination.connect(source.context.destination);
+            source.connect(destination);
             return destination;
         };
         Object.defineProperty(Speech.prototype, "isMicSource", {
@@ -802,33 +802,25 @@ var Bing;
         }
         LuisClient.kServiceUrl = "https://api.projectoxford.ai/luis/v1/application?subscription-key=";
         LuisClient.prototype.getIntent = function (text) {
-            var _this = this;
             var task = new Task();
             var request = new XMLHttpRequest();
-            this._auth.authenticate(this._prefs.clientId, this._prefs.clientSecret).done(function (token) {
-                if (!token) {
+            request.open('GET', [
+                LuisClient.kServiceUrl, 
+                this._prefs.luisSubscriptionId, 
+                "&id=", 
+                this._prefs.luisAppId, 
+                "&q=", 
+                text
+            ].join(""), true);
+            request.onload = function () {
+                if (request.readyState == 4 && request.status === 200) {
+                    var response = handleJSONWebResponse(request);
+                    task.resolve(request.response);
+                } else {
                     task.resolve(null);
-                    return;
                 }
-                request.open('GET', [
-                    LuisClient.kServiceUrl, 
-                    _this._prefs.luisSubscriptionId, 
-                    "&id=", 
-                    _this._prefs.luisAppId, 
-                    "&q=", 
-                    text
-                ].join(""), true);
-                request.setRequestHeader("Authorization", token);
-                request.onload = function () {
-                    if (request.readyState == 4 && request.status === 200) {
-                        var response = handleJSONWebResponse(request);
-                        task.resolve(request.response);
-                    } else {
-                        task.resolve(null);
-                    }
-                };
-                request.send();
-            });
+            };
+            request.send();
             return task;
         };
         return LuisClient;
@@ -1384,12 +1376,12 @@ var Bing;
         };
         WebAudioSource.prototype.onBufferLoaded = function () {
             var _this = this;
-            this._bufferSource.connect(this._destination);
-            this._bufferSource.start(0);
-            this._started = true;
             this._bufferSource.onended = function () {
                 _this.handleEnd();
             };
+            this._bufferSource.connect(this._destination);
+            this._bufferSource.start(0);
+            this._started = true;
         };
         WebAudioSource.prototype.toString = function () {
             return this._url;

@@ -2,7 +2,7 @@ The client library
 ==================
 
 The Emotion API client library is a thin Java client wrapper for Microsoft Cognitive Services (formerly Project Oxford)
-Emotion REST APIs.  
+Emotion REST APIs.
 
 The easiest way to consume the client library is to add com.microsoft.projectoxford.emotion package from Maven Central Repository.
 
@@ -31,7 +31,7 @@ To do add the client library dependency from Android Studio:
 6. Type "com.microsoft.projectoxford" and hit the search icon from "Choose Library Dependency" dialog
 7. Pick the Project Oxford client library that you intend to use.
 8. Click "OK" to add the new dependency
- 
+
 Order expressions
 ============
 
@@ -45,7 +45,7 @@ List<Map.Entry<String, Double>> collection = scores.ToRankedList(Order.ASCENDING
 DESCENDING
 ```
 List<Map.Entry<String, Double>> collection = scores.ToRankedList(Order.DESCENDING);
-		
+
 ```
 
 The sample

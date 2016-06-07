@@ -27,7 +27,7 @@ group = "com.microsoft.projectoxford"
 // Artifact name is the name of the technology
 archivesBaseName = "vision"
 // Update your version
-version = "1.0.101"
+version = "1.0.354"
 
 uploadArchives {
     repositories {
