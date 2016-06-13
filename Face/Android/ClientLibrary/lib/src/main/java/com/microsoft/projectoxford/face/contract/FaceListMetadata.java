@@ -33,7 +33,7 @@
 package com.microsoft.projectoxford.face.contract;
 
 public class FaceListMetadata {
-    public String faceGroupId;
+    public String faceListId;
 
     public String name;
 

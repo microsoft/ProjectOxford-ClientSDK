@@ -33,5 +33,5 @@
 package com.microsoft.projectoxford.face.contract;
 
 public class FaceList extends FaceListMetadata {
-    public FaceMetadata[] faces;
+    public FaceMetadata[] persistedFaces;
 }
