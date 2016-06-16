@@ -33,6 +33,7 @@ To get started, select the platform for which you're developing.
 -   [Android](</Face/Android/>)
 -   [Python](</Face/Python/>)
 -   [Windows](</Face/Windows/>)
+-   [iOS] (</Face/iOS/>)
 
 Changes
 ============
