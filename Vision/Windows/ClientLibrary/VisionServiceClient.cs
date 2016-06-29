@@ -36,6 +36,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.ProjectOxford.Vision.Contract;
@@ -61,6 +62,16 @@ namespace Microsoft.ProjectOxford.Vision
         /// Host root, overridable by subclasses, intended for testing.
         /// </summary>
         protected virtual string ServiceHost => SERVICE_HOST;
+
+        /// <summary>
+        /// Default timeout for calls
+        /// </summary>
+        private const int DEFAULT_TIMEOUT = 2 * 60 * 1000; // 2 minutes timeout
+
+        /// <summary>
+        /// Default timeout for calls, overridable by subclasses
+        /// </summary>
+        protected virtual int DefaultTimeout => DEFAULT_TIMEOUT;
 
         /// <summary>
         /// The analyze query
@@ -451,12 +462,29 @@ namespace Microsoft.ProjectOxford.Vision
                     setHeadersCallback(request);
                 }
 
-                var response = await Task.Factory.FromAsync<WebResponse>(
+                var getResponseAsync = Task.Factory.FromAsync<WebResponse>(
                     request.BeginGetResponse,
                     request.EndGetResponse,
                     null);
 
-                return this.ProcessAsyncResponse<TResponse>(response as HttpWebResponse);
+                await Task.WhenAny(getResponseAsync, Task.Delay(DefaultTimeout));
+
+                //Abort request if timeout has expired
+                if (!getResponseAsync.IsCompleted)
+                {
+                    request.Abort();
+                }
+
+                return this.ProcessAsyncResponse<TResponse>(getResponseAsync.Result as HttpWebResponse);
+            }
+            catch (AggregateException ae)
+            {
+                ae.Handle(e =>
+                {
+                    this.HandleException(e);
+                    return true;
+                });
+                return default(TResponse);
             }
             catch (Exception e)
             {
@@ -506,39 +534,59 @@ namespace Microsoft.ProjectOxford.Vision
                     WebRequest = (HttpWebRequest)request,
                 };
 
-                var continueRequestAsyncState = await Task.Factory.FromAsync<Stream>(
-                                                    asyncState.WebRequest.BeginGetRequestStream,
-                                                    asyncState.WebRequest.EndGetRequestStream,
-                                                    asyncState,
-                                                    TaskCreationOptions.None).ContinueWith<WebRequestAsyncState>(
-                                                       task =>
-                                                       {
-                                                           var requestAsyncState = (WebRequestAsyncState)task.AsyncState;
-                                                           if (requestBody != null)
-                                                           {
-                                                               using (var requestStream = task.Result)
-                                                               {
-                                                                   if (requestBody is Stream)
-                                                                   {
-                                                                       (requestBody as Stream).CopyTo(requestStream);
-                                                                   }
-                                                                   else
-                                                                   {
-                                                                       requestStream.Write(requestAsyncState.RequestBytes, 0, requestAsyncState.RequestBytes.Length);
-                                                                   }
-                                                               }
-                                                           }
+                var webRequestAsyncState = await Task.Factory.FromAsync<Stream>(
+                    asyncState.WebRequest.BeginGetRequestStream,
+                    asyncState.WebRequest.EndGetRequestStream,
+                    asyncState,
+                    TaskCreationOptions.None).ContinueWith<WebRequestAsyncState>(
+                        task =>
+                        {
+                            var requestAsyncState = (WebRequestAsyncState)task.AsyncState;
+                            if (requestBody != null)
+                            {
+                                using (var requestStream = task.Result)
+                                {
+                                    if (requestBody is Stream)
+                                    {
+                                        (requestBody as Stream).CopyTo(requestStream);
+                                    }
+                                    else
+                                    {
+                                        requestStream.Write(requestAsyncState.RequestBytes, 0, requestAsyncState.RequestBytes.Length);
+                                    }
+                                }
+                            }
 
-                                                           return requestAsyncState;
-                                                       });
+                            return requestAsyncState;
+                        });
+                var continueRequestAsyncState = webRequestAsyncState;
 
                 var continueWebRequest = continueRequestAsyncState.WebRequest;
-                var response = await Task.Factory.FromAsync<WebResponse>(
-                                            continueWebRequest.BeginGetResponse,
-                                            continueWebRequest.EndGetResponse,
-                                            continueRequestAsyncState);
 
-                return this.ProcessAsyncResponse<TResponse>(response as HttpWebResponse);
+                var getResponseAsync = Task.Factory.FromAsync<WebResponse>(
+                    continueWebRequest.BeginGetResponse,
+                    continueWebRequest.EndGetResponse,
+                    continueRequestAsyncState);
+
+                await Task.WhenAny(getResponseAsync, Task.Delay(DefaultTimeout));
+
+                //Abort request if timeout has expired
+                if (!getResponseAsync.IsCompleted)
+                {
+                    request.Abort();
+                }
+
+                var processAsyncResponse = this.ProcessAsyncResponse<TResponse>(getResponseAsync.Result as HttpWebResponse);
+                return processAsyncResponse;
+            }
+            catch (AggregateException ae)
+            {
+                ae.Handle(e =>
+                {
+                    this.HandleException(e);
+                    return true;
+                });
+                return default(TResponse);
             }
             catch (Exception e)
             {
@@ -567,7 +615,7 @@ namespace Microsoft.ProjectOxford.Vision
                         {
                             if (stream != null)
                             {
-                                if (webResponse.ContentType == "image/jpeg" || 
+                                if (webResponse.ContentType == "image/jpeg" ||
                                     webResponse.ContentType == "image/png")
                                 {
                                     using (MemoryStream ms = new MemoryStream())
