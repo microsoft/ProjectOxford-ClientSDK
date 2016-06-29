@@ -36,7 +36,6 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.ProjectOxford.Vision.Contract;
