@@ -1,5 +1,8 @@
 Microsoft Cognitive Services client SDK and samples
 ====================================
+**ANNOUNCEMENT: We are currently deploying a set of changes to our SDK repo structure to improve how we maintain and update our  repos. During this time, you may experience inconsistencies between this website and our [www.microsoft.com/cognitive](www.microsoft.com/cognitive) website. We expect this maintenance to be completed by 12:00 PM PST on July 7th. Thanks for your patience!**
+
+
 
 This repo contains the client libraries and samples that demonstrate the [Microsoft Cognitive Services](<https://www.microsoft.com/cognitive-services>), which includes the former Project Oxford APIs.
 This is an evolving portfolio of REST APIs that enable developers to leverage the power of Microsoft's natural data
