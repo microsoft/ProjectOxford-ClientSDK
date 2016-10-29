@@ -161,4 +161,9 @@ public class OxfordAuthentication
 
         return null;
     }
+    static class Util {
+		public static String getJsonValue(String src, String name) {
+			return src.replaceAll(".*\"" + name + "\":\"(.*?)\".*", "$1");
+		}
+	}
 }
