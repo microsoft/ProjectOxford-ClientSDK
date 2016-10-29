@@ -63,6 +63,16 @@ namespace Microsoft.ProjectOxford.Vision
         protected virtual string ServiceHost => SERVICE_HOST;
 
         /// <summary>
+        /// Default timeout for calls
+        /// </summary>
+        private const int DEFAULT_TIMEOUT = 2 * 60 * 1000; // 2 minutes timeout
+
+        /// <summary>
+        /// Default timeout for calls, overridable by subclasses
+        /// </summary>
+        protected virtual int DefaultTimeout => DEFAULT_TIMEOUT;
+
+        /// <summary>
         /// The analyze query
         /// </summary>
         private const string AnalyzeQuery = "analyze";
@@ -122,7 +132,7 @@ namespace Microsoft.ProjectOxford.Vision
         {
             var visualFeatureEnums = visualFeatures?.Select(feature => (VisualFeature)Enum.Parse(typeof(VisualFeature), feature, true));
 
-            return await AnalyzeImageAsync(url, visualFeatureEnums);
+            return await AnalyzeImageAsync(url, visualFeatureEnums).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,7 +146,7 @@ namespace Microsoft.ProjectOxford.Vision
         {
             var visualFeatureEnums = visualFeatures?.Select(feature => (VisualFeature)Enum.Parse(typeof(VisualFeature), feature, true));
 
-            return await AnalyzeImageAsync(imageStream, visualFeatureEnums);
+            return await AnalyzeImageAsync(imageStream, visualFeatureEnums).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -151,7 +161,7 @@ namespace Microsoft.ProjectOxford.Vision
             dynamic request = new ExpandoObject();
             request.url = url;
 
-            return await AnalyzeImageAsync<ExpandoObject>(request, visualFeatures, details);
+            return await AnalyzeImageAsync<ExpandoObject>(request, visualFeatures, details).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,7 +173,7 @@ namespace Microsoft.ProjectOxford.Vision
         /// <returns>The AnalysisResult object.</returns>
         public async Task<AnalysisResult> AnalyzeImageAsync(Stream imageStream, IEnumerable<VisualFeature> visualFeatures = null, IEnumerable<string> details = null)
         {
-            return await AnalyzeImageAsync<Stream>(imageStream, visualFeatures, details);
+            return await AnalyzeImageAsync<Stream>(imageStream, visualFeatures, details).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +196,7 @@ namespace Microsoft.ProjectOxford.Vision
 
             var request = WebRequest.Create(requestUrl.ToString());
 
-            return await this.SendAsync<T, AnalysisResult>("POST", body, request);
+            return await this.SendAsync<T, AnalysisResult>("POST", body, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,7 +208,7 @@ namespace Microsoft.ProjectOxford.Vision
         /// <returns>The AnalysisInDomainResult object.</returns>
         public async Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(string url, Model model)
         {
-            return await AnalyzeImageInDomainAsync(url, model.Name);
+            return await AnalyzeImageInDomainAsync(url, model.Name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -210,7 +220,7 @@ namespace Microsoft.ProjectOxford.Vision
         /// <returns>The AnalysisInDomainResult object.</returns>
         public async Task<AnalysisInDomainResult> AnalyzeImageInDomainAsync(Stream imageStream, Model model)
         {
-            return await AnalyzeImageInDomainAsync(imageStream, model.Name);
+            return await AnalyzeImageInDomainAsync(imageStream, model.Name).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,7 +238,7 @@ namespace Microsoft.ProjectOxford.Vision
             dynamic requestObject = new ExpandoObject();
             requestObject.url = url;
 
-            return await this.SendAsync<ExpandoObject, AnalysisInDomainResult>("POST", requestObject, request);
+            return await this.SendAsync<ExpandoObject, AnalysisInDomainResult>("POST", requestObject, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,7 +253,7 @@ namespace Microsoft.ProjectOxford.Vision
             string requestUrl = string.Format("{0}/{1}/{2}/{3}?{4}={5}", ServiceHost, ModelsPart, modelName, AnalyzeQuery, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
-            return await this.SendAsync<Stream, AnalysisInDomainResult>("POST", imageStream, request);
+            return await this.SendAsync<Stream, AnalysisInDomainResult>("POST", imageStream, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -255,7 +265,7 @@ namespace Microsoft.ProjectOxford.Vision
             string requestUrl = string.Format("{0}/{1}?{2}={3}", ServiceHost, ModelsPart, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
-            return await this.GetAsync<ModelResult>("GET", request);
+            return await this.GetAsync<ModelResult>("GET", request).ConfigureAwait(false);
         }
         /// <summary>
         /// 
@@ -272,7 +282,7 @@ namespace Microsoft.ProjectOxford.Vision
             dynamic requestObject = new ExpandoObject();
             requestObject.url = url;
 
-            return await this.SendAsync<ExpandoObject, AnalysisResult>("POST", requestObject, request);
+            return await this.SendAsync<ExpandoObject, AnalysisResult>("POST", requestObject, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -286,7 +296,7 @@ namespace Microsoft.ProjectOxford.Vision
             string requestUrl = string.Format("{0}/{1}?{2}={3}&{4}={5}", ServiceHost, DescribeQuery, _maxCandidatesName, maxCandidates, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
-            return await this.SendAsync<Stream, AnalysisResult>("POST", imageStream, request);
+            return await this.SendAsync<Stream, AnalysisResult>("POST", imageStream, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -305,7 +315,7 @@ namespace Microsoft.ProjectOxford.Vision
             dynamic requestObject = new ExpandoObject();
             requestObject.url = url;
 
-            return await this.SendAsync<ExpandoObject, byte[]>("POST", requestObject, request);
+            return await this.SendAsync<ExpandoObject, byte[]>("POST", requestObject, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -321,7 +331,7 @@ namespace Microsoft.ProjectOxford.Vision
             string requestUrl = string.Format("{0}/{1}?width={2}&height={3}&smartCropping={4}&{5}={6}", ServiceHost, ThumbnailsQuery, width, height, smartCropping, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
-            return await this.SendAsync<Stream, byte[]>("POST", stream, request);
+            return await this.SendAsync<Stream, byte[]>("POST", stream, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -339,7 +349,7 @@ namespace Microsoft.ProjectOxford.Vision
             dynamic requestObject = new ExpandoObject();
             requestObject.url = imageUrl;
 
-            return await this.SendAsync<ExpandoObject, OcrResults>("POST", requestObject, request);
+            return await this.SendAsync<ExpandoObject, OcrResults>("POST", requestObject, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -354,7 +364,7 @@ namespace Microsoft.ProjectOxford.Vision
             string requestUrl = string.Format("{0}/ocr?language={1}&detectOrientation={2}&{3}={4}", ServiceHost, languageCode, detectOrientation, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
-            return await this.SendAsync<Stream, OcrResults>("POST", imageStream, request);
+            return await this.SendAsync<Stream, OcrResults>("POST", imageStream, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -367,7 +377,7 @@ namespace Microsoft.ProjectOxford.Vision
             string requestUrl = string.Format("{0}/tag?{1}={2}", ServiceHost, _subscriptionKeyName, _subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
-            return await this.SendAsync<Stream, AnalysisResult>("POST", imageStream, request);
+            return await this.SendAsync<Stream, AnalysisResult>("POST", imageStream, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -383,7 +393,7 @@ namespace Microsoft.ProjectOxford.Vision
             dynamic requestObject = new ExpandoObject();
             requestObject.url = imageUrl;
 
-            return await this.SendAsync<ExpandoObject, AnalysisResult>("POST", requestObject, request);
+            return await this.SendAsync<ExpandoObject, AnalysisResult>("POST", requestObject, request).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -451,12 +461,29 @@ namespace Microsoft.ProjectOxford.Vision
                     setHeadersCallback(request);
                 }
 
-                var response = await Task.Factory.FromAsync<WebResponse>(
+                var getResponseAsync = Task.Factory.FromAsync<WebResponse>(
                     request.BeginGetResponse,
                     request.EndGetResponse,
                     null);
 
-                return this.ProcessAsyncResponse<TResponse>(response as HttpWebResponse);
+                await Task.WhenAny(getResponseAsync, Task.Delay(DefaultTimeout)).ConfigureAwait(false);
+
+                //Abort request if timeout has expired
+                if (!getResponseAsync.IsCompleted)
+                {
+                    request.Abort();
+                }
+
+                return this.ProcessAsyncResponse<TResponse>(getResponseAsync.Result as HttpWebResponse);
+            }
+            catch (AggregateException ae)
+            {
+                ae.Handle(e =>
+                {
+                    this.HandleException(e);
+                    return true;
+                });
+                return default(TResponse);
             }
             catch (Exception e)
             {
@@ -506,39 +533,59 @@ namespace Microsoft.ProjectOxford.Vision
                     WebRequest = (HttpWebRequest)request,
                 };
 
-                var continueRequestAsyncState = await Task.Factory.FromAsync<Stream>(
-                                                    asyncState.WebRequest.BeginGetRequestStream,
-                                                    asyncState.WebRequest.EndGetRequestStream,
-                                                    asyncState,
-                                                    TaskCreationOptions.None).ContinueWith<WebRequestAsyncState>(
-                                                       task =>
-                                                       {
-                                                           var requestAsyncState = (WebRequestAsyncState)task.AsyncState;
-                                                           if (requestBody != null)
-                                                           {
-                                                               using (var requestStream = task.Result)
-                                                               {
-                                                                   if (requestBody is Stream)
-                                                                   {
-                                                                       (requestBody as Stream).CopyTo(requestStream);
-                                                                   }
-                                                                   else
-                                                                   {
-                                                                       requestStream.Write(requestAsyncState.RequestBytes, 0, requestAsyncState.RequestBytes.Length);
-                                                                   }
-                                                               }
-                                                           }
+                var webRequestAsyncState = await Task.Factory.FromAsync<Stream>(
+                    asyncState.WebRequest.BeginGetRequestStream,
+                    asyncState.WebRequest.EndGetRequestStream,
+                    asyncState,
+                    TaskCreationOptions.None).ContinueWith<WebRequestAsyncState>(
+                        task =>
+                        {
+                            var requestAsyncState = (WebRequestAsyncState)task.AsyncState;
+                            if (requestBody != null)
+                            {
+                                using (var requestStream = task.Result)
+                                {
+                                    if (requestBody is Stream)
+                                    {
+                                        (requestBody as Stream).CopyTo(requestStream);
+                                    }
+                                    else
+                                    {
+                                        requestStream.Write(requestAsyncState.RequestBytes, 0, requestAsyncState.RequestBytes.Length);
+                                    }
+                                }
+                            }
 
-                                                           return requestAsyncState;
-                                                       });
+                            return requestAsyncState;
+                        }).ConfigureAwait(false);
+                var continueRequestAsyncState = webRequestAsyncState;
 
                 var continueWebRequest = continueRequestAsyncState.WebRequest;
-                var response = await Task.Factory.FromAsync<WebResponse>(
-                                            continueWebRequest.BeginGetResponse,
-                                            continueWebRequest.EndGetResponse,
-                                            continueRequestAsyncState);
 
-                return this.ProcessAsyncResponse<TResponse>(response as HttpWebResponse);
+                var getResponseAsync = Task.Factory.FromAsync<WebResponse>(
+                    continueWebRequest.BeginGetResponse,
+                    continueWebRequest.EndGetResponse,
+                    continueRequestAsyncState);
+
+                await Task.WhenAny(getResponseAsync, Task.Delay(DefaultTimeout)).ConfigureAwait(false);
+
+                //Abort request if timeout has expired
+                if (!getResponseAsync.IsCompleted)
+                {
+                    request.Abort();
+                }
+
+                var processAsyncResponse = this.ProcessAsyncResponse<TResponse>(getResponseAsync.Result as HttpWebResponse);
+                return processAsyncResponse;
+            }
+            catch (AggregateException ae)
+            {
+                ae.Handle(e =>
+                {
+                    this.HandleException(e);
+                    return true;
+                });
+                return default(TResponse);
             }
             catch (Exception e)
             {
@@ -567,7 +614,7 @@ namespace Microsoft.ProjectOxford.Vision
                         {
                             if (stream != null)
                             {
-                                if (webResponse.ContentType == "image/jpeg" || 
+                                if (webResponse.ContentType == "image/jpeg" ||
                                     webResponse.ContentType == "image/png")
                                 {
                                     using (MemoryStream ms = new MemoryStream())
