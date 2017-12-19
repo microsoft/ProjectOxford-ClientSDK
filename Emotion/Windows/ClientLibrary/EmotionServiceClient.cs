@@ -63,9 +63,9 @@ namespace Microsoft.ProjectOxford.Emotion
         /// </summary>
         /// <param name="imageUrl">URL of the image.</param>
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each recognized face.</returns>
-        public async Task<Contract.Emotion[]> RecognizeAsync(String imageUrl)
+        public Task<Contract.Emotion[]> RecognizeAsync(String imageUrl)
         {
-            return await RecognizeAsync(imageUrl, null);
+            return RecognizeAsync(imageUrl, null);
         }
 
         /// <summary>
@@ -74,9 +74,9 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <param name="imageUrl">URL of the image.</param>
         /// <param name="faceRectangles">Array of face rectangles.</param>
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each recognized face.</returns>
-        public async Task<Contract.Emotion[]> RecognizeAsync(String imageUrl, Rectangle[] faceRectangles)
+        public Task<Contract.Emotion[]> RecognizeAsync(String imageUrl, Rectangle[] faceRectangles)
         {
-            return await PostAsync<UrlReqeust, Contract.Emotion[]>(GetRecognizeUrl(faceRectangles), new UrlReqeust { url = imageUrl });
+            return PostAsync<UrlReqeust, Contract.Emotion[]>(GetRecognizeUrl(faceRectangles), new UrlReqeust { url = imageUrl });
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each recognized face.</returns>
         public async Task<Contract.Emotion[]> RecognizeAsync(Stream imageStream)
         {
-            return await RecognizeAsync(imageStream, null);            
+            return await RecognizeAsync(imageStream, null);
         }
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace Microsoft.ProjectOxford.Emotion
         /// </summary>
         /// <param name="imageStream">Stream of the image</param>
         /// <returns>Async task, which, upon completion, will return rectangle and emotion scores for each face.</returns>        
-        public async Task<Contract.Emotion[]> RecognizeAsync(Stream imageStream, Rectangle[] faceRectangles)
+        public Task<Contract.Emotion[]> RecognizeAsync(Stream imageStream, Rectangle[] faceRectangles)
         {
-            return await PostAsync<Stream, Contract.Emotion[]>(GetRecognizeUrl(faceRectangles), imageStream);
+            return PostAsync<Stream, Contract.Emotion[]>(GetRecognizeUrl(faceRectangles), imageStream);
         }
 
         private string GetRecognizeUrl(Rectangle[] faceRectangles)
@@ -116,10 +116,9 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <param name="videoStream">Video stream</param>
         /// <param name="outputStyle">Output data style</param>
         /// <returns>Video operation created</returns>
-        public async Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(Stream videoStream)
+        public Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(Stream videoStream)
         {
-            var operation = await PostAsync<Stream, VideoEmotionRecognitionOperation>(@"/recognizeInVideo", videoStream);
-            return operation;
+            return PostAsync<Stream, VideoEmotionRecognitionOperation>(@"/recognizeInVideo", videoStream);
         }
 
         /// <summary>
@@ -143,10 +142,9 @@ namespace Microsoft.ProjectOxford.Emotion
         /// <param name="videoUrl">Video URL</param>
         /// <param name="outputStyle">Output data style</param>
         /// <returns>Video operation created</returns>
-        public async Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(string videoUrl)
+        public Task<VideoEmotionRecognitionOperation> RecognizeInVideoAsync(string videoUrl)
         {
-            var operation = await PostAsync<string, VideoEmotionRecognitionOperation>(@"/recognizeInVideo", videoUrl);
-            return operation;
+            return PostAsync<string, VideoEmotionRecognitionOperation>(@"/recognizeInVideo", videoUrl);
         }
 
         /// <summary>
