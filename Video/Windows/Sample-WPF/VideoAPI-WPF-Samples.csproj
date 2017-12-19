@@ -51,6 +51,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Video.SDK, Version=1.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ProjectOxford.Video.1.0.1\lib\portable-net452+win81\Video.SDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -117,10 +121,6 @@
     <ProjectReference Include="..\..\..\SampleUtil\Windows\SampleUserControlLibrary\SampleUserControlLibrary.csproj">
       <Project>{735929f0-f8f1-4d93-b027-5d034fa7892b}</Project>
       <Name>SampleUserControlLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ClientLibrary\Video.SDK.csproj">
-      <Project>{5714988e-4873-4c64-8cad-852381e59a95}</Project>
-      <Name>Video.SDK</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

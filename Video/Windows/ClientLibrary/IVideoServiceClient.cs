@@ -107,5 +107,10 @@ namespace Microsoft.ProjectOxford.Video
         /// <param name="url">The result video content url.</param>
         /// <returns>The result video stream.</returns>
         Task<Stream> GetResultVideoAsync(string url);
+
+        /// <summary>
+        /// Get or set the timespan to wait before the request times out.
+        /// </summary>
+        TimeSpan Timeout { get; set; }
     }
 }

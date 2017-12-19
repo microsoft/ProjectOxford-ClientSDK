@@ -37,6 +37,6 @@ namespace Microsoft.ProjectOxford.Linguistics.Contract
         /// <summary>
         /// The resulting analysis, encoded as JSON. See the documentation for the relevant analyzer kind for more information on formatting.
         /// </summary>
-        public string Result { get; set; }
+        public object Result { get; set; }
     }
 }

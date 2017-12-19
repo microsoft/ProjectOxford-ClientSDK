@@ -68,6 +68,11 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void activityAnalyzeInDomain(View v) {
+        Intent intent = new Intent(this, AnalyzeInDomainActivity.class);
+        startActivity(intent);
+    }
+
     public void activityDescribe(View v) {
         Intent intent = new Intent(this, DescribeActivity.class);
         startActivity(intent);

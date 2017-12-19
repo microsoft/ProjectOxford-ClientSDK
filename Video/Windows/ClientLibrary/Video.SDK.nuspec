@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Microsoft.ProjectOxford.Video</id>
+    <version>1.0.1</version>
+    <title>Microsoft.ProjectOxford.Video</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx</licenseUrl>
+    <projectUrl>http://projectoxford.ai/video</projectUrl>
+    <iconUrl>https://www.projectoxford.ai/images/bright/video/VideoAPI-Main.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Microsoft Project Oxford Video Client Library</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright (c) 2015</copyright>
+    <tags>Microsoft Project Oxford Video</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="7.0.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Video.SDK.dll" target="lib\portable-net452+win81" />
+  </files>
+</package>

@@ -29,6 +29,14 @@
                 android:value="com.microsoft.projectoxford.visionsample.MainActivity" />
         </activity>
         <activity
+            android:name=".AnalyzeInDomainActivity"
+            android:label="@string/title_activity_analyze_domain"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.microsoft.projectoxford.visionsample.AnalyzeInDomainActivity" />
+        </activity>
+        <activity
             android:name=".DescribeActivity"
             android:label="@string/title_activity_describe"
             android:parentActivityName=".MainActivity" >

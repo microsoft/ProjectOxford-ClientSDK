@@ -33,11 +33,12 @@
 package com.microsoft.projectoxford.vision.contract;
 
 import java.util.UUID;
+import com.google.gson.JsonObject;
 
 public class AnalysisInDomainResult {
     public UUID requestId;
 
     public Metadata metadata;
 
-    public String Result;
+    public JsonObject result;
 }
