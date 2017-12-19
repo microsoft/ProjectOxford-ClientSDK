@@ -118,9 +118,9 @@ namespace Microsoft.ProjectOxford.Common
         /// <param name="requestBody">Content of the HTTP request.</param>
         /// <returns>TResponse</returns>
         /// <exception cref="ClientException">Service exception</exception>
-        protected async Task<TResponse> PostAsync<TRequest, TResponse>(string apiUrl, TRequest requestBody)
+        protected Task<TResponse> PostAsync<TRequest, TResponse>(string apiUrl, TRequest requestBody)
         {
-            return await SendAsync<TRequest, TResponse>(HttpMethod.Post, apiUrl, requestBody);
+            return SendAsync<TRequest, TResponse>(HttpMethod.Post, apiUrl, requestBody);
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace Microsoft.ProjectOxford.Common
         /// <param name="requestBody">Content of the HTTP request.</param>
         /// <returns>TResponse</returns>
         /// <exception cref="ClientException">Service exception</exception>
-        protected async Task<TResponse> GetAsync<TRequest, TResponse>(string apiUrl, TRequest requestBody)
+        protected Task<TResponse> GetAsync<TRequest, TResponse>(string apiUrl, TRequest requestBody)
         {
-            return await SendAsync<TRequest, TResponse>(HttpMethod.Get, apiUrl, requestBody);
+            return SendAsync<TRequest, TResponse>(HttpMethod.Get, apiUrl, requestBody);
         }
 
         /// <summary>
