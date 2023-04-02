@@ -5,3 +5,4 @@ We heard your feedback! This repo has been deprecated and each project has moved
 You can now find the **full list of [SDKs and Samples on our website](https://www.microsoft.com/cognitive-services/en-us/sdk-sample).**
 
 Happy coding!
+So please do checkout the moved code.
